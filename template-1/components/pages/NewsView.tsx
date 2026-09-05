@@ -56,7 +56,7 @@ const Item = styled.article`
 
 const ItemTitle = styled(Link)`
   display: block;
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-size: clamp(21px, 2vw, 26px);
   line-height: 1.28;
   font-weight: 650;

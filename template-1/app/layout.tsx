@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 import { Toaster } from "sonner";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import { Header } from "@/components/Header";
@@ -14,11 +14,11 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const logo = Playfair_Display({
-  variable: "--font-logo-face",
+/* A second sans for headings: Sora is rounder and more geometric than Manrope,
+   so titles read as a distinct voice while the body stays quiet. */
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
-  weight: "700",
-  style: "italic",
   display: "swap",
 });
 
@@ -38,8 +38,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    /* Palette preset: "paper" | "emerald" | "sapphire" - defined in app/globals.css */
-    <html lang="en" data-palette="paper" className={`${manrope.variable} ${logo.variable}`}>
+    <html
+      lang="en"
+      className={`${manrope.variable} ${sora.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <StyledComponentsRegistry>
           <MotionProvider>

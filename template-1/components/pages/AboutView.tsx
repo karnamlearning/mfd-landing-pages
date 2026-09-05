@@ -11,6 +11,7 @@ import {
   Container,
   Eyebrow,
   Grid,
+  IconRow,
   Lead,
   Section,
   SectionTitle,
@@ -48,7 +49,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Mission</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 30, margin: "8px 0 12px" }}>
                     Help every family we work with reach their goals with a clear plan.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -60,7 +61,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Vision</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 30, margin: "8px 0 12px" }}>
                     Be the trusted first call for every financial decision.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -72,7 +73,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Since {site.foundedYear}</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 30, margin: "8px 0 12px" }}>
                     Registered, regulated, and transparent.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -98,7 +99,7 @@ export function AboutView() {
                 <Item key={item.title}>
                   <Card>
                     <IconBadge icon={philosophyIcons[index]} />
-                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 26, marginTop: 14 }}>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, marginTop: 16 }}>
                       {item.title}
                     </h3>
                     <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.7 }}>
@@ -121,9 +122,13 @@ export function AboutView() {
               {processSteps.map((step, index) => (
                 <Item key={step.n}>
                   <div>
-                    <IconBadge icon={processIcons[index]} tone="dark" />
-                    <Eyebrow style={{ marginTop: 14 }}>{step.n}</Eyebrow>
-                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 24 }}>{step.title}</h3>
+                    <IconRow>
+                      <IconBadge icon={processIcons[index]} tone="dark" />
+                      <Eyebrow>Step {step.n}</Eyebrow>
+                    </IconRow>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, marginTop: 16 }}>
+                      {step.title}
+                    </h3>
                     <p style={{ color: "var(--on-brand-soft)", marginTop: 8 }}>{step.body}</p>
                   </div>
                 </Item>
@@ -144,23 +149,23 @@ export function AboutView() {
                   <Card>
                     <div
                       style={{
-                        width: 56,
-                        height: 56,
-                        borderRadius: 16,
-                        background: "var(--surface-dark)",
-                        color: "var(--accent-soft)",
+                        width: 52,
+                        height: 52,
+                        borderRadius: 14,
+                        background: "var(--brand-deep)",
+                        color: "var(--on-brand)",
                         display: "grid",
                         placeItems: "center",
-                        fontFamily: "var(--font-sans)",
-                        fontSize: 22,
-                        fontWeight: 700,
+                        fontSize: 15,
+                        fontWeight: 750,
+                        letterSpacing: "0.04em",
                         marginBottom: 16,
                       }}
                     >
                       {member.initials}
                     </div>
-                    <h3>{member.name}</h3>
-                    <p style={{ color: "var(--accent-text)", fontSize: 13, margin: "6px 0 10px" }}>
+                    <h3 style={{ fontSize: 20 }}>{member.name}</h3>
+                    <p style={{ color: "var(--accent-text)", fontSize: 13, margin: "6px 0 10px", fontWeight: 650 }}>
                       {member.role}
                     </p>
                     <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.6 }}>

@@ -23,7 +23,7 @@ const Wrap = styled.div`
   h2,
   h3,
   h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     letter-spacing: -0.02em;
     margin: 32px 0 12px;
     line-height: 1.25;

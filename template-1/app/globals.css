@@ -1,85 +1,45 @@
 /* ============================================================================
    PALETTE - THE ONLY BLOCK YOU NEED TO EDIT TO RE-SKIN THE SITE
    ----------------------------------------------------------------------------
-   Every colour on the site is derived from the seeds below. They are written as
-   raw "R G B" channels (not hex) so that translucent layers can be built from
-   them with rgb(var(--seed) / <alpha>) further down.
-
-   To try a different look, either edit these numbers, or switch preset by
-   changing the data-palette attribute on <html> in app/layout.tsx:
-       data-palette="paper"      (default - warm cream, near-black, coral)
-       data-palette="emerald"    (pine green + gold)
-       data-palette="sapphire"   (navy blue + gold)
-   The alternate presets are defined below this block.
+   Warm cream paper, pale sage panels, and a deep forest green that carries the
+   primary button, the dark panels, and accent text. Seeds are raw "R G B"
+   channels so translucent layers can be built with rgb(var(--seed) / <alpha>).
    ============================================================================ */
-:root,
-[data-palette="paper"] {
-  /* Brand - near-black. Carries the primary button, dark sections and headings. */
-  --seed-brand-deep: 13 13 13;
-  --seed-brand: 26 25 24;
-  --seed-brand-soft: 92 86 80;
+:root {
+  /* Brand - forest green. Primary button, dark panels, table header. */
+  --seed-brand-deep: 24 54 40;
+  --seed-brand: 31 66 49;
+  --seed-brand-soft: 74 112 90;
 
-  /* Accent - warm coral, used sparingly: eyebrows, icons, the logo mark.
-     -strong is the darker cut for accent TEXT on cream. */
-  --seed-accent: 245 98 60;
-  --seed-accent-soft: 250 162 132;
-  --seed-accent-strong: 198 66 30;
+  /* Accent - the same forest green on light surfaces; a soft mint on dark ones. */
+  --seed-accent: 31 66 49;
+  --seed-accent-soft: 190 219 196;
+  --seed-accent-strong: 24 54 40;
 
-  /* Surfaces - warm cream paper, white cards */
-  --seed-surface: 246 243 239;
+  /* Surfaces - cream page, white cards, pale sage bands */
+  --seed-surface: 247 246 242;
   --seed-surface-raised: 255 255 255;
-  --seed-on-brand: 247 245 242;
+  --seed-sage: 232 236 228;
+  --seed-on-brand: 246 247 243;
 
   /* Text */
-  --seed-ink: 15 15 15;
-  --seed-muted: 107 101 95;
+  --seed-ink: 22 26 23;
+  --seed-muted: 104 110 104;
 
-  /* Dark panels. Deliberately a warm charcoal, not black - flat black next to
-     cream reads as a hole in the page. */
-  --seed-panel: 43 37 33;
-  --seed-panel-deep: 32 27 24;
+  /* Dark panels */
+  --seed-panel: 31 66 49;
+  --seed-panel-deep: 22 48 36;
 
   /* Status */
   --seed-positive: 22 150 110;
   --seed-danger: 190 40 50;
-}
 
-/* Alternate presets - each overrides only the seeds above. */
-[data-palette="emerald"] {
-  --seed-brand-deep: 3 26 21;
-  --seed-brand: 6 56 45;
-  --seed-brand-soft: 20 150 118;
-  --seed-accent: 245 194 75;
-  --seed-accent-soft: 250 216 150;
-  --seed-accent-strong: 146 88 10;
-  --seed-surface: 246 250 248;
-  --seed-surface-raised: 255 255 255;
-  --seed-on-brand: 235 247 242;
-  --seed-ink: 7 28 23;
-  --seed-muted: 82 104 96;
-  --seed-positive: 5 150 105;
-  --seed-danger: 190 40 50;
-}
-
-[data-palette="sapphire"] {
-  --seed-brand-deep: 6 22 56;
-  --seed-brand: 18 58 138;
-  --seed-brand-soft: 59 130 246;
-  --seed-accent: 255 197 61;
-  --seed-accent-soft: 255 218 133;
-  --seed-accent-strong: 161 92 7;
-  --seed-surface: 244 247 254;
-  --seed-surface-raised: 255 255 255;
-  --seed-on-brand: 234 241 255;
-  --seed-ink: 10 18 41;
-  --seed-muted: 88 100 130;
-  --seed-positive: 16 185 129;
-  --seed-danger: 190 40 50;
+  /* Stars */
+  --seed-star: 22 26 23;
 }
 
 /* ============================================================================
-   DERIVED TOKENS - these are what components use. You should rarely edit these;
-   they all resolve back to the seeds above.
+   DERIVED TOKENS - what components use. They resolve back to the seeds above.
    ============================================================================ */
 :root {
   --brand-deep: rgb(var(--seed-brand-deep));
@@ -92,73 +52,80 @@
 
   --surface: rgb(var(--seed-surface));
   --surface-raised: rgb(var(--seed-surface-raised));
+  --surface-sage: rgb(var(--seed-sage));
   --on-brand: rgb(var(--seed-on-brand));
 
   --ink: rgb(var(--seed-ink));
   --muted: rgb(var(--seed-muted));
   --positive: rgb(var(--seed-positive));
   --danger: rgb(var(--seed-danger));
+  --star: rgb(var(--seed-star));
 
-  /* Accent text that adapts to its background. Light sections use the dark cut;
-     dark sections re-declare this to the bright cut (see .on-dark-scope below),
-     so a single --accent-text token stays readable everywhere. */
+  /* Accent text adapts to its background - see .on-dark-scope below. */
   --accent-text: var(--accent-strong);
 
   /* Hairlines */
-  --line: rgb(var(--seed-brand) / 0.14);
-  --line-strong: rgb(var(--seed-brand) / 0.26);
-  --line-accent: rgb(var(--seed-accent) / 0.38);
+  --line: rgb(var(--seed-ink) / 0.1);
+  --line-strong: rgb(var(--seed-ink) / 0.2);
+  --line-accent: rgb(var(--seed-accent) / 0.35);
 
-  /* Translucent accent washes (icon badges, borders on dark, gradient blooms) */
-  --tint-accent-weak: rgb(var(--seed-accent) / 0.12);
-  --tint-accent: rgb(var(--seed-accent) / 0.18);
-  --tint-accent-strong: rgb(var(--seed-accent) / 0.28);
+  /* Translucent accent washes */
+  --tint-accent-weak: rgb(var(--seed-accent) / 0.08);
+  --tint-accent: rgb(var(--seed-accent) / 0.14);
+  --tint-accent-strong: rgb(var(--seed-accent) / 0.22);
 
   /* Text/fills layered on dark brand backgrounds */
-  --on-brand-soft: rgb(var(--seed-on-brand) / 0.78);
+  --on-brand-soft: rgb(var(--seed-on-brand) / 0.8);
   --on-brand-mute: rgb(var(--seed-on-brand) / 0.62);
   --on-brand-veil: rgb(var(--seed-on-brand) / 0.08);
   --on-brand-veil-strong: rgb(var(--seed-on-brand) / 0.14);
 
-  --surface-veil: rgb(var(--seed-surface-raised) / 0.94);
+  --surface-veil: rgb(var(--seed-surface) / 0.86);
 
-  /* Dark panels. Kept off --brand so a mid-tone brand (royal blue) never ends
-     up as a section background that light text cannot sit on. */
   --surface-dark: rgb(var(--seed-panel));
   --surface-darkest: rgb(var(--seed-panel-deep));
 
-  /* Primary call to action */
+  /* Primary call to action: forest green pill, cream text */
   --cta-bg: var(--brand-deep);
-  --cta-bg-hover: var(--brand-soft);
+  --cta-bg-hover: var(--brand);
   --cta-text: var(--on-brand);
   --edge-highlight: rgb(255 255 255 / 0.7);
 
-  --radius: 16px;
+  --radius: 20px;
+  --radius-sm: 14px;
   --shadow:
-    0 18px 44px rgb(var(--seed-brand-deep) / 0.13),
-    0 2px 6px rgb(var(--seed-brand-deep) / 0.06);
-  --shadow-accent: 0 18px 40px rgb(var(--seed-accent) / 0.28);
+    0 18px 44px rgb(var(--seed-ink) / 0.08),
+    0 2px 6px rgb(var(--seed-ink) / 0.04);
+  --shadow-accent: 0 18px 40px rgb(var(--seed-accent) / 0.2);
 
-  --font-display: var(--font-manrope), "Segoe UI", sans-serif;
+  --font-display: var(--font-sora), var(--font-manrope), "Segoe UI", sans-serif;
   --font-sans: var(--font-manrope), "Segoe UI", sans-serif;
-  --font-logo: var(--font-logo-face), Georgia, "Times New Roman", serif;
+  --font-logo: var(--font-sora), var(--font-manrope), "Segoe UI", sans-serif;
 }
 
 /* Any dark-brand surface flips the context-sensitive tokens. */
 .on-dark-scope {
+  --accent: var(--accent-soft);
   --accent-text: var(--accent-soft);
-  --line: rgb(var(--seed-accent) / 0.22);
-  --line-strong: rgb(var(--seed-accent) / 0.34);
+  --accent-strong: var(--accent-soft);
+  --line: rgb(var(--seed-on-brand) / 0.14);
+  --line-strong: rgb(var(--seed-on-brand) / 0.26);
+  --tint-accent-weak: rgb(var(--seed-on-brand) / 0.08);
+  --cta-bg: var(--accent-soft);
+  --cta-bg-hover: rgb(var(--seed-on-brand));
+  --cta-text: var(--brand-deep);
 }
 
 html {
   height: 100%;
 }
 
+/* `clip`, not `hidden`: hidden would turn <body> into a scroll container and
+   silently break every position: sticky element on the site. */
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -200,8 +167,16 @@ textarea {
   font-family: inherit;
 }
 
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
 ::selection {
-  background: var(--accent);
+  background: var(--accent-soft);
   color: var(--brand-deep);
 }
 
@@ -215,10 +190,10 @@ textarea {
   left: 16px;
   top: -40px;
   z-index: 100;
-  background: var(--accent);
-  color: var(--brand-deep);
+  background: var(--brand-deep);
+  color: var(--on-brand);
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 600;
 }
 
@@ -238,12 +213,10 @@ textarea {
   }
 }
 
-/* Not a band any more - just the page title, cleared of the fixed header.
-   The header is fixed at 72px, so the first 72px of this padding is clearance,
-   not breathing room - the visible gap above the title is what is left. */
+/* Inner-page title. The header is fixed at 76px; the rest is breathing room. */
 .page-hero {
   color: var(--ink);
-  padding: 116px 0 0;
+  padding: 132px 0 0;
 }
 
 .page-hero + section {
@@ -252,7 +225,7 @@ textarea {
 
 @media (max-width: 800px) {
   .page-hero {
-    padding: 104px 0 0;
+    padding: 112px 0 0;
   }
 
   .page-hero + section {
@@ -264,73 +237,39 @@ textarea {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* 72px of the top clears the fixed header. */
-  padding: 128px 0 56px;
+  padding: 140px 0 72px;
   color: var(--ink);
   background: var(--surface);
 }
 
 @media (max-width: 960px) {
   .home-hero {
-    padding: 108px 0 40px;
+    padding: 112px 0 48px;
   }
 }
 
-.home-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(
-      42% 52% at 100% 0%,
-      rgb(var(--seed-accent) / 0.12),
-      transparent 70%
-    ),
-    radial-gradient(
-      36% 40% at 0% 80%,
-      rgb(var(--seed-brand) / 0.05),
-      transparent 70%
-    );
-  pointer-events: none;
-}
-
-header {
+header.site-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 50;
-  color: var(--brand);
+  color: var(--ink);
   background: var(--surface-veil);
-  backdrop-filter: saturate(1.4) blur(10px);
-  border-bottom: 1px solid var(--line);
+  backdrop-filter: saturate(1.3) blur(12px);
+  -webkit-backdrop-filter: saturate(1.3) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+header.site-header.is-solid {
+  border-bottom-color: var(--line);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
-  .home-hero::after {
-    display: none;
-  }
-}
-
-.home-hero::after {
-  content: "";
-  position: absolute;
-  top: -20%;
-  right: -8%;
-  width: min(520px, 48vw);
-  height: min(520px, 48vw);
-  z-index: -1;
-  border-radius: 50%;
-  border: 1px solid rgb(var(--seed-brand) / 0.08);
-  box-shadow:
-    0 0 0 48px rgb(var(--seed-brand) / 0.03),
-    0 0 0 96px rgb(var(--seed-brand) / 0.02);
-  pointer-events: none;
 }
 
 @keyframes home-marquee {

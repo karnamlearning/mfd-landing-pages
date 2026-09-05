@@ -1,15 +1,32 @@
 # Image credits
 
-## family-goals.jpg
-Supplied by the site owner. Derived from `indian-family.jpg` (resized to 2400px
-wide, re-encoded) for web delivery. Used as the background of the closing
-call-to-action band on the home page.
+All photos below are from Unsplash and used under the Unsplash License
+(free for commercial use, no attribution required). Source pages:
 
-## compounding.jpg
-Supplied by the site owner, from Pexels (`pexels-towfiqu-barbhuiya-3440682-9755376.jpg`).
-Photographer: Towfiqu Barbhuiya. The Pexels licence permits commercial use and
-does not require attribution. Resized to 1600px wide and re-encoded.
-Used on the news and blog sections.
+| File | Unsplash photo |
+| --- | --- |
+| featured-office-meeting.jpg | https://unsplash.com/photos/cW4lLTavU80 (Smartworks Coworking) |
+| portrait-farhan.jpg | https://unsplash.com/photos/zXR0fNWHDDQ (Kamal Dharma Teja Dasari) |
+| face-1.jpg | https://unsplash.com/photos/eucPfcmTQig (Abhishek Rai) |
+| face-2.jpg | https://unsplash.com/photos/n45Wbm8gpm0 (Gabriel Ogulu) |
+| face-3.jpg | https://unsplash.com/photos/Oj_PWTQo6b8 (Tanmay Abhay Mahajan) |
+| face-4.jpg | https://unsplash.com/photos/c07j-zSHezM (Subhra Jyoti Paul) |
+| face-5.jpg | https://unsplash.com/photos/clZSFsy3218 (Vinit Vispute) |
+| case-onboarding.jpg | https://unsplash.com/photos/Uz8THWPXwhI (Smartworks Coworking) |
+| case-scheme-selection.jpg | https://unsplash.com/photos/zLx710peU_k |
+| case-sip.jpg | https://unsplash.com/photos/3S0Ucv4BDCk (Amit Ranjan) |
+| case-portfolio.jpg | https://unsplash.com/photos/kgc1vAw1Tl8 |
+| case-goals.jpg | https://unsplash.com/photos/a-_1PPjnbUg (Vivek Kumar) |
+| case-retirement.jpg | https://unsplash.com/photos/yvl5Nb7pHK0 (Prateek Jaiswal) |
+| resource-sip-rupees.jpg | https://unsplash.com/photos/5lw6CLBZlCg |
+| resource-retirement-couple.jpg | https://unsplash.com/photos/deRqTSOWY0Y |
+| resource-coins.jpg | https://unsplash.com/photos/KzUiI7ENbws |
+| compounding.jpg | https://unsplash.com/photos/LGM0PPU9Q4U |
+| growth-plant-coins.jpg | https://images.unsplash.com/photo-1579621970563-ebec7560ff3e (Unsplash, hero "growth" photo) |
+| about-friends.jpg | https://unsplash.com/photos/bik_lIl9Nco (Sithamshu Manoj) |
+| about-grandparents.jpg | https://unsplash.com/photos/77ooeCGz8J4 (Rajat Sarki) |
+| about-women.jpg | https://unsplash.com/photos/O_H7BlvtZ8Y (Varun Gaba) |
+| why-father-child.jpg | https://unsplash.com/photos/oG6mE4Z6UME (BenMoses M) |
+| contact-cafe.jpg | https://unsplash.com/photos/5U_28ojjgms (Redd Francisco) |
 
-The full-resolution originals are kept alongside these derivatives and are not
-referenced by the site. They can be deleted once you are happy with the crops.
+indian-family.jpg was already present in the project before this set was added.

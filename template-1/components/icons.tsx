@@ -8,6 +8,7 @@ import {
   FiClipboard,
   FiClock,
   FiBookOpen,
+  FiFileText,
   FiHelpCircle,
   FiHome,
   FiLayers,
@@ -31,6 +32,7 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import styled from "styled-components";
+import { services } from "@/lib/services";
 
 const Mark = styled.span<{ $tone?: "light" | "dark" }>`
   width: 44px;
@@ -39,9 +41,9 @@ const Mark = styled.span<{ $tone?: "light" | "dark" }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 14px;
   background: ${({ $tone }) =>
-    $tone === "dark" ? "var(--tint-accent)" : "var(--tint-accent-weak)"};
+    $tone === "dark" ? "var(--on-brand-veil-strong)" : "var(--surface-sage)"};
   color: ${({ $tone }) => ($tone === "dark" ? "var(--accent-soft)" : "var(--accent-strong)")};
   flex-shrink: 0;
   margin: 0;
@@ -51,11 +53,6 @@ const Mark = styled.span<{ $tone?: "light" | "dark" }>`
 
 type IconSet = "service" | "calculator";
 
-/**
- * Server Components cannot pass a component reference across the client
- * boundary, so they pass a `name` (+ `set`) and the lookup happens here.
- * Client callers can keep passing `icon` directly.
- */
 export function IconBadge({
   icon,
   name,
@@ -77,7 +74,17 @@ export function IconBadge({
   );
 }
 
-export const serviceIcons: Record<string, IconType> = {
+function serviceIconFor(slug: string): IconType {
+  if (slug.startsWith("insurance") || slug.includes("policy") || slug.includes("claim") || slug.includes("premium") || slug.includes("rider") || slug.includes("nomination") || slug.includes("term-") || slug.includes("health") || slug.includes("motor") || slug.includes("travel") || slug.includes("accident") || slug.includes("home-property") || slug.includes("business-insurance") || slug.includes("life-insurance") || slug.includes("customer-education") || slug.includes("documentation") || slug.includes("post-sale")) {
+    return FiShield;
+  }
+  if (slug.startsWith("fd-") || slug.includes("bond") || slug.includes("corporate") || slug.includes("government") || slug.includes("ladder") || slug.includes("yield") || slug.includes("liquidity") || slug.includes("credit-risk") || slug.includes("maturity") || slug.includes("reinvestment") || slug.includes("tds") || slug.includes("secondary") || slug.includes("fi-") || slug.includes("tax-saving-fixed") || slug.includes("regular-income") || slug.includes("interest-") || slug.includes("investor-statements")) {
+    return FiLayers;
+  }
+  return FiBriefcase;
+}
+
+const explicitServiceIcons: Record<string, IconType> = {
   "investor-onboarding": FiUsers,
   "investor-profiling": FiClipboard,
   "scheme-selection": FiPieChart,
@@ -89,7 +96,24 @@ export const serviceIcons: Record<string, IconType> = {
   "retirement-planning": FiSunrise,
   "tax-capital-gains": FiPercent,
   "investor-service": FiHelpCircle,
+  "insurance-needs-analysis": FiClipboard,
+  "life-insurance-planning": FiShield,
+  "term-insurance": FiShield,
+  "health-insurance": FiActivity,
+  "claims-assistance": FiFileText,
+  "fd-product-selection": FiLayers,
+  "bond-selection": FiTrendingUp,
+  "laddering-strategy": FiCalendar,
+  "credit-risk-assessment": FiHelpCircle,
 };
+
+/**
+ * Every service slug resolved once at module load, so IconBadge only ever does
+ * a lookup - never a function call that returns a component during render.
+ */
+export const serviceIcons: Record<string, IconType> = Object.fromEntries(
+  services.map((item) => [item.slug, explicitServiceIcons[item.slug] ?? serviceIconFor(item.slug)]),
+);
 
 export const philosophyIcons = [FiShield, FiUsers, FiClipboard] as const;
 
@@ -111,10 +135,6 @@ export const socialIcons: Record<string, IconType> = {
   YouTube: FaYoutube,
 };
 
-/**
- * Icons for dropdown children, keyed by href. Only the Insights menu is mapped
- * - the other menus are plain lists, and half-iconed rows read as broken.
- */
 export const navIcons: Record<string, IconType> = {
   "/blog": FiBookOpen,
   "/news": FiRadio,
@@ -131,7 +151,6 @@ export const calculatorIcons: Record<string, IconType> = {
   "target-amount-sip": FiHome,
 };
 
-/** Icons for the home page stat band, keyed by the `icon` field in site.stats. */
 export const statIcons: Record<string, IconType> = {
   years: FiClock,
   families: FiUsers,

@@ -56,7 +56,7 @@ const FeaturedBody = styled.div`
   justify-content: center;
 
   h2 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: clamp(24px, 2.4vw, 32px);
     line-height: 1.22;
     letter-spacing: -0.02em;
@@ -124,7 +124,7 @@ const CardBody = styled.div`
   flex: 1;
 
   h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-display);
     font-size: 20px;
     line-height: 1.32;
     font-weight: 650;

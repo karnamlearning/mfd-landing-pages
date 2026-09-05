@@ -3,71 +3,41 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { footerNav, site } from "@/lib/site";
-import { Logo } from "@/components/Logo";
 import { Container } from "@/components/ui";
 import { contactIcons, socialIcons } from "@/components/icons";
 
-const Wrap = styled.footer.attrs({ className: "on-dark-scope" })`
-  background: var(--surface-darkest);
-  color: var(--on-brand);
-  padding: 72px 0 28px;
-`;
+/*
+ * The reference footer: a contact line, an oversized serif wordmark, a row of
+ * pill links, and the small print. Cream, not dark - the wordmark carries it.
+ */
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1fr;
-  gap: 36px;
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ColTitle = styled.h3`
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin: 8px 0 16px;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  display: grid;
-  gap: 10px;
-  font-size: 14px;
-  opacity: 0.88;
-`;
-
-const Address = styled.p`
-  margin: 18px 0 14px;
-  line-height: 1.7;
-  font-size: 14px;
-  opacity: 0.86;
-  white-space: pre-line;
-`;
-
-const Fine = styled.p`
-  margin-top: 36px;
-  padding-top: 22px;
+const Wrap = styled.footer`
+  background: var(--surface);
+  color: var(--ink);
+  padding: 72px 0 32px;
   border-top: 1px solid var(--line);
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--on-brand-mute);
+  overflow: hidden;
 `;
 
-const Bottom = styled.div`
+const Top = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  align-items: flex-start;
+  gap: 24px;
   flex-wrap: wrap;
-  margin-top: 18px;
-  font-size: 13px;
-  opacity: 0.72;
+  font-size: 14px;
+  color: var(--muted);
+
+  a:hover {
+    color: var(--ink);
+  }
+`;
+
+const ContactList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
 `;
 
 const IconRow = styled.li`
@@ -77,14 +47,86 @@ const IconRow = styled.li`
 
   svg {
     flex-shrink: 0;
-    opacity: 0.85;
+    color: var(--accent-strong);
   }
+`;
+
+const Address = styled.p`
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 34ch;
+  text-align: right;
+
+  @media (max-width: 700px) {
+    text-align: left;
+  }
+`;
+
+const Brand = styled.p`
+  font-family: var(--font-display);
+  font-size: clamp(72px, 17vw, 240px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  text-align: center;
+  color: var(--ink);
+  margin: 36px 0 32px;
+  white-space: nowrap;
+`;
+
+const Pills = styled.nav`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+`;
+
+const Pill = styled(Link)<{ $primary?: boolean }>`
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid ${({ $primary }) => ($primary ? "var(--brand-deep)" : "var(--line-strong)")};
+  background: ${({ $primary }) => ($primary ? "var(--brand-deep)" : "var(--surface-raised)")};
+  color: ${({ $primary }) => ($primary ? "var(--on-brand)" : "var(--ink)")};
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.18s ease;
+
+  &:hover {
+    background: ${({ $primary }) => ($primary ? "var(--brand)" : "var(--surface-sage)")};
+  }
+`;
+
+const Fine = styled.p`
+  margin: 40px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 96ch;
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  font-size: 13px;
+  color: var(--muted);
 `;
 
 const Social = styled.div`
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 8px;
 
   a {
     width: 36px;
@@ -92,12 +134,19 @@ const Social = styled.div`
     display: grid;
     place-items: center;
     border: 1px solid var(--line-strong);
-    border-radius: 10px;
+    border-radius: 50%;
+    color: var(--ink);
+    transition: 0.18s ease;
+  }
+
+  a:hover {
+    background: var(--brand-deep);
+    border-color: var(--brand-deep);
+    color: var(--on-brand);
   }
 `;
 
-/* Registration numbers come from lib/site.ts so the disclaimer never drifts
-   from the registrations section on the home page. */
+/* Registration numbers come from lib/site.ts so the disclaimer never drifts. */
 const amfi = site.registrations.find((item) => item.label.startsWith("AMFI"));
 const apmi = site.registrations.find((item) => item.label.startsWith("APMI"));
 
@@ -107,6 +156,17 @@ function describe(item: typeof amfi) {
   return `${item.value}${valid}`;
 }
 
+const pills = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Calculators", href: "/calculators" },
+  { label: "Blog", href: "/blog" },
+  { label: "News", href: "/news" },
+  { label: "FAQs", href: "/faqs" },
+  ...footerNav.company.filter((item) => ["/disclosures", "/privacy", "/terms"].includes(item.href)),
+];
+
 export function Footer() {
   const Phone = contactIcons.phone;
   const Mail = contactIcons.mail;
@@ -114,67 +174,34 @@ export function Footer() {
   return (
     <Wrap>
       <Container>
-        <Grid>
-          <div>
-            <Logo onDark />
-            <Address>{site.address.lines.join("\n")}</Address>
-            <List>
-              <IconRow>
-                <Phone size={14} />
-                <a href={site.phoneHref}>{site.phone}</a>
-              </IconRow>
-              <IconRow>
-                <Mail size={14} />
-                <a href={`mailto:${site.email}`}>{site.email}</a>
-              </IconRow>
-              <IconRow>
-                <Mail size={14} />
-                <a href={`mailto:${site.advisorEmail}`}>{site.advisorEmail}</a>
-              </IconRow>
-            </List>
-            <Social>
-              {site.social.map((item) => {
-                const Icon = socialIcons[item.name];
-                if (!Icon) return null;
-                return (
-                  <a key={item.name} href={item.href} aria-label={item.name}>
-                    <Icon size={16} />
-                  </a>
-                );
-              })}
-            </Social>
-          </div>
-          <div>
-            <ColTitle>Company</ColTitle>
-            <List>
-              {footerNav.company.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
-            </List>
-          </div>
-          <div>
-            <ColTitle>Offerings</ColTitle>
-            <List>
-              {footerNav.offerings.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
-            </List>
-          </div>
-          <div>
-            <ColTitle>FAQs</ColTitle>
-            <List>
-              {footerNav.faqs.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
-            </List>
-          </div>
-        </Grid>
+        <Top>
+          <ContactList>
+            <IconRow>
+              <Mail size={14} />
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </IconRow>
+            <IconRow>
+              <Phone size={14} />
+              <a href={site.phoneHref}>{site.phone}</a>
+            </IconRow>
+            <li>{site.hours}</li>
+          </ContactList>
+          <Address>{site.address.lines.slice(1).join(", ")}</Address>
+        </Top>
+
+        <Brand aria-hidden>{site.shortName}</Brand>
+
+        <Pills aria-label="Footer">
+          {pills.map((item) => (
+            <Pill key={item.href} href={item.href}>
+              {item.label}
+            </Pill>
+          ))}
+          <Pill href="/contact" $primary>
+            Contact us
+          </Pill>
+        </Pills>
+
         <Fine>
           {site.legalName} is an AMFI-registered Mutual Fund Distributor
           {amfi ? ` (${describe(amfi)})` : ""}
@@ -182,14 +209,26 @@ export function Footer() {
           investments are subject to market risks; read all scheme-related documents
           carefully before investing. Past performance is not indicative of future
           returns. Content on this website is for information only and is not
-          personalised investment advice. We do not offer guaranteed returns.
-          <br />
+          personalised investment advice. We do not offer guaranteed returns.{" "}
           <a href={site.scores}>SEBI SCORES</a>
           {" · "}
           <a href={site.smartOdr}>SMART ODR</a>
         </Fine>
         <Bottom>
-          <span>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} {site.legalName}. All rights reserved.
+          </span>
+          <Social>
+            {site.social.map((item) => {
+              const Icon = socialIcons[item.name];
+              if (!Icon) return null;
+              return (
+                <a key={item.name} href={item.href} aria-label={item.name}>
+                  <Icon size={15} />
+                </a>
+              );
+            })}
+          </Social>
           <span>Designed &amp; developed by Advisorkhoj.com</span>
         </Bottom>
       </Container>

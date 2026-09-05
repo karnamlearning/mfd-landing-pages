@@ -4,48 +4,31 @@ import styled from "styled-components";
 import { Container, Eyebrow, PageHeroWrap } from "@/components/ui";
 
 /**
- * The page heading, and nothing else.
+ * The page heading, and nothing else. A single bold line under the header so
+ * every inner page opens the same way as the home page.
  *
- * This used to be a full-bleed band - its own background, a gradient wash, a
- * closing hairline, a marketing headline, a supporting paragraph and a CTA on
- * top of the header clearance. On a laptop it pushed the first real section of
- * every inner page under the fold. It is now a single line naming the page.
- *
- * `meta` is only for article routes, where the category and publish date are
- * not repeated anywhere else on the page.
- */
-/**
- * Still one line, but given a little presence: a short accent rule above the
- * title so the heading reads as a deliberate mark rather than a stray sentence
- * floating under the header.
+ * `meta` is for article routes and category pages, where a small pill above
+ * the title names the section.
  */
 const Title = styled.h1`
-  font-family: var(--font-sans);
-  font-weight: 650;
-  font-size: clamp(30px, 3vw, 42px);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
   color: var(--ink);
-`;
-
-const Rule = styled.span`
-  display: block;
-  width: 44px;
-  height: 3px;
-  margin-bottom: 16px;
-  border-radius: 2px;
-  background: var(--accent);
+  max-width: 18ch;
 `;
 
 const Meta = styled(Eyebrow)`
-  margin: 0 0 8px;
+  margin: 0 0 16px;
 `;
 
 export function PageHero({ title, meta }: { title: string; meta?: string }) {
   return (
     <PageHeroWrap>
       <Container>
-        {meta ? <Meta>{meta}</Meta> : <Rule aria-hidden />}
+        {meta ? <Meta>{meta}</Meta> : null}
         <Title>{title}</Title>
       </Container>
     </PageHeroWrap>

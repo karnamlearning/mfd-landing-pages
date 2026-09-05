@@ -4,20 +4,20 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 
 export const Container = styled.div`
-  width: min(1320px, calc(100% - 48px));
+  width: min(1200px, calc(100% - 48px));
   margin: 0 auto;
 
   @media (max-width: 640px) {
-    width: min(1180px, calc(100% - 28px));
+    width: min(1200px, calc(100% - 28px));
   }
 `;
 
 export const Section = styled.section.attrs<{
-  $tone?: "cream" | "paper" | "navy" | "ink";
+  $tone?: "cream" | "paper" | "sage" | "navy" | "ink";
 }>(({ $tone }) => ({
   className: $tone === "navy" || $tone === "ink" ? "on-dark-scope" : undefined,
-})) <{ $tone?: "cream" | "paper" | "navy" | "ink" }>`
-  padding: 72px 0;
+}))<{ $tone?: "cream" | "paper" | "sage" | "navy" | "ink" }>`
+  padding: 96px 0;
   background: ${({ $tone }) =>
     $tone === "navy"
       ? "var(--surface-dark)"
@@ -25,45 +25,69 @@ export const Section = styled.section.attrs<{
         ? "var(--surface-darkest)"
         : $tone === "paper"
           ? "var(--surface-raised)"
-          : "var(--surface)"};
+          : $tone === "sage"
+            ? "var(--surface-sage)"
+            : "var(--surface)"};
   color: ${({ $tone }) =>
     $tone === "navy" || $tone === "ink" ? "var(--on-brand)" : "var(--ink)"};
 
   @media (max-width: 800px) {
-    padding: 56px 0;
+    padding: 64px 0;
   }
 `;
 
+/* Small pill label: "AMFI-registered", "What we do". */
 export const Eyebrow = styled.p`
-  font-size: 12px;
-  letter-spacing: 0.22em;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  font-size: 11px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-text);
+  color: var(--ink);
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+
+  .on-dark-scope & {
+    color: var(--on-brand);
+  }
 `;
 
 export const Display = styled.h2`
-  font-family: var(--font-sans);
-  font-weight: 650;
-  font-size: clamp(32px, 4.4vw, 52px);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   max-width: 18ch;
+
+  em {
+    font-style: normal;
+    color: var(--accent-text);
+  }
 `;
 
 /**
- * A heading for a section inside a page. Deliberately smaller than the page
- * title in PageHero so each page reads with one dominant heading; `Display` is
- * reserved for the home page, where there is no PageHero to compete with.
+ * A heading for a section inside an inner page. Deliberately smaller than the
+ * page title in PageHero so each page reads with one dominant heading.
  */
 export const SectionTitle = styled.h2`
-  font-family: var(--font-sans);
-  font-weight: 650;
-  font-size: clamp(22px, 2vw, 26px);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   margin-bottom: 4px;
+
+  em {
+    font-style: normal;
+    color: var(--accent-text);
+  }
 `;
 
 export const Lead = styled.p`
@@ -83,11 +107,16 @@ const buttonStyles = css<{ $variant?: "gold" | "navy" | "ghost" | "light" }>`
   border-radius: 999px;
   font-size: 14px;
   font-weight: 650;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   border: 1px solid transparent;
   cursor: pointer;
   transition: 0.2s ease;
   width: fit-content;
+  white-space: nowrap;
+
+  svg {
+    flex-shrink: 0;
+  }
 
   ${({ $variant }) =>
     $variant === "navy"
@@ -104,16 +133,18 @@ const buttonStyles = css<{ $variant?: "gold" | "navy" | "ghost" | "light" }>`
       : $variant === "ghost"
         ? css`
             background: transparent;
-            color: var(--on-brand);
-            border-color: var(--line-accent);
+            color: inherit;
+            border-color: var(--line-strong);
             &:hover {
-              background: var(--on-brand-veil);
+              background: var(--tint-accent-weak);
+              border-color: currentColor;
             }
           `
         : $variant === "light"
           ? css`
               background: var(--surface-raised);
-              color: var(--brand);
+              color: var(--ink);
+              border-color: var(--line);
               &:hover {
                 background: var(--surface);
               }
@@ -121,14 +152,15 @@ const buttonStyles = css<{ $variant?: "gold" | "navy" | "ghost" | "light" }>`
           : css`
               background: var(--cta-bg);
               color: var(--cta-text);
+              border-color: var(--cta-bg);
               &:hover {
                 background: var(--cta-bg-hover);
-                box-shadow: var(--shadow);
+                border-color: var(--cta-bg-hover);
               }
             `}
 `;
 
-export const ButtonLink = styled(Link) <{
+export const ButtonLink = styled(Link)<{
   $variant?: "gold" | "navy" | "ghost" | "light";
 }>`
   ${buttonStyles}
@@ -142,7 +174,7 @@ export const Button = styled.button<{
 
 export const Grid = styled.div<{ $cols?: number }>`
   display: grid;
-  gap: 22px;
+  gap: 20px;
   grid-template-columns: repeat(${({ $cols }) => $cols ?? 3}, minmax(0, 1fr));
 
   @media (max-width: 900px) {
@@ -159,7 +191,6 @@ export const Card = styled.article`
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 28px;
-  box-shadow: 0 1px 0 var(--edge-highlight) inset;
 `;
 
 export const CardLink = styled(Link)`
@@ -168,7 +199,6 @@ export const CardLink = styled(Link)`
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 28px;
-  box-shadow: 0 1px 0 var(--edge-highlight) inset;
   color: inherit;
   transition: 0.2s ease;
 
@@ -179,13 +209,38 @@ export const CardLink = styled(Link)`
 `;
 
 export const DisplayTitle = styled.h1`
-  font-family: var(--font-sans);
-  font-weight: 650;
-  font-size: clamp(28px, 3vw, 38px);
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.4vw, 44px);
+  line-height: 1.1;
   letter-spacing: -0.03em;
   max-width: 16ch;
   color: var(--ink);
+`;
+
+/* Five filled stars, as used under hero and process copy. */
+export const Stars = styled.span.attrs({ "aria-hidden": true })`
+  display: inline-flex;
+  gap: 2px;
+  color: var(--star);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+
+  &::before {
+    content: "★★★★★";
+  }
+`;
+
+/* An icon badge and a pill label on one baseline - service cards, process steps. */
+export const IconRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  ${Eyebrow} {
+    margin: 0;
+  }
 `;
 
 export const PageHeroWrap = styled.section.attrs({ className: "page-hero" })``;

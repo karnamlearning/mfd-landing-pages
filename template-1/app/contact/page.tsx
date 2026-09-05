@@ -22,7 +22,7 @@ export default function ContactPage() {
               <Eyebrow>Get in touch</Eyebrow>
               <h2
                 style={{
-                  fontFamily: "var(--font-sans)",
+                  fontFamily: "var(--font-display)",
                   fontSize: 32,
                   margin: "8px 0 18px",
                 }}

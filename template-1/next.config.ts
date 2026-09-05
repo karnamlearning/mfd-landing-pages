@@ -5,12 +5,15 @@ const nextConfig: NextConfig = {
     styledComponents: true,
   },
   images: {
-    // Article artwork is served from the Advisorkhoj API host.
     remotePatterns: [
       {
         protocol: "https",
         hostname: "web-api.advisorkhoj.com",
         pathname: "/common/images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
     ],
   },
