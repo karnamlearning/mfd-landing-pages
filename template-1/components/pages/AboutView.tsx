@@ -29,7 +29,7 @@ export function AboutView() {
             <Lead>
               {site.name} is an AMFI-registered mutual fund distributor based in{" "}
               {site.address.city}. Since {site.foundedYear}, we have helped individuals,
-              families, and NRIs as an AMFI-registered mutual fund distributor — from
+              families, and NRIs as an AMFI-registered mutual fund distributor - from
               onboarding and scheme selection to SIPs, transactions, and ongoing
               portfolio service.
             </Lead>

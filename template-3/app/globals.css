@@ -1,5 +1,5 @@
 /* ============================================================================
-   PALETTE — AGEvia-inspired: ink, cream, lime
+   PALETTE - AGEvia-inspired: ink, cream, lime
    Seeds are raw "R G B" channels so translucent layers can use
    rgb(var(--seed) / <alpha>).
    ============================================================================ */

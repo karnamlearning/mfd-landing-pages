@@ -1,5 +1,5 @@
 export function formatINR(value: number, fractionDigits = 0) {
-  if (!Number.isFinite(value)) return "—";
+  if (!Number.isFinite(value)) return "-";
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
@@ -9,7 +9,7 @@ export function formatINR(value: number, fractionDigits = 0) {
 }
 
 export function formatCompactINR(value: number) {
-  if (!Number.isFinite(value)) return "—";
+  if (!Number.isFinite(value)) return "-";
   const abs = Math.abs(value);
   if (abs >= 1_00_00_000) {
     return `₹${(value / 1_00_00_000).toFixed(2)} Cr`;

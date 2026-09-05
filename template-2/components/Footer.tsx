@@ -185,7 +185,7 @@ export function Footer() {
             onSubmit={(event) => {
               event.preventDefault();
               if (!email.trim()) return;
-              toast.success("Thanks — we will be in touch with the next note.");
+              toast.success("Thanks - we will be in touch with the next note.");
               setEmail("");
             }}
           >

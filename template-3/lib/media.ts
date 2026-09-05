@@ -1,25 +1,40 @@
-/** Photography for the high-contrast home page. Images are treated as grayscale in CSS. */
+/**
+ * Photography for the high-contrast home page. Images are treated as grayscale in CSS.
+ *
+ * All photos are free-license (Unsplash License) images of Indian people and
+ * settings, served locally from /public/images. Photo sources are listed in
+ * /public/images/CREDITS.md.
+ */
 
 export const photos = {
-  hero: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=2000&q=80",
-  featured: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1800&q=80",
-  aboutA: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80",
-  aboutB: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
-  aboutC: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
-  why: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1400&q=80",
-  contact: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80",
-  portrait: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+  hero: "/images/indian-family.jpg",
+  featured: "/images/featured-office-meeting.jpg",
+  aboutA: "/images/about-friends.jpg",
+  aboutB: "/images/about-grandparents.jpg",
+  aboutC: "/images/about-women.jpg",
+  why: "/images/why-father-child.jpg",
+  contact: "/images/contact-cafe.jpg",
+  portrait: "/images/portrait-farhan.jpg",
   faces: [
-    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
-    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
-    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=200&q=80",
-    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
-    "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+    "/images/face-1.jpg",
+    "/images/face-2.jpg",
+    "/images/face-3.jpg",
+    "/images/face-4.jpg",
+    "/images/face-5.jpg",
   ],
-  caseA: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-  caseB: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
-  caseC: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80",
-  caseD: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
-  caseE: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1200&q=80",
-  caseF: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+  /* Client impact stories, in the order used on the home page. */
+  storyA: "/images/face-2.jpg",
+  storyB: "/images/face-4.jpg",
+  storyC: "/images/face-3.jpg",
+  /* Service pillars, in the order used on the home page. */
+  caseA: "/images/case-onboarding.jpg",
+  caseB: "/images/case-scheme-selection.jpg",
+  caseC: "/images/case-sip.jpg",
+  caseD: "/images/case-portfolio.jpg",
+  caseE: "/images/case-goals.jpg",
+  caseF: "/images/case-retirement.jpg",
+  /* Resource cards. */
+  resourceSip: "/images/resource-sip-rupees.jpg",
+  resourceRetirement: "/images/resource-retirement-couple.jpg",
+  resourceBlog: "/images/resource-coins.jpg",
 } as const;

@@ -162,8 +162,7 @@ export const PINNED_ARTICLE_SLUGS = [
   "volatility-in-markets-and-your-long-term-investment",
   "financial-independence-and-mutual-funds",
   "multi-asset-allocation:-importance-of-having-gold-and-silver-exposure",
-  "how-to-create-long-term-wealth-with-sip-top-up",
-  "xirr:-way-to-calculate-mutual-fund-sip-returns",
+  "how-to-create-long-term-wealth-with-sip-top-up"
 ] as const;
 
 const SCAN_PAGES = 130;
@@ -173,7 +172,7 @@ export async function getPinnedArticles(): Promise<AkArticle[]> {
   const wanted = new Set<string>(PINNED_ARTICLE_SLUGS);
   const found = new Map<string, AkArticle>();
 
-  for (let page = 1; page <= SCAN_PAGES && found.size < wanted.size; ) {
+  for (let page = 1; page <= SCAN_PAGES && found.size < wanted.size;) {
     const batch: Promise<{ items: AkArticle[] }>[] = [];
     for (let i = 0; i < SCAN_CONCURRENCY && page <= SCAN_PAGES; i += 1, page += 1) {
       batch.push(getArticles(page));

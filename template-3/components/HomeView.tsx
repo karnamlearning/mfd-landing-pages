@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import styled from "styled-components";
 import { motion, type Variants } from "framer-motion";
-import { FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight, FiCheck } from "react-icons/fi";
 import {
   PiArrowsClockwiseThin,
   PiChartLineUpThin,
@@ -25,7 +26,7 @@ import { site } from "@/lib/site";
 import { photos } from "@/lib/media";
 import { calculatorMeta } from "@/lib/calculators";
 import { LeadForm } from "@/components/LeadForm";
-import { CountUp, Item, Reveal, Stagger, ease } from "@/components/motion";
+import { CountUp, Item, Reveal, Stagger, ease, useReduceMotion } from "@/components/motion";
 import { IconBadge } from "@/components/icons";
 import { ButtonLink, Container, Display, Eyebrow, Lead, Section } from "@/components/ui";
 
@@ -56,41 +57,53 @@ const pillars = pillarSlugs.map((slug, index) => ({
   image: pillarPhotos[index],
 }));
 
-const serviceGroups = [
-  {
-    title: "Get started",
-    slugs: ["investor-onboarding", "investor-profiling", "transaction-execution"],
-  },
-  {
-    title: "Invest with a plan",
-    slugs: ["scheme-selection", "sip-services", "lumpsum-investments"],
-  },
-  {
-    title: "Stay serviced",
-    slugs: ["portfolio-monitoring", "goal-based-investing", "retirement-planning", "tax-capital-gains"],
-  },
-] as const;
-
 const resources = [
   {
-    href: "/calculators/sip-return",
+    href: "/calculators#sip-return",
     title: calculatorMeta[1].title,
     note: calculatorMeta[1].summary,
-    image: photos.caseA,
+    image: photos.resourceSip,
   },
   {
-    href: "/calculators/retirement-planning",
+    href: "/calculators#retirement-planning",
     title: calculatorMeta[2].title,
     note: calculatorMeta[2].summary,
-    image: photos.caseB,
+    image: photos.resourceRetirement,
   },
   {
     href: "/blog",
     title: blogPosts[0].title,
     note: blogPosts[0].excerpt,
-    image: photos.caseC,
+    image: photos.resourceBlog,
   },
 ] as const;
+
+/*
+ * Client impact stories. Each pairs a testimonial with a portrait and a short
+ * before/after summary drawn from the quote. testimonials[1] is used in the
+ * portrait block further down.
+ */
+const impactStories = [
+  {
+    ...testimonials[0],
+    image: photos.storyA,
+    before: "Several SIPs across banks and apps, none tied to a purpose.",
+    after: "Everything consolidated, each investment mapped to a goal, reviewed every quarter.",
+  },
+  {
+    ...testimonials[2],
+    image: photos.storyB,
+    before: "NRE and NRO accounts plus KYC to sort out from overseas.",
+    after: "Onboarded smoothly, with SIPs running without any hassle since.",
+  },
+  {
+    ...testimonials[3],
+    image: photos.storyC,
+    before: "A falling market and the urge to stop investing.",
+    after: "Stayed invested, kept the SIPs going, and saw the discipline pay off.",
+  },
+] as const;
+const storyDwellMs = 7000;
 
 /*
  * Home page runs slower than the shared defaults (0.7s) so sections settle
@@ -504,6 +517,10 @@ const WorkCol = styled(Link)`
   padding: 28px 24px 8px 0;
   border-right: 1px solid var(--line);
 
+  & + & {
+    padding-left: 24px;
+  }
+
   &:last-child {
     border-right: 0;
     padding-right: 0;
@@ -531,6 +548,10 @@ const WorkCol = styled(Link)`
     border-right: 0;
     border-bottom: 1px solid var(--line);
     padding: 24px 0;
+
+    & + & {
+      padding-left: 0;
+    }
   }
 `;
 
@@ -658,76 +679,482 @@ const Impact = styled.section.attrs({ className: "on-dark-scope" })`
   overflow: hidden;
   background: var(--surface-darkest);
   color: var(--on-brand);
-  padding: 120px 0 160px;
-  text-align: center;
+  padding: 104px 0;
+
+  @media (max-width: 800px) {
+    padding: 72px 0;
+  }
 `;
 
-const Arch = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: -1px;
-  width: min(720px, 80vw);
-  height: 120px;
-  transform: translateX(-50%);
-  background: var(--accent);
-  border-radius: 360px 360px 0 0;
-`;
-
-const Quote = styled.blockquote`
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 750;
-  letter-spacing: -0.04em;
-  line-height: 1.15;
-  max-width: 18ch;
-  margin: 18px auto 0;
-`;
-
-const ServiceGrid = styled.div`
+const ImpactHead = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 32px 72px;
+  align-items: end;
+  margin-bottom: 44px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+`;
+
+const ImpactAside = styled.div`
+  display: grid;
+  gap: 24px;
+`;
+
+const ImpactBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+`;
+
+const ImpactHint = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--on-brand-mute);
+
+  &::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+`;
+
+/*
+ * Expanding story strip. On wide screens the panels sit side by side and the
+ * open one takes most of the row; on phones they stack and the open one grows
+ * downwards. Hover, tap, focus, or the arrow keys open a story.
+ */
+const Strip = styled.div`
+  display: flex;
+  gap: 6px;
+  height: clamp(440px, 58vh, 560px);
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    height: auto;
+  }
+`;
+
+const panelEase = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+const Panel = styled.article<{ $active: boolean }>`
+  position: relative;
+  overflow: hidden;
+  flex: ${({ $active }) => ($active ? "5 1 0%" : "1 1 0%")};
+  min-width: 0;
+  background: var(--brand);
+  border: 1px solid var(--line);
+  cursor: ${({ $active }) => ($active ? "default" : "pointer")};
+  transition: flex 0.9s ${panelEase}, border-color 0.4s ease;
+
+  &:hover {
+    border-color: var(--line-strong);
+  }
+
+  @media (max-width: 800px) {
+    flex: none;
+    display: grid;
+    grid-template-rows: auto ${({ $active }) => ($active ? "1fr" : "0fr")};
+    transition: grid-template-rows 0.6s ${panelEase}, border-color 0.4s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+`;
+
+const PanelPhoto = styled.div<{ $active: boolean }>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: ${({ $active }) => ($active ? "42%" : "100%")};
+  z-index: 0;
+  transition: width 0.9s ${panelEase};
+
+  img {
+    object-fit: cover;
+    object-position: center 18%;
+    filter: grayscale(1) contrast(1.05);
+    opacity: ${({ $active }) => ($active ? 0.92 : 0.42)};
+    transform: scale(${({ $active }) => ($active ? 1 : 1.08)});
+    transition: opacity 0.6s ease, transform 1.2s ${panelEase};
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, transparent 60%, rgb(var(--seed-brand) / 0.85) 100%),
+      linear-gradient(to top, rgb(var(--seed-brand-deep) / 0.9) 0%, transparent 55%);
+    opacity: ${({ $active }) => ($active ? 0.7 : 1)};
+    transition: opacity 0.6s ease;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+
+    img {
+      opacity: ${({ $active }) => ($active ? 0.32 : 0.22)};
+      transform: none;
+    }
+
+    &::after {
+      opacity: 1;
+      background: linear-gradient(
+        to right,
+        rgb(var(--seed-brand-deep) / 0.7) 0%,
+        rgb(var(--seed-brand-deep) / 0.96) 70%
+      );
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    img {
+      transition: none;
+    }
+  }
+`;
+
+/* The whole panel is one tab. Collapsed on desktop it shows a number and a vertical name. */
+const PanelTab = styled.button<{ $active: boolean }>`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 22px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: inherit;
+  opacity: ${({ $active }) => ($active ? 0 : 1)};
+  pointer-events: ${({ $active }) => ($active ? "none" : "auto")};
+  transition: opacity 0.35s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  i {
+    font-style: normal;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  b {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  small {
+    display: none;
+  }
+
+  svg {
+    display: none;
+  }
+
+  @media (max-width: 800px) {
+    position: relative;
+    inset: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 20px;
+    opacity: 1;
+    pointer-events: auto;
+
+    b {
+      writing-mode: horizontal-tb;
+      transform: none;
+      font-size: 18px;
+    }
+
+    small {
+      display: block;
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--on-brand-mute);
+      text-align: right;
+    }
+
+    svg {
+      display: block;
+      flex: none;
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+      transform: rotate(${({ $active }) => ($active ? "90deg" : "0deg")});
+      transition: transform 0.4s ${panelEase};
+    }
+  }
+`;
+
+/* Phones only: the full-bleed photo sits behind a dark veil there, so the row header shows a small portrait. */
+const PanelAvatar = styled.span`
+  display: none;
+
+  @media (max-width: 800px) {
+    display: block;
+    position: relative;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+
+    img {
+      object-fit: cover;
+      object-position: center 18%;
+      filter: grayscale(1);
+    }
+  }
+`;
+
+const PanelBody = styled.div<{ $active: boolean }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 42%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 40px 34px;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transform: translateY(${({ $active }) => ($active ? 0 : 14)}px);
+  pointer-events: ${({ $active }) => ($active ? "auto" : "none")};
+  transition: ${({ $active }) =>
+    $active ? "opacity 0.55s ease 0.35s, transform 0.7s ease 0.35s" : "opacity 0.2s ease, transform 0.2s ease"};
+
+  @media (max-width: 800px) {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transform: none;
+    transition: opacity 0.4s ease ${({ $active }) => ($active ? "0.15s" : "0s")};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none;
+  }
+`;
+
+const BodyInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+
+  @media (max-width: 800px) {
+    padding: 4px 20px 24px;
+  }
+`;
+
+const BodyHead = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 22px;
+
+  i {
+    font-style: normal;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  b {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+  }
+
+  span {
+    font-size: 13px;
+    color: var(--on-brand-mute);
+  }
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+const StoryQuote = styled.blockquote`
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-wrap: pretty;
+
+  &::before {
+    content: "\\201C";
+    display: block;
+    font-size: 64px;
+    line-height: 0.4;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+`;
+
+/* Before -> after strip. This is the "impact" part of each story. */
+const Change = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin-top: auto;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
 
   @media (max-width: 800px) {
+    margin-top: 22px;
+    padding-top: 18px;
+  }
+
+  @media (max-width: 480px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 `;
 
-const ServiceBox = styled.div`
-  padding: 36px 28px 8px 0;
-  border-right: 1px solid var(--line);
+const ChangeCell = styled.div<{ $after?: boolean }>`
+  display: grid;
+  gap: 6px;
 
-  &:last-child {
-    border-right: 0;
+  small {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: ${({ $after }) => ($after ? "var(--accent)" : "var(--on-brand-mute)")};
   }
 
-  h3 {
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: ${({ $after }) => ($after ? "var(--on-brand)" : "var(--on-brand-soft)")};
+  }
+`;
+
+const ChangeArrow = styled.span`
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--accent);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 480px) {
+    transform: rotate(90deg);
+  }
+`;
+
+const PanelProgress = styled.span<{ $running: boolean; $ms: number }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: ${({ $running }) => ($running ? "storyFill" : "none")} ${({ $ms }) => $ms}ms linear forwards;
+
+  @keyframes storyFill {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+`;
+
+const StoryControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  button {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  button:hover,
+  button:focus-visible {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--cta-text);
+    outline: none;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  em {
+    font-style: normal;
     font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 750;
-    margin: 16px 0 18px;
-  }
-
-  ul {
-    list-style: none;
-    display: grid;
-    gap: 10px;
-  }
-
-  a {
-    color: var(--muted);
-    font-weight: 600;
-  }
-
-  a:hover {
-    color: var(--ink);
-  }
-
-  @media (max-width: 800px) {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-    padding: 28px 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--on-brand-mute);
+    min-width: 5.5ch;
+    text-align: center;
+    white-space: nowrap;
   }
 `;
 
@@ -925,6 +1352,162 @@ const tickerItems = [
   "AMFI-registered mutual fund distributor",
 ];
 
+const pad = (n: number) => String(n + 1).padStart(2, "0");
+
+function ImpactStories() {
+  const reduceMotion = useReduceMotion();
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [cycle, setCycle] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const count = impactStories.length;
+  const running = !paused && !reduceMotion;
+
+  const go = useCallback(
+    (next: number) => {
+      setIndex(((next % count) + count) % count);
+      setCycle((c) => c + 1);
+    },
+    [count],
+  );
+
+  useEffect(() => {
+    if (!running) return;
+    const t = window.setTimeout(() => go(index + 1), storyDwellMs);
+    return () => window.clearTimeout(t);
+  }, [running, index, cycle, go]);
+
+  const hold = () => setPaused(true);
+  const release = () => {
+    setPaused(false);
+    setCycle((c) => c + 1);
+  };
+
+  /* Arrow keys move between stories; focus follows so screen readers stay in sync. */
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const step =
+      event.key === "ArrowRight" || event.key === "ArrowDown"
+        ? 1
+        : event.key === "ArrowLeft" || event.key === "ArrowUp"
+          ? -1
+          : 0;
+    const target = event.key === "Home" ? 0 : event.key === "End" ? count - 1 : step ? index + step : null;
+    if (target === null) return;
+    event.preventDefault();
+    const next = ((target % count) + count) % count;
+    go(next);
+    tabRefs.current[next]?.focus();
+  };
+
+  return (
+    <>
+      <ImpactHead>
+        <div>
+          <Eyebrow>Client impact</Eyebrow>
+          <Display>
+            What changes after the <em>first</em> review.
+          </Display>
+        </div>
+        <ImpactAside>
+          <Lead style={{ color: "var(--on-brand-mute)" }}>
+            Fewer scattered folios, one written plan, and a review cadence families actually keep.
+            In their words, not ours.
+          </Lead>
+          <ImpactBar>
+            <ImpactHint>Open a story to see what changed</ImpactHint>
+            <StoryControls>
+              <button type="button" aria-label="Previous story" onClick={() => go(index - 1)}>
+                <FiArrowLeft />
+              </button>
+              <em>
+                {pad(index)} / {pad(count - 1)}
+              </em>
+              <button type="button" aria-label="Next story" onClick={() => go(index + 1)}>
+                <FiArrowRight />
+              </button>
+            </StoryControls>
+          </ImpactBar>
+        </ImpactAside>
+      </ImpactHead>
+
+      <Strip role="tablist" aria-label="Client stories" onMouseLeave={release} onKeyDown={onKeyDown}>
+        {impactStories.map((story, i) => {
+          const active = i === index;
+          const tabId = `impact-tab-${i}`;
+          const panelId = `impact-panel-${i}`;
+          return (
+            <Panel
+              key={story.name}
+              $active={active}
+              onMouseEnter={() => {
+                hold();
+                if (!active) go(i);
+              }}
+            >
+              <PanelPhoto $active={active} aria-hidden>
+                <Image src={story.image} alt="" fill sizes="(max-width: 800px) 100vw, 800px" />
+              </PanelPhoto>
+
+              <PanelTab
+                ref={(el) => {
+                  tabRefs.current[i] = el;
+                }}
+                type="button"
+                role="tab"
+                id={tabId}
+                aria-selected={active}
+                aria-controls={panelId}
+                tabIndex={active ? 0 : -1}
+                $active={active}
+                onClick={() => go(i)}
+                onFocus={() => {
+                  hold();
+                  if (!active) go(i);
+                }}
+                onBlur={release}
+              >
+                <PanelAvatar aria-hidden>
+                  <Image src={story.image} alt="" fill sizes="40px" />
+                </PanelAvatar>
+                <i>{pad(i)}</i>
+                <b>{story.name}</b>
+                <small>{story.role}</small>
+                <FiArrowRight aria-hidden />
+              </PanelTab>
+
+              <PanelBody role="tabpanel" id={panelId} aria-labelledby={tabId} aria-hidden={!active} $active={active}>
+                <BodyInner>
+                  <BodyHead>
+                    <i>{pad(i)}</i>
+                    <b>{story.name}</b>
+                    <span>{story.role}</span>
+                  </BodyHead>
+                  <StoryQuote>{story.quote}</StoryQuote>
+                  <Change>
+                    <ChangeCell>
+                      <small>Before</small>
+                      <p>{story.before}</p>
+                    </ChangeCell>
+                    <ChangeArrow aria-hidden>
+                      <FiArrowRight />
+                    </ChangeArrow>
+                    <ChangeCell $after>
+                      <small>After</small>
+                      <p>{story.after}</p>
+                    </ChangeCell>
+                  </Change>
+                </BodyInner>
+              </PanelBody>
+
+              {active && <PanelProgress key={cycle} $running={running} $ms={storyDwellMs} aria-hidden />}
+            </Panel>
+          );
+        })}
+      </Strip>
+    </>
+  );
+}
+
 export function HomeView() {
   const news = blogPosts.slice(0, 4);
 
@@ -935,7 +1518,7 @@ export function HomeView() {
           <StagePhoto>
             <Image
               src={photos.hero}
-              alt="Advisors in a planning conversation"
+              alt="Indian family planning their financial future together"
               fill
               priority
               sizes="100vw"
@@ -980,7 +1563,7 @@ export function HomeView() {
           <Reveal duration={revealDuration} amount={revealAmount}>
             <IntroTitle>The right partner for your wealth.</IntroTitle>
             <IntroLead>
-              Families come to us with the same money questions — how much to invest, which
+              Families come to us with the same money questions - how much to invest, which
               schemes to keep, and whether the plan will still work when life changes.
             </IntroLead>
           </Reveal>
@@ -1014,9 +1597,11 @@ export function HomeView() {
                 return (
                   <Item key={step.n} duration={itemDuration}>
                     <Pillar>
-                      <Mark />
-                      <h3>{step.title}</h3>
-                      <p>{step.body}</p>
+                      <Mark style={{
+                        width: "40px"
+                      }} />
+                      < h3 style={{ fontSize: "18px" }}> {step.title}</h3>
+                      <p style={{ fontSize: "14px" }}>{step.body}</p>
                     </Pillar>
                   </Item>
                 );
@@ -1024,7 +1609,7 @@ export function HomeView() {
             </PillarGrid>
           </Stagger>
         </Container>
-      </Intro>
+      </Intro >
 
       <Section $tone="ink">
         <Container>
@@ -1138,41 +1723,13 @@ export function HomeView() {
         </Container>
       </Section>
 
-      <Impact>
-        <Container>
-          <Eyebrow style={{ color: "var(--accent)" }}>Client impact</Eyebrow>
-          <Quote>“{testimonials[0].quote}”</Quote>
-        </Container>
-        <Arch aria-hidden />
-      </Impact>
-
-      <Section>
+      <Impact id="impact">
         <Container>
           <Reveal duration={revealDuration} amount={revealAmount}>
-            <Eyebrow>Capabilities</Eyebrow>
-            <Display>Open architecture. Written plans. Regular reviews.</Display>
+            <ImpactStories />
           </Reveal>
-          <ServiceGrid style={{ marginTop: 40 }}>
-            {serviceGroups.map((group) => (
-              <ServiceBox key={group.title}>
-                <IconBadge name={group.slugs[0]} />
-                <h3>{group.title}</h3>
-                <ul>
-                  {group.slugs.map((slug) => {
-                    const service = services.find((item) => item.slug === slug);
-                    if (!service) return null;
-                    return (
-                      <li key={slug}>
-                        <Link href={`/services/${slug}`}>{service.title}</Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </ServiceBox>
-            ))}
-          </ServiceGrid>
         </Container>
-      </Section>
+      </Impact>
 
       <Section $tone="ink">
         <Container>
@@ -1181,7 +1738,7 @@ export function HomeView() {
               News &amp; <em>insights</em>
             </Display>
             <Lead style={{ color: "var(--on-brand-mute)" }}>
-              Notes on SIPs, allocation, and the paperwork that keeps a folio usable —
+              Notes on SIPs, allocation, and the paperwork that keeps a folio usable -
               written for families who want a plan they can keep.
             </Lead>
           </NewsHead>

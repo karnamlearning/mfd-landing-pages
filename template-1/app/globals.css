@@ -1,5 +1,5 @@
 /* ============================================================================
-   PALETTE — THE ONLY BLOCK YOU NEED TO EDIT TO RE-SKIN THE SITE
+   PALETTE - THE ONLY BLOCK YOU NEED TO EDIT TO RE-SKIN THE SITE
    ----------------------------------------------------------------------------
    Every colour on the site is derived from the seeds below. They are written as
    raw "R G B" channels (not hex) so that translucent layers can be built from
@@ -42,7 +42,6 @@
   /* Status */
   --seed-positive: 22 150 110;
   --seed-danger: 190 40 50;
-
 }
 
 /* Alternate presets - each overrides only the seeds above. */
@@ -79,7 +78,7 @@
 }
 
 /* ============================================================================
-   DERIVED TOKENS — these are what components use. You should rarely edit these;
+   DERIVED TOKENS - these are what components use. You should rarely edit these;
    they all resolve back to the seeds above.
    ============================================================================ */
 :root {
@@ -283,8 +282,16 @@ textarea {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(42% 52% at 100% 0%, rgb(var(--seed-accent) / 0.12), transparent 70%),
-    radial-gradient(36% 40% at 0% 80%, rgb(var(--seed-brand) / 0.05), transparent 70%);
+    radial-gradient(
+      42% 52% at 100% 0%,
+      rgb(var(--seed-accent) / 0.12),
+      transparent 70%
+    ),
+    radial-gradient(
+      36% 40% at 0% 80%,
+      rgb(var(--seed-brand) / 0.05),
+      transparent 70%
+    );
   pointer-events: none;
 }
 

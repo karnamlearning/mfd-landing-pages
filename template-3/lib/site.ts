@@ -149,19 +149,19 @@ export const primaryNav: NavItem[] = [
     label: "Calculators",
     href: "/calculators",
     children: [
-      { label: "Become a Crorepati", href: "/calculators/become-a-crorepati" },
-      { label: "SIP Return Calculator", href: "/calculators/sip-return" },
+      { label: "Become a Crorepati", href: "/calculators#become-a-crorepati" },
+      { label: "SIP Return Calculator", href: "/calculators#sip-return" },
       {
         label: "Retirement Planning",
-        href: "/calculators/retirement-planning",
+        href: "/calculators#retirement-planning",
       },
-      { label: "SIP Step-Up Calculator", href: "/calculators/sip-step-up" },
-      { label: "Lumpsum Target", href: "/calculators/lumpsum-target" },
+      { label: "SIP Step-Up Calculator", href: "/calculators#sip-step-up" },
+      { label: "Lumpsum Target", href: "/calculators#lumpsum-target" },
       {
         label: "Children Education Planner",
-        href: "/calculators/children-education",
+        href: "/calculators#children-education",
       },
-      { label: "Target Amount SIP", href: "/calculators/target-amount-sip" },
+      { label: "Target Amount SIP", href: "/calculators#target-amount-sip" },
     ],
   },
   {

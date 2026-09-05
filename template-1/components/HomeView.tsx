@@ -1017,7 +1017,7 @@ export function HomeView() {
               <Lead>
                 {site.name} is an AMFI-registered mutual fund distributor. We help
                 individuals, families, and NRIs start SIPs, protect what they have
-                built, and plan for retirement — with a written plan and regular
+                built, and plan for retirement - with a written plan and regular
                 reviews.
               </Lead>
               <Lead>
@@ -1194,7 +1194,7 @@ export function HomeView() {
             <Display>Open architecture. No house bias.</Display>
             <Lead style={{ marginTop: 14 }}>
               We select schemes across the industry on consistency, cost, and fit
-              with your plan — never because a single AMC sits on our shelf.
+              with your plan - never because a single AMC sits on our shelf.
             </Lead>
           </Reveal>
           <MarqueeWrap>
@@ -1215,7 +1215,7 @@ export function HomeView() {
               <Display>Name the goal. Then size the SIP.</Display>
               <Lead style={{ marginTop: 16 }}>
                 Every goal has a time horizon and a target amount. We map SIPs to
-                those goals so each rupee has a job — education, a home, retirement,
+                those goals so each rupee has a job - education, a home, retirement,
                 or a buffer you can actually use.
               </Lead>
               <GoalList>
@@ -1291,7 +1291,7 @@ export function HomeView() {
                 <Display>Bring your goals. Leave with a plan.</Display>
                 <Lead style={{ color: "var(--on-brand-mute)", marginTop: 12 }}>
                   Book a free consultation. Bring existing SIPs, insurance policies,
-                  and the goals that matter — we will map the next step together.
+                  and the goals that matter - we will map the next step together.
                 </Lead>
               </div>
               <ButtonLink href="/contact">

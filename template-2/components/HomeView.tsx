@@ -1074,7 +1074,7 @@ export function HomeView() {
               <Lead style={{ marginTop: 18 }}>
                 {site.name} is an AMFI-registered mutual fund distributor. We help
                 individuals, families, and NRIs start SIPs, protect what they have
-                built, and plan for retirement — with a written plan and regular reviews.
+                built, and plan for retirement - with a written plan and regular reviews.
               </Lead>
               <Lead style={{ marginTop: 12 }}>
                 Schemes are chosen across fund houses on merit. There is no in-house
@@ -1243,7 +1243,7 @@ export function HomeView() {
               <Display>The partner behind a plan you can actually keep.</Display>
               <Lead style={{ marginTop: 16 }}>
                 We use open architecture, written plans, and regular reviews so that
-                investing stays tied to your goals — not to the product of the month.
+                investing stays tied to your goals - not to the product of the month.
               </Lead>
               <CheckList>
                 {philosophy.map((item) => (
