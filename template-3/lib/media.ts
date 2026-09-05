@@ -1,5 +1,5 @@
 /**
- * Photography for the high-contrast home page. Images are treated as grayscale in CSS.
+ * Photography for the high-contrast home page.
  *
  * All photos are free-license (Unsplash License) images of Indian people and
  * settings, served locally from /public/images. Photo sources are listed in

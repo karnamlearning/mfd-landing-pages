@@ -43,7 +43,6 @@ const Shot = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 
   @media (max-width: 860px) {
@@ -119,7 +118,6 @@ const CardShot = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 `;
 

@@ -16,7 +16,7 @@ export const Section = styled.section.attrs<{
   $tone?: "cream" | "paper" | "navy" | "ink";
 }>(({ $tone }) => ({
   className: $tone === "navy" || $tone === "ink" ? "on-dark-scope" : undefined,
-}))<{ $tone?: "cream" | "paper" | "navy" | "ink" }>`
+})) <{ $tone?: "cream" | "paper" | "navy" | "ink" }>`
   padding: 104px 0;
   background: ${({ $tone }) =>
     $tone === "navy"
@@ -132,7 +132,7 @@ const buttonStyles = css<{ $variant?: "gold" | "navy" | "ghost" | "light" }>`
             `}
 `;
 
-export const ButtonLink = styled(Link)<{
+export const ButtonLink = styled(Link) <{
   $variant?: "gold" | "navy" | "ghost" | "light";
 }>`
   ${buttonStyles}

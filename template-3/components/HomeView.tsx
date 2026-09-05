@@ -133,7 +133,6 @@ const StagePhoto = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1) contrast(1.05);
   }
 
   &::after {
@@ -190,7 +189,6 @@ const Face = styled.span`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 `;
 
@@ -248,10 +246,10 @@ const Title = styled(motion.h1)`
 
 const HeroBottom = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.7fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.85fr);
   gap: 40px;
   align-items: end;
-  margin-top: 32px;
+  margin-top: 36px;
 
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
@@ -259,15 +257,74 @@ const HeroBottom = styled.div`
   }
 `;
 
-const HeroLead = styled(motion.p)`
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--accent);
-  max-width: 42ch;
+const HeroQuote = styled(motion.blockquote)`
+  position: relative;
   justify-self: end;
+  width: 100%;
+  max-width: 38ch;
+  margin: 0;
+  padding: 22px 22px 20px 24px;
+  background: rgb(10 10 10 / 0.72);
+  border: 1px solid rgb(var(--seed-accent) / 0.45);
+  border-left: 3px solid var(--accent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--on-brand);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.28);
+
+  &::before {
+    content: "“";
+    position: absolute;
+    top: 6px;
+    right: 16px;
+    font-family: var(--font-logo);
+    font-size: 64px;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  p {
+    position: relative;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgb(var(--seed-on-brand) / 0.92);
+    max-width: 34ch;
+  }
+
+  footer {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgb(var(--seed-accent) / 0.28);
+  }
+
+  cite {
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+
+  span {
+    font-size: 12px;
+    color: rgb(var(--seed-on-brand) / 0.62);
+  }
 
   @media (max-width: 800px) {
     justify-self: start;
+    max-width: none;
+
+    &::before {
+      font-size: 52px;
+      top: 4px;
+      right: 12px;
+    }
   }
 `;
 
@@ -276,6 +333,8 @@ const HeroActions = styled(motion.div)`
   gap: 12px;
   flex-wrap: wrap;
 `;
+
+const heroQuote = testimonials[1];
 
 const Intro = styled(Section)`
   text-align: center;
@@ -493,7 +552,6 @@ const FeatureShot = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 
   @media (max-width: 800px) {
@@ -634,7 +692,6 @@ const CaseShot = styled.div<{ $flip?: boolean }>`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 
   @media (max-width: 860px) {
@@ -783,7 +840,6 @@ const PanelPhoto = styled.div<{ $active: boolean }>`
   img {
     object-fit: cover;
     object-position: center 18%;
-    filter: grayscale(1) contrast(1.05);
     opacity: ${({ $active }) => ($active ? 0.92 : 0.42)};
     transform: scale(${({ $active }) => ($active ? 1 : 1.08)});
     transition: opacity 0.6s ease, transform 1.2s ${panelEase};
@@ -932,7 +988,6 @@ const PanelAvatar = styled.span`
     img {
       object-fit: cover;
       object-position: center 18%;
-      filter: grayscale(1);
     }
   }
 `;
@@ -1231,7 +1286,6 @@ const Portrait = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 `;
 
@@ -1309,7 +1363,6 @@ const Thumb = styled.div`
 
   img {
     object-fit: cover;
-    filter: grayscale(1);
   }
 `;
 
@@ -1551,7 +1604,13 @@ export function HomeView() {
                     Book a free consultation <FiArrowRight />
                   </ButtonLink>
                 </HeroActions>
-                <HeroLead {...rise(0.24)}>{hero.body}</HeroLead>
+                <HeroQuote {...rise(0.24)}>
+                  <p>{heroQuote.quote}</p>
+                  <footer>
+                    <cite>{heroQuote.name}</cite>
+                    <span>{heroQuote.role}</span>
+                  </footer>
+                </HeroQuote>
               </HeroBottom>
             </Container>
           </HeroCopy>
