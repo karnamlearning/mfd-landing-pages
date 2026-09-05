@@ -1,36 +1,80 @@
 import type { Metadata } from "next";
-import { services, servicesIntro } from "@/lib/content";
+import {
+  serviceCategories,
+  servicesIntro,
+  getServicesByCategory,
+} from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { IconBadge } from "@/components/icons";
-import { ButtonLink, CardLink, Container, Eyebrow, Grid, Lead, Section } from "@/components/ui";
+import {
+  ButtonLink,
+  CardLink,
+  Container,
+  Display,
+  Eyebrow,
+  Grid,
+  Lead,
+  Section,
+} from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Our Services",
   description:
-    "Onboarding, scheme selection, SIPs, transactions, portfolio monitoring, goal-based investing, and investor service as an AMFI-registered MFD.",
+    "Mutual funds, insurance, and FD & bond services - selection, execution, monitoring, and ongoing support.",
 };
 
 export default function ServicesPage() {
   return (
     <>
-      <PageHero title="Our Services" />
+      <PageHero title="Our Services" meta="What we do" />
       <Section>
         <Container>
-          <Lead style={{ marginBottom: 36 }}>{servicesIntro}</Lead>
-          <Grid $cols={2}>
-            {services.map((service) => (
-              <CardLink href={`/services/${service.slug}`} key={service.slug}>
-                <IconBadge name={service.slug} />
-                <Eyebrow style={{ marginTop: 14 }}>{service.eyebrow}</Eyebrow>
-                <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 32 }}>{service.title}</h2>
-                <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.7 }}>
-                  {service.summary}
-                </p>
-              </CardLink>
-            ))}
-          </Grid>
-          <ButtonLink href="/calculators" $variant="navy" style={{ marginTop: 28 }}>
-            Explore calculators
+          <Lead style={{ marginBottom: 48, maxWidth: "62ch" }}>{servicesIntro}</Lead>
+
+          {serviceCategories.map((category) => {
+            const items = getServicesByCategory(category.id);
+            return (
+              <div
+                key={category.id}
+                id={category.id}
+                style={{ marginBottom: 72, scrollMarginTop: 100 }}
+              >
+                <Eyebrow>{category.eyebrow}</Eyebrow>
+                <Display style={{ maxWidth: "14ch", marginTop: 8 }}>{category.title}</Display>
+                <Lead style={{ marginTop: 16, marginBottom: 28 }}>{category.summary}</Lead>
+                {category.note ? (
+                  <p
+                    style={{
+                      marginBottom: 28,
+                      maxWidth: "68ch",
+                      fontSize: 14,
+                      lineHeight: 1.7,
+                      color: "var(--muted)",
+                    }}
+                  >
+                    {category.note}
+                  </p>
+                ) : null}
+                <Grid $cols={2}>
+                  {items.map((service) => (
+                    <CardLink href={`/services/${service.slug}`} key={service.slug}>
+                      <IconBadge name={service.slug} />
+                      <Eyebrow style={{ marginTop: 14 }}>{service.eyebrow}</Eyebrow>
+                      <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 26, marginTop: 6 }}>
+                        {service.title}
+                      </h2>
+                      <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.7 }}>
+                        {service.summary}
+                      </p>
+                    </CardLink>
+                  ))}
+                </Grid>
+              </div>
+            );
+          })}
+
+          <ButtonLink href="/contact" $variant="navy" style={{ marginTop: 8 }}>
+            Book a consultation
           </ButtonLink>
         </Container>
       </Section>

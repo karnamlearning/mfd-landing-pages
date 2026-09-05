@@ -6,7 +6,7 @@ export const site = {
   logoTagline: "Mutual Fund Distributor",
   tagline: "Plan your goals. Invest with confidence.",
   description:
-    "AMFI-registered mutual fund distributor helping investors with onboarding, scheme selection, SIPs, transactions, portfolio monitoring, and ongoing service.",
+    "Mutual fund distribution, insurance, and FD & bond services - helping investors select, execute, monitor, and stay serviced.",
   foundedYear: 2014,
   url: "https://www.aarohanwealth.in",
   email: "hello@aarohanwealth.in",
@@ -132,17 +132,26 @@ export const primaryNav: NavItem[] = [
     label: "Services",
     href: "/services",
     children: [
-      { label: "Investor Onboarding", href: "/services/investor-onboarding" },
-      { label: "Investor Profiling", href: "/services/investor-profiling" },
-      { label: "Scheme Selection", href: "/services/scheme-selection" },
-      { label: "SIP Services", href: "/services/sip-services" },
-      { label: "Lumpsum Investments", href: "/services/lumpsum-investments" },
-      { label: "Transaction Execution", href: "/services/transaction-execution" },
-      { label: "Portfolio Monitoring", href: "/services/portfolio-monitoring" },
-      { label: "Goal-Based Investing", href: "/services/goal-based-investing" },
-      { label: "Retirement Planning", href: "/services/retirement-planning" },
-      { label: "Tax & Capital Gains", href: "/services/tax-capital-gains" },
-      { label: "Investor Service", href: "/services/investor-service" },
+      {
+        label: "Mutual Funds",
+        href: "/services#mutual-funds",
+        description: "Onboarding to portfolio monitoring as an AMFI-registered MFD",
+      },
+      {
+        label: "Insurance",
+        href: "/services#insurance",
+        description: "Needs analysis, policies, renewals, and claims assistance",
+      },
+      {
+        label: "FD & Bonds",
+        href: "/services#fd-bonds",
+        description: "Fixed deposits, bonds, ladders, and maturity planning",
+      },
+      {
+        label: "All services",
+        href: "/services",
+        description: "Full catalogue across mutual funds, insurance, and fixed income",
+      },
     ],
   },
   {
@@ -186,10 +195,12 @@ export const footerNav = {
     { label: "Terms of Service", href: "/terms" },
   ],
   offerings: [
+    { label: "Mutual Funds", href: "/services#mutual-funds" },
+    { label: "Insurance", href: "/services#insurance" },
+    { label: "FD & Bonds", href: "/services#fd-bonds" },
     { label: "Calculators", href: "/calculators" },
     { label: "Blog", href: "/blog" },
     { label: "News", href: "/news" },
-    { label: "Our Services", href: "/services" },
   ],
   faqs: [
     { label: "Mutual Fund FAQs", href: "/faqs#mutual-funds" },

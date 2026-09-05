@@ -8,6 +8,7 @@ import {
   FiClipboard,
   FiClock,
   FiBookOpen,
+  FiFileText,
   FiHelpCircle,
   FiHome,
   FiLayers,
@@ -63,13 +64,28 @@ export function IconBadge({
   tone?: "light" | "dark";
 }) {
   const Icon =
-    icon ?? (name ? (set === "calculator" ? calculatorIcons : serviceIcons)[name] : undefined);
+    icon ??
+    (name
+      ? set === "calculator"
+        ? calculatorIcons[name]
+        : serviceIcons[name] ?? serviceIconFor(name)
+      : undefined);
   if (!Icon) return null;
   return (
     <Mark $tone={tone} aria-hidden>
       <Icon size={20} />
     </Mark>
   );
+}
+
+function serviceIconFor(slug: string): IconType {
+  if (slug.startsWith("insurance") || slug.includes("policy") || slug.includes("claim") || slug.includes("premium") || slug.includes("rider") || slug.includes("nomination") || slug.includes("term-") || slug.includes("health") || slug.includes("motor") || slug.includes("travel") || slug.includes("accident") || slug.includes("home-property") || slug.includes("business-insurance") || slug.includes("life-insurance") || slug.includes("customer-education") || slug.includes("documentation") || slug.includes("post-sale")) {
+    return FiShield;
+  }
+  if (slug.startsWith("fd-") || slug.includes("bond") || slug.includes("corporate") || slug.includes("government") || slug.includes("ladder") || slug.includes("yield") || slug.includes("liquidity") || slug.includes("credit-risk") || slug.includes("maturity") || slug.includes("reinvestment") || slug.includes("tds") || slug.includes("secondary") || slug.includes("fi-") || slug.includes("tax-saving-fixed") || slug.includes("regular-income") || slug.includes("interest-") || slug.includes("investor-statements")) {
+    return FiLayers;
+  }
+  return FiBriefcase;
 }
 
 export const serviceIcons: Record<string, IconType> = {
@@ -84,6 +100,15 @@ export const serviceIcons: Record<string, IconType> = {
   "retirement-planning": FiSunrise,
   "tax-capital-gains": FiPercent,
   "investor-service": FiHelpCircle,
+  "insurance-needs-analysis": FiClipboard,
+  "life-insurance-planning": FiShield,
+  "term-insurance": FiShield,
+  "health-insurance": FiActivity,
+  "claims-assistance": FiFileText,
+  "fd-product-selection": FiLayers,
+  "bond-selection": FiTrendingUp,
+  "laddering-strategy": FiCalendar,
+  "credit-risk-assessment": FiHelpCircle,
 };
 
 export const philosophyIcons = [FiShield, FiUsers, FiClipboard] as const;

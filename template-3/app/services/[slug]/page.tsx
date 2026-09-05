@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getService, services } from "@/lib/content";
+import { getService, getServiceCategory, services } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
 import { IconBadge } from "@/components/icons";
 import { ButtonLink, Card, Container, Eyebrow, Grid, Lead, Section } from "@/components/ui";
@@ -22,10 +22,11 @@ export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   const service = getService(slug);
   if (!service) notFound();
+  const category = getServiceCategory(service.category);
 
   return (
     <>
-      <PageHero title={service.title} />
+      <PageHero title={service.title} meta={category?.title} />
       <Section>
         <Container>
           <Lead>{service.description}</Lead>
@@ -51,7 +52,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <Eyebrow style={{ marginTop: 14 }}>Not sure if this is right for you?</Eyebrow>
               <p style={{ margin: "12px 0 18px", color: "var(--muted)", lineHeight: 1.7 }}>
                 Speak to us. We will tell you whether this fits your plan, or whether
-                your existing investments already cover the need.
+                your existing arrangements already cover the need.
               </p>
               <ButtonLink href="/contact">Book a consultation</ButtonLink>
             </Card>
@@ -71,6 +72,13 @@ export default async function ServiceDetailPage({ params }: Props) {
               ) : null}
             </Card>
           ) : null}
+          <ButtonLink
+            href={`/services#${service.category}`}
+            $variant="ghost"
+            style={{ marginTop: 28 }}
+          >
+            Back to {category?.title ?? "services"}
+          </ButtonLink>
         </Container>
       </Section>
     </>
