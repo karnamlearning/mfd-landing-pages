@@ -223,7 +223,8 @@ header.site-header {
   color: var(--on-brand);
 }
 
-header.site-header.is-solid {
+header.site-header.is-solid,
+header.site-header.is-open {
   background: var(--surface-darkest);
   border-bottom: 1px solid rgb(var(--seed-on-brand) / 0.12);
 }

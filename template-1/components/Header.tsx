@@ -384,7 +384,7 @@ export function Header() {
                     <DrawerLink
                       href={item.href}
                       $active={itemActive(item, pathname)}
-                      onClick={() => setOpenedAt(null)}
+                      onClick={() => setTimeout(() => setOpenedAt(null), 0)}
                     >
                       {item.label}
                     </DrawerLink>
@@ -409,7 +409,7 @@ export function Header() {
                             key={child.href}
                             href={child.href}
                             $active={pathMatches(child.href, pathname) && child.href.indexOf("#") < 0}
-                            onClick={() => setOpenedAt(null)}
+                            onClick={() => setTimeout(() => setOpenedAt(null), 0)}
                           >
                             {ChildIcon ? <ChildIcon size={15} aria-hidden /> : null}
                             {child.label}
@@ -422,7 +422,7 @@ export function Header() {
               );
             })}
             <DrawerActions>
-              <ButtonLink href="/contact" onClick={() => setOpenedAt(null)}>
+              <ButtonLink href="/contact" onClick={() => setTimeout(() => setOpenedAt(null), 0)}>
                 Book a consultation
               </ButtonLink>
             </DrawerActions>

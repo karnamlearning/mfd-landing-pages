@@ -2,24 +2,42 @@
 
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import { site } from "@/lib/site";
-
-/*
- * A serif wordmark, the way a firm's name sits on a letterhead, with the
- * category and city in tracked small caps beside it.
- */
 
 const Mark = styled(Link)`
   display: inline-flex;
-  align-items: baseline;
-  gap: 14px;
+  align-items: center;
+  gap: 12px;
   color: inherit;
   white-space: nowrap;
 `;
 
+const Seal = styled.span<{ $size: number }>`
+  display: block;
+  width: ${({ $size }) => $size}px;
+  height: ${({ $size }) => $size}px;
+  flex-shrink: 0;
+  line-height: 0;
+  background: transparent;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+`;
+
+const Word = styled.span`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+`;
+
 const Name = styled.span`
   font-family: var(--font-display);
-  font-size: 27px;
+  font-size: 24px;
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -40,17 +58,32 @@ const Sub = styled.span<{ $hideNarrow?: boolean }>`
       : ""}
 `;
 
-export function LogoMark() {
-  return <Name aria-hidden>{site.shortName}</Name>;
+export function LogoMark({ size = 48 }: { size?: number }) {
+  return (
+    <Seal $size={size} aria-hidden>
+      <Image
+        src="/images/logo.png?v=3"
+        alt=""
+        width={size}
+        height={size}
+        sizes={`${size}px`}
+        priority
+        unoptimized
+      />
+    </Seal>
+  );
 }
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <Mark href="/" aria-label={site.name}>
-      <Name>{site.shortName}</Name>
-      <Sub $hideNarrow={compact}>
-        {site.logoTagline} · {site.address.city}
-      </Sub>
+      <LogoMark />
+      <Word>
+        <Name>{site.shortName}</Name>
+        <Sub $hideNarrow={compact}>
+          {site.logoTagline} · {site.address.city}
+        </Sub>
+      </Word>
     </Mark>
   );
 }

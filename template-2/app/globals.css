@@ -246,7 +246,7 @@ header.site-header {
 
 header.site-header.is-solid,
 header.site-header.is-open {
-  background: var(--surface-veil);
+  background: var(--surface);
   border-bottom-color: var(--line);
   backdrop-filter: blur(14px);
 }

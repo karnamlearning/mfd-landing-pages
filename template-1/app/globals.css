@@ -256,7 +256,7 @@ header.site-header {
   right: 0;
   z-index: 50;
   color: var(--ink);
-  background: var(--surface-veil);
+  background: var(--surface);
   backdrop-filter: saturate(1.3) blur(12px);
   -webkit-backdrop-filter: saturate(1.3) blur(12px);
   border-bottom: 1px solid transparent;

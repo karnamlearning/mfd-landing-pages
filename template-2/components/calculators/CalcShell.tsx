@@ -324,14 +324,22 @@ const ViewTabs = styled.div`
   display: flex;
   padding: 4px;
   gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ViewTab = styled.button<{ $on: boolean }>`
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
   gap: 7px;
   padding: 8px 14px;
   border: 0;

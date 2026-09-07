@@ -264,6 +264,10 @@ const InWords = styled.span`
   color: var(--accent-strong);
   border-left: 1px solid var(--line);
   white-space: nowrap;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 /** A rupee amount: typed directly, nudged with a slider, or picked from presets. */

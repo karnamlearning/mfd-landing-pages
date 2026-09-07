@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Container } from "@/components/ui";
@@ -72,6 +72,18 @@ export function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
   // through every section on the way; hold the clicked tab until it settles.
   const lock = useRef<number | null>(null);
 
+  const go = useCallback((id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    setActive(id);
+    window.history.replaceState(null, "", `#${id}`);
+    if (lock.current !== null) window.clearTimeout(lock.current);
+    lock.current = window.setTimeout(() => {
+      lock.current = null;
+    }, 900);
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   useEffect(() => {
     const fromHash = () => {
       const hash = window.location.hash.slice(1);
@@ -79,8 +91,28 @@ export function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);
-    return () => window.removeEventListener("hashchange", fromHash);
-  }, [tabs]);
+
+    // Header dropdowns use <Link href="/services#insurance">. Client navigations
+    // often skip hashchange, so watch clicks the same way the calculator rail does.
+    const onClick = (event: MouseEvent) => {
+      const anchor = (event.target as HTMLElement | null)?.closest("a");
+      if (!anchor) return;
+      try {
+        const url = new URL(anchor.href, window.location.href);
+        if (url.pathname !== "/services") return;
+        const id = url.hash.slice(1);
+        if (tabs.some((tab) => tab.id === id)) queueMicrotask(() => go(id));
+      } catch {
+        /* ignore malformed hrefs */
+      }
+    };
+    document.addEventListener("click", onClick);
+
+    return () => {
+      window.removeEventListener("hashchange", fromHash);
+      document.removeEventListener("click", onClick);
+    };
+  }, [go, tabs]);
 
   useEffect(() => {
     const sections = tabs
@@ -110,18 +142,6 @@ export function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
   useEffect(() => () => {
     if (lock.current !== null) window.clearTimeout(lock.current);
   }, []);
-
-  const go = (id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    setActive(id);
-    window.history.replaceState(null, "", `#${id}`);
-    if (lock.current !== null) window.clearTimeout(lock.current);
-    lock.current = window.setTimeout(() => {
-      lock.current = null;
-    }, 900);
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   return (
     <Rail>

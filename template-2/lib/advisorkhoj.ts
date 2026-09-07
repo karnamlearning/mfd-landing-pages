@@ -95,7 +95,7 @@ function normaliseImages(html: string): string {
     else if (url.startsWith("/")) url = `${UPSTREAM}${url}`;
     else if (!/^https?:\/\//i.test(url)) url = `${UPSTREAM}/${url}`;
     const alt = attr("alt");
-    return `<img src="${url}" alt="${alt.replace(/"/g, "&quot;")}" loading="lazy" decoding="async">`;
+    return `<img src="${url}" alt="${alt.replace(/"/g, "&quot;")}" decoding="async" referrerpolicy="no-referrer">`;
   });
 }
 
@@ -104,7 +104,8 @@ function normaliseImages(html: string): string {
  * carried across from the source articles, news, or mutual fund topics. Also
  * removes scripts, styles, iframes and inline event handlers, since this HTML
  * is injected with dangerouslySetInnerHTML, and rewrites lazy-loaded images so
- * they actually display.
+ * they actually display. Native `loading="lazy"` is omitted: `overflow-x: clip`
+ * on html/body makes the browser treat off-screen images as never intersecting.
  */
 export function stripLinks(html: string): string {
   if (!html) return "";

@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 import { site } from "@/lib/site";
 
 const Mark = styled(Link)`
@@ -11,23 +12,19 @@ const Mark = styled(Link)`
   color: inherit;
 `;
 
-const Tile = styled.span`
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
+const Seal = styled.span<{ $size: number }>`
+  display: block;
+  width: ${({ $size }) => $size}px;
+  height: ${({ $size }) => $size}px;
   flex-shrink: 0;
-  background: var(--accent);
-  color: var(--ink);
-`;
+  line-height: 0;
+  background: transparent;
 
-const Glyph = styled.span`
-  font-family: var(--font-logo);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  translate: 0 1px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
 const Word = styled.span`
@@ -50,20 +47,29 @@ const Sub = styled.small`
   opacity: 0.7;
   font-weight: 650;
   margin-top: 3px;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
-const markLetter = site.shortName.trim().charAt(0);
-
-export function LogoMark() {
+export function LogoMark({ size = 44 }: { size?: number }) {
   return (
-    <Tile aria-hidden>
-      <Glyph>{markLetter}</Glyph>
-    </Tile>
+    <Seal $size={size} aria-hidden>
+      <Image
+        src="/images/logo.png?v=3"
+        alt=""
+        width={size}
+        height={size}
+        sizes={`${size}px`}
+        priority
+        unoptimized
+      />
+    </Seal>
   );
 }
 
-export function Logo({ onDark = false }: { onDark?: boolean }) {
-  void onDark;
+export function Logo() {
   return (
     <Mark href="/" aria-label={site.name}>
       <LogoMark />

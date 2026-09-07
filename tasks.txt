@@ -1,6 +1,13 @@
 - Update Services copies correctly
-- Replace FAQs endpoint
 - Remove Hyperlinks from articles and News
+- Hyperlinks clarification
+- Form in the news
+- Check if all images are of free license
+- Add Client Login button
+
+---
+
+- Replace FAQs endpoint
 - Get real data and populate one template
 - Update comission disclosures from link
 - Check and fix mobile views

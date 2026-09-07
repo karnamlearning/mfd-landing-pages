@@ -52,6 +52,9 @@ const Wrap = styled.div`
   }
 
   img {
+    display: block;
+    width: auto;
+    max-width: 100%;
     height: auto;
     border-radius: var(--radius);
     margin: 8px 0 20px;

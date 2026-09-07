@@ -27,7 +27,7 @@ const Nav = styled.nav`
   align-self: stretch;
   gap: 4px;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;
@@ -108,7 +108,7 @@ const Actions = styled.div`
   align-items: center;
   gap: 10px;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;
@@ -125,7 +125,7 @@ const Burger = styled.button`
   font-size: 26px;
   cursor: pointer;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1100px) {
     display: grid;
   }
 `;
@@ -140,7 +140,7 @@ const Burger = styled.button`
 const Drawer = styled.nav`
   display: none;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1100px) {
     display: block;
     max-height: calc(100dvh - 76px);
     overflow-y: auto;
@@ -353,7 +353,7 @@ export function Header() {
                     <DrawerLink
                       href={item.href}
                       $active={itemActive(item, pathname)}
-                      onClick={() => setOpenedAt(null)}
+                      onClick={() => setTimeout(() => setOpenedAt(null), 0)}
                     >
                       {item.label}
                     </DrawerLink>
@@ -378,7 +378,7 @@ export function Header() {
                             key={child.href}
                             href={child.href}
                             $active={pathMatches(child.href, pathname) && child.href.indexOf("#") < 0}
-                            onClick={() => setOpenedAt(null)}
+                            onClick={() => setTimeout(() => setOpenedAt(null), 0)}
                           >
                             {ChildIcon ? <ChildIcon size={15} aria-hidden /> : null}
                             {child.label}
@@ -391,7 +391,7 @@ export function Header() {
               );
             })}
             <DrawerActions>
-              <ButtonLink href="/contact" onClick={() => setOpenedAt(null)}>
+              <ButtonLink href="/contact" onClick={() => setTimeout(() => setOpenedAt(null), 0)}>
                 Book a consultation
               </ButtonLink>
             </DrawerActions>
