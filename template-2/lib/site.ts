@@ -2,11 +2,14 @@ export const site = {
   name: "Aarohan Wealth",
   legalName: "Aarohan Wealth Advisors LLP",
   shortName: "Aarohan",
-  /** Small line under the name in the logo. Keep it to two or three words. */
+  /** Small line beside the wordmark. Keep it to two or three words. */
   logoTagline: "Mutual Fund Distributor",
   tagline: "Plan your goals. Invest with confidence.",
   description:
-    "AMFI-registered mutual fund distributor helping investors with onboarding, scheme selection, SIPs, transactions, portfolio monitoring, and ongoing service.",
+    "Mutual fund distribution, insurance, and FD & bond services - helping investors select, execute, monitor, and stay serviced.",
+  /** One-line version for the footer and metadata. */
+  blurb:
+    "We handle the fund houses, the paperwork and the follow-ups, so you can get on with your life.",
   foundedYear: 2014,
   url: "https://www.aarohanwealth.in",
   email: "hello@aarohanwealth.in",
@@ -50,6 +53,8 @@ export const site = {
       detail: "Certified Financial Planner",
     },
   ],
+  /** Client rating shown beside the face row. */
+  rating: { score: "4.9", count: 212 },
   /**
    * Home page stat band. `value` is a number so it can count up on screen;
    * prefix/suffix carry the currency sign and the "+". `icon` keys into
@@ -113,6 +118,51 @@ export type NavItem = {
 export const primaryNav: NavItem[] = [
   { label: "Home", href: "/" },
   {
+    label: "Services",
+    href: "/services",
+    children: [
+      {
+        label: "Mutual Funds",
+        href: "/services#mutual-funds",
+        description: "Onboarding to portfolio monitoring as an AMFI-registered MFD",
+      },
+      {
+        label: "Insurance",
+        href: "/services#insurance",
+        description: "Needs analysis, policies, renewals, and claims assistance",
+      },
+      {
+        label: "FD & Bonds",
+        href: "/services#fd-bonds",
+        description: "Fixed deposits, bonds, ladders, and maturity planning",
+      },
+      {
+        label: "All services",
+        href: "/services",
+        description: "Full catalogue across mutual funds, insurance, and fixed income",
+      },
+    ],
+  },
+  {
+    label: "Calculators",
+    href: "/calculators",
+    children: [
+      { label: "Become a Crorepati", href: "/calculators#become-a-crorepati" },
+      { label: "SIP Return Calculator", href: "/calculators#sip-return" },
+      {
+        label: "Retirement Planning",
+        href: "/calculators#retirement-planning",
+      },
+      { label: "SIP Step-Up Calculator", href: "/calculators#sip-step-up" },
+      { label: "Lumpsum Target", href: "/calculators#lumpsum-target" },
+      {
+        label: "Children Education Planner",
+        href: "/calculators#children-education",
+      },
+      { label: "Target Amount SIP", href: "/calculators#target-amount-sip" },
+    ],
+  },
+  {
     label: "About",
     href: "/about",
     children: [
@@ -129,42 +179,6 @@ export const primaryNav: NavItem[] = [
     ],
   },
   {
-    label: "Services",
-    href: "/services",
-    children: [
-      { label: "Investor Onboarding", href: "/services/investor-onboarding" },
-      { label: "Investor Profiling", href: "/services/investor-profiling" },
-      { label: "Scheme Selection", href: "/services/scheme-selection" },
-      { label: "SIP Services", href: "/services/sip-services" },
-      { label: "Lumpsum Investments", href: "/services/lumpsum-investments" },
-      { label: "Transaction Execution", href: "/services/transaction-execution" },
-      { label: "Portfolio Monitoring", href: "/services/portfolio-monitoring" },
-      { label: "Goal-Based Investing", href: "/services/goal-based-investing" },
-      { label: "Retirement Planning", href: "/services/retirement-planning" },
-      { label: "Tax & Capital Gains", href: "/services/tax-capital-gains" },
-      { label: "Investor Service", href: "/services/investor-service" },
-    ],
-  },
-  {
-    label: "Calculators",
-    href: "/calculators",
-    children: [
-      { label: "Become a Crorepati", href: "/calculators/become-a-crorepati" },
-      { label: "SIP Return Calculator", href: "/calculators/sip-return" },
-      {
-        label: "Retirement Planning",
-        href: "/calculators/retirement-planning",
-      },
-      { label: "SIP Step-Up Calculator", href: "/calculators/sip-step-up" },
-      { label: "Lumpsum Target", href: "/calculators/lumpsum-target" },
-      {
-        label: "Children Education Planner",
-        href: "/calculators/children-education",
-      },
-      { label: "Target Amount SIP", href: "/calculators/target-amount-sip" },
-    ],
-  },
-  {
     label: "Insights",
     href: "/blog",
     children: [
@@ -176,25 +190,29 @@ export const primaryNav: NavItem[] = [
   { label: "Contact", href: "/contact" },
 ];
 
+/** Three footer columns, in the order they render. */
 export const footerNav = {
-  company: [
-    { label: "About Us", href: "/about" },
+  site: [
+    { label: "Services", href: "/services" },
+    { label: "Calculators", href: "/calculators" },
+    { label: "About", href: "/about" },
     { label: "Our Team", href: "/about/team" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Blog", href: "/blog" },
+    { label: "News", href: "/news" },
+    { label: "FAQs", href: "/faqs" },
+  ],
+  handle: [
+    { label: "Mutual Funds", href: "/services#mutual-funds" },
+    { label: "SIP services", href: "/services/sip-services" },
+    { label: "Insurance", href: "/services#insurance" },
+    { label: "FD & Bonds", href: "/services#fd-bonds" },
+    { label: "Retirement planning", href: "/services/retirement-planning" },
+    { label: "NRI investing", href: "/faqs#nri" },
+  ],
+  legal: [
     { label: "Commission Disclosures", href: "/disclosures" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Terms of Service", href: "/terms" },
-  ],
-  offerings: [
-    { label: "Calculators", href: "/calculators" },
-    { label: "Blog", href: "/blog" },
-    { label: "News", href: "/news" },
-    { label: "Our Services", href: "/services" },
-  ],
-  faqs: [
-    { label: "Mutual Fund FAQs", href: "/faqs#mutual-funds" },
-    { label: "NRI Corner FAQs", href: "/faqs#nri" },
-    { label: "Financial Planning", href: "/faqs#planning" },
   ],
 };
 

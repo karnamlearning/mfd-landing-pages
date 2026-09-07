@@ -37,8 +37,8 @@ export default function DisclosuresPage() {
                         textAlign: "left",
                         padding: "12px 14px",
                         borderBottom: "1px solid var(--line)",
-                        background: "var(--surface-dark)",
-                        color: "var(--on-brand)",
+                        background: "var(--tint-accent-weak)",
+                        color: "var(--ink)",
                       }}
                     >
                       {h}

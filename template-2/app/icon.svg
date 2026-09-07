@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="18" fill="#f5c42d"/>
+  <rect width="64" height="64" rx="16" fill="#d4e62b"/>
   <text
     x="32"
     y="45"
@@ -8,6 +8,6 @@
     font-size="44"
     font-weight="700"
     font-style="italic"
-    fill="#101114"
+    fill="#0a2a20"
   >A</text>
 </svg>

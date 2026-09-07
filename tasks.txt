@@ -1,0 +1,8 @@
+- Update Services copies correctly
+- Replace FAQs endpoint
+- Remove Hyperlinks from articles and News
+- Get real data and populate one template
+- Update comission disclosures from link
+- Check and fix mobile views
+- Add Home link
+- Make calculators fix on scrolling like in template 1, in 2 and 3

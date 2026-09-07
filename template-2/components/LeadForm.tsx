@@ -28,7 +28,7 @@ const Schema = Yup.object({
   message: messageField,
 });
 
-/** Homepage callback form: identity only. Extra fields stay optional so they never block submit. */
+/** Homepage form: identity plus a free-text line. Nothing else can block submit. */
 const CompactSchema = Yup.object({
   name: nameField,
   email: emailField,
@@ -54,37 +54,43 @@ type FieldName = keyof Values;
 
 const Fields = styled.div`
   display: grid;
-  gap: 12px;
+  gap: 22px;
 `;
 
+/* Labels are tiny tracked capitals; inputs are a single hairline underneath. */
 const Label = styled.label`
   display: grid;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  color: var(--muted);
 `;
 
 const inputCss = `
   width: 100%;
-  min-height: 44px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: var(--surface);
+  min-height: 42px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
-  font-size: 14px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-size: 16px;
+  transition: border-color 0.15s ease;
+
+  &::placeholder {
+    color: rgb(var(--seed-muted) / 0.7);
+  }
 
   &:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--tint-accent-weak);
+    border-bottom-color: var(--brand);
   }
 
   &[aria-invalid="true"] {
-    border-color: var(--danger);
+    border-bottom-color: var(--danger);
   }
 `;
 
@@ -94,12 +100,14 @@ const Input = styled.input`
 
 const Select = styled.select`
   ${inputCss}
+  cursor: pointer;
 `;
 
 const Area = styled.textarea`
   ${inputCss}
-  min-height: 96px;
+  min-height: 88px;
   resize: vertical;
+  line-height: 1.5;
 `;
 
 const ErrorText = styled.div`
@@ -107,13 +115,14 @@ const ErrorText = styled.div`
   font-size: 12px;
   text-transform: none;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: 500;
+  margin-top: 4px;
 `;
 
 const Two = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 22px;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -196,7 +205,13 @@ async function submitLead(values: Values) {
   }
 }
 
-export function LeadForm({ compact = false }: { compact?: boolean }) {
+export function LeadForm({
+  compact = false,
+  cta = "Request a callback",
+}: {
+  compact?: boolean;
+  cta?: string;
+}) {
   return (
     <Formik
       initialValues={initialValues}
@@ -214,21 +229,35 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
         <Form noValidate>
           <Fields>
             <Label>
-              Full name
-              <TextInput name="name" placeholder="Your name" />
+              Your name
+              <TextInput name="name" placeholder="First and last name" />
               <FieldError name="name" />
             </Label>
             {compact ? (
               <>
+                <Two>
+                  <Label>
+                    Email
+                    <TextInput name="email" type="email" placeholder="you@email.com" />
+                    <FieldError name="email" />
+                  </Label>
+                  <Label>
+                    Mobile
+                    <TextInput name="phone" type="tel" placeholder="98765 43210" />
+                    <FieldError name="phone" />
+                  </Label>
+                </Two>
                 <Label>
-                  Mobile
-                  <TextInput name="phone" type="tel" placeholder="98765 43210" />
-                  <FieldError name="phone" />
-                </Label>
-                <Label>
-                  Email
-                  <TextInput name="email" type="email" placeholder="you@email.com" />
-                  <FieldError name="email" />
+                  What are you saving for?
+                  <Field name="message">
+                    {({ field }: { field: object }) => (
+                      <Area
+                        {...field}
+                        placeholder="Roughly. A home, a child's education, retirement, or just 'I don't know where to start'."
+                      />
+                    )}
+                  </Field>
+                  <FieldError name="message" />
                 </Label>
               </>
             ) : (
@@ -276,8 +305,8 @@ export function LeadForm({ compact = false }: { compact?: boolean }) {
                 </Label>
               </>
             )}
-            <Button type="submit" disabled={isSubmitting} $variant="gold">
-              {isSubmitting ? "Sending..." : "Request a callback"}
+            <Button type="submit" disabled={isSubmitting} style={{ marginTop: 6 }}>
+              {isSubmitting ? "Sending..." : cta}
             </Button>
           </Fields>
         </Form>

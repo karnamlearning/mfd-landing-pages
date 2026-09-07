@@ -124,6 +124,7 @@ export function retirementCorpus(options: {
 export const calculatorMeta = [
   {
     slug: "become-a-crorepati",
+    short: "Crorepati",
     title: "Become a Crorepati",
     eyebrow: "Goal calculator",
     summary:
@@ -131,6 +132,7 @@ export const calculatorMeta = [
   },
   {
     slug: "sip-return",
+    short: "SIP Return",
     title: "SIP Return Calculator",
     eyebrow: "Contribution math",
     summary:
@@ -138,6 +140,7 @@ export const calculatorMeta = [
   },
   {
     slug: "retirement-planning",
+    short: "Retirement",
     title: "Retirement Planning Calculator",
     eyebrow: "Paycheck after work",
     summary:
@@ -145,6 +148,7 @@ export const calculatorMeta = [
   },
   {
     slug: "sip-step-up",
+    short: "Step-Up SIP",
     title: "SIP Step-Up Calculator",
     eyebrow: "Annual raise",
     summary:
@@ -152,6 +156,7 @@ export const calculatorMeta = [
   },
   {
     slug: "lumpsum-target",
+    short: "Lumpsum",
     title: "Lumpsum Target Calculator",
     eyebrow: "One cheque",
     summary:
@@ -159,6 +164,7 @@ export const calculatorMeta = [
   },
   {
     slug: "children-education",
+    short: "Education",
     title: "Children Education Planner",
     eyebrow: "Fee inflation",
     summary:
@@ -166,6 +172,7 @@ export const calculatorMeta = [
   },
   {
     slug: "target-amount-sip",
+    short: "Target SIP",
     title: "Target Amount SIP Calculator",
     eyebrow: "Reverse the SIP",
     summary:
@@ -174,3 +181,23 @@ export const calculatorMeta = [
 ] as const;
 
 export type CalculatorSlug = (typeof calculatorMeta)[number]["slug"];
+
+/** What a future rupee amount is worth in today's money. */
+export function realValue(nominal: number, years: number, inflation: number) {
+  if (nominal <= 0) return 0;
+  return nominal / Math.pow(1 + inflation / 100, Math.max(0, years));
+}
+
+/**
+ * The SIP needed to close the gap between a target and what a lumpsum already
+ * invested today will have grown into by then.
+ */
+export function sipRequiredAfterLumpsum(
+  target: number,
+  lumpsum: number,
+  years: number,
+  annualRate: number,
+) {
+  const grown = lumpsumFutureValue(lumpsum, years, annualRate);
+  return sipRequired(Math.max(0, target - grown), years, annualRate);
+}

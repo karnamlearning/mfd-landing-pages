@@ -1,286 +1,15 @@
-export type Service = {
-  slug: string;
-  title: string;
-  shortTitle: string;
-  eyebrow: string;
-  summary: string;
-  description: string;
-  whoFor: string[];
-  highlights: string[];
-  illustration?: {
-    title: string;
-    lines: string[];
-    note?: string;
-  };
-};
-
-export const services: Service[] = [
-  {
-    slug: "investor-onboarding",
-    title: "Investor Onboarding",
-    shortTitle: "Onboarding",
-    eyebrow: "Get started",
-    summary:
-      "Mutual fund account opening, KYC / CKYC, FATCA/CRS, bank and nomination details, and folio set-up - using AMFI-standard forms and processes.",
-    description:
-      "Buying a mutual fund starts with a clean account. We help you open the folio, complete KYC or CKYC, file FATCA/CRS where required, and register PAN, bank details, email, and mobile. We also guide nomination, contact updates, demat or non-demat choices, folio creation, and consolidation so your first investment is not held up by paperwork. AMFI provides standardised forms for KYC and investor-service requests; we walk you through them and explain the investment process before you commit money.",
-    whoFor: [
-      "First-time mutual fund investors",
-      "NRIs completing KYC, FATCA/CRS, and NRE or NRO bank details",
-      "Families consolidating folios opened across banks and apps",
-    ],
-    highlights: [
-      "KYC / CKYC assistance and FATCA/CRS documentation",
-      "PAN, bank mandate, email, and mobile registration",
-      "Nomination and contact-detail updates",
-      "Demat or non-demat guidance, folio creation, and consolidation",
-    ],
-  },
-  {
-    slug: "investor-profiling",
-    title: "Investor Profiling & Requirements",
-    shortTitle: "Profiling",
-    eyebrow: "Suitability",
-    summary:
-      "We understand age, risk tolerance, horizon, liquidity, existing holdings, and SIP or SWP needs before any scheme is discussed.",
-    description:
-      "Suitability comes before selection. We take time to understand your age, risk tolerance, investment horizon, amount, liquidity needs, existing investments, and objectives - including SIP and SWP requirements and short-, medium-, and long-term goals. SEBI and AMFI expect distributors to act in the investor's interest, exercise due diligence, and ensure that what is offered is appropriate. That is why we profile first and only then talk about schemes.",
-    whoFor: [
-      "Anyone starting a relationship with us",
-      "Investors whose goals or cash flow have changed",
-      "Households with SIPs that were never mapped to a purpose",
-    ],
-    highlights: [
-      "Age, risk tolerance, and investment horizon",
-      "Investment amount and liquidity requirements",
-      "Existing holdings versus stated objectives",
-      "SIP, SWP, and short- to long-term needs captured in writing",
-    ],
-  },
-  {
-    slug: "scheme-selection",
-    title: "Mutual Fund Scheme Selection",
-    shortTitle: "Scheme Selection",
-    eyebrow: "Core work",
-    summary:
-      "Help choosing among equity, debt, hybrid, ELSS, index, ETF, and other permitted schemes we are authorised to distribute - with investor interest first.",
-    description:
-      "As an AMFI-registered distributor, we help you understand and select from the mutual fund schemes we are authorised to distribute: equity, debt, and hybrid funds; solution-oriented funds and ELSS; index funds and ETFs; fund of funds; and other permitted products. We explain the investment objective, asset allocation, risk, scheme characteristics, portfolio, expense ratio, exit load, benchmarks, historical performance, fund manager, and strategy - in language you can use. We do not recommend a scheme merely because it generates commission. Under AMFI's Code of Conduct, your interest remains paramount.",
-    whoFor: [
-      "Investors building or rebuilding a core portfolio",
-      "Savers comparing regular, direct, active, and index options",
-      "Anyone who wants the trade-offs explained before they invest",
-    ],
-    highlights: [
-      "Equity, debt, hybrid, ELSS, index, ETF, and FoF options explained",
-      "Objective, allocation, risk, costs, and benchmarks discussed upfront",
-      "Historical performance and manager style in context, not isolation",
-      "Open architecture across fund houses; no house product to push",
-    ],
-  },
-  {
-    slug: "sip-services",
-    title: "SIP Services",
-    shortTitle: "SIP Services",
-    eyebrow: "Systematic investing",
-    summary:
-      "SIP registration, mandates, pause, step-up, date changes, and goal tracking - including a SIP health review when you want one.",
-    description:
-      "Most long-term investing here runs through SIPs. We help with registration and bank-mandate set-up, then with the servicing that keeps the SIP alive: modify, increase or decrease, pause, restart, cancel, change the date, step-up, and top-up. We also review SIP returns, track them against goals, and look at the SIP book as a portfolio - not a set of forgotten mandates. The point is a SIP you can keep, not one that looks good on day one.",
-    whoFor: [
-      "Salaried investors starting or raising a monthly SIP",
-      "Families who want step-up SIPs tied to income growth",
-      "Anyone with SIPs spread across apps who wants one view",
-    ],
-    highlights: [
-      "Registration and bank-mandate assistance",
-      "Modify, pause, restart, cancel, and date-change requests",
-      "Step-up, top-up, and amount changes",
-      "SIP return analysis, goal tracking, and portfolio review",
-    ],
-    illustration: {
-      title: "Illustration - SIP health review",
-      lines: [
-        "Current SIP → ₹50,000 / month",
-        "Annual SIP increase → 10%",
-        "Current value → ₹32 lakh",
-        "Target corpus → ₹1.5 crore",
-        "Estimated shortfall and suggested action → increase the SIP or extend the horizon",
-      ],
-      note: "Figures are educational illustrations, not a forecast or a client result. Markets, cash flow, and assumptions change.",
-    },
-  },
-  {
-    slug: "lumpsum-investments",
-    title: "Lumpsum Investment Services",
-    shortTitle: "Lumpsum",
-    eyebrow: "One-time investing",
-    summary:
-      "New purchases, additional investments, NFOs, allocation across schemes, and STP, SWP, switch, or redemption support.",
-    description:
-      "When surplus arrives - a bonus, a sale, a maturity - we help you invest it with a plan. That includes new investments, additional purchases, NFO subscriptions where they fill a genuine gap, and allocation across schemes. We also set up STPs and SWPs, and help with switches, redemptions, and rebalancing through transactions where that is appropriate. A lumpsum is sized to your horizon and emergency buffer, not to last quarter's table-topper.",
-    whoFor: [
-      "Investors deploying a bonus, maturity, or sale proceeds",
-      "Those moving money from a liquid fund into a longer-term mix",
-      "Anyone considering an NFO against an existing scheme",
-    ],
-    highlights: [
-      "New investments, additional purchases, and NFO support",
-      "Allocation across schemes after the profile is clear",
-      "STP and SWP set-up",
-      "Switch, redemption, and rebalancing transactions where appropriate",
-    ],
-  },
-  {
-    slug: "transaction-execution",
-    title: "Transaction Execution",
-    shortTitle: "Transactions",
-    eyebrow: "Online and offline",
-    summary:
-      "Purchase, additional purchase, switch, SIP, STP, SWP, bank mandates, and folio requests - executed with the AMC on your behalf.",
-    description:
-      "Execution is a core distributor service. SEBI describes the role as including help for investors to place transactions with AMCs. We handle purchase, additional purchase, switch, SIP, STP, and SWP - online and offline - along with bank-mandate set-up and nomination or folio-related service requests. You see what was placed, in which folio, and when it was confirmed.",
-    whoFor: [
-      "Investors who want one desk for all AMC transactions",
-      "NRIs who cannot visit a branch for every request",
-      "Households that prefer paper or assisted online execution",
-    ],
-    highlights: [
-      "Purchase, additional purchase, switch, SIP, STP, and SWP",
-      "Bank-mandate set-up",
-      "Nomination and folio-related service requests",
-      "Online and offline execution with confirmation",
-    ],
-  },
-  {
-    slug: "portfolio-monitoring",
-    title: "Portfolio Monitoring",
-    shortTitle: "Portfolio Monitoring",
-    eyebrow: "Ongoing value",
-    summary:
-      "Valuation, XIRR, capital gains, scheme and category allocation, concentration, and benchmark comparison - reviewed, not only sold.",
-    description:
-      "This is where an MFD adds ongoing value. We move from selling a fund to servicing the book: current valuation with absolute and XIRR returns, capital gains, scheme-wise performance, asset allocation, AMC-wise and category-wise split, concentration and top holdings, schemes that are lagging, scheme-versus-benchmark comparison, and a plain-language view of portfolio risk. The relationship is continuous monitoring and service, not a one-time purchase.",
-    whoFor: [
-      "Investors with SIPs or lumpsums that have not been reviewed",
-      "Families who want one allocation picture across AMCs",
-      "Anyone who wants XIRR and gains, not only a latest NAV",
-    ],
-    highlights: [
-      "Valuation with absolute return, XIRR, and capital gains",
-      "Scheme, AMC, and category allocation",
-      "Concentration, top holdings, and laggards flagged",
-      "Benchmark comparison and portfolio risk discussed in reviews",
-    ],
-  },
-  {
-    slug: "goal-based-investing",
-    title: "Goal-Based Investment Support",
-    shortTitle: "Goal-Based Investing",
-    eyebrow: "Purpose",
-    summary:
-      "Mutual fund investing mapped to education, marriage, retirement, a home, a vacation, an emergency corpus, or financial independence.",
-    description:
-      "A SIP without a job is just a debit. We help you see mutual fund investments in the context of objectives: children's education and marriage, retirement, wealth creation, a house, a vacation, an emergency corpus, or financial independence. We can show projected outcomes under different assumptions and what changes if you raise the SIP or extend the horizon. That is comprehensive investment planning around the goal - not a product pitch with a goal sticker.",
-    whoFor: [
-      "Parents funding education or marriage",
-      "Households saving for a home or a defined corpus",
-      "Anyone who wants each SIP tied to a date and an amount",
-    ],
-    highlights: [
-      "Education, marriage, home, vacation, and emergency goals",
-      "Retirement and financial-independence planning",
-      "Projected outcomes under stated assumptions",
-      "SIP and horizon changes explained before you make them",
-    ],
-    illustration: {
-      title: "Illustration - education goal",
-      lines: [
-        "Goal → ₹1 crore for a child's education",
-        "Time → 12 years",
-        "Current investment → ₹15 lakh",
-        "Monthly SIP → ₹40,000",
-      ],
-      note: "Projections use constant assumed rates for education only. They are not guaranteed and they are not investment advice.",
-    },
-  },
-  {
-    slug: "retirement-planning",
-    title: "Retirement Planning Support",
-    shortTitle: "Retirement Planning",
-    eyebrow: "Later-life income",
-    summary:
-      "Corpus illustrations, SIP projections, inflation-adjusted needs, existing-corpus analysis, and SWP or retirement-income pictures.",
-    description:
-      "Retirement support from an MFD is about the mutual fund path to a later-life income. We prepare corpus illustrations, SIP accumulation projections, inflation-adjusted spending needs, analysis of what you already have, corpus-depletion pictures, and SWP or retirement-income illustrations. Assumptions are written down so you can see what happens if inflation, the SIP, or the retirement date changes.",
-    whoFor: [
-      "Professionals ten to twenty years from retirement",
-      "Business owners without a formal pension",
-      "Couples who want a corpus number and a withdrawal picture",
-    ],
-    highlights: [
-      "Inflation-adjusted retirement-need illustrations",
-      "SIP calculations and accumulation projections",
-      "Existing-corpus and depletion analysis",
-      "SWP and retirement-income illustrations",
-    ],
-    illustration: {
-      title: "Illustration - retirement picture",
-      lines: [
-        "Current monthly expense → ₹1 lakh",
-        "Retirement in → 15 years",
-        "Inflation assumption → stated in the review",
-        "Required corpus and expected SIP → worked from those inputs",
-      ],
-      note: "Illustrations use constant rates. They are not a promised corpus or a guaranteed withdrawal.",
-    },
-  },
-  {
-    slug: "tax-capital-gains",
-    title: "Tax & Capital Gains Support",
-    shortTitle: "Tax & Gains",
-    eyebrow: "Information, not advice",
-    summary:
-      "Help reading realised and unrealised gains, STCG/LTCG classification, ELSS, and the tax implications of redemptions or switches - with a tax professional for the return.",
-    description:
-      "We help you understand mutual-fund-related tax information: realised and unrealised capital gains, short-term versus long-term classification, capital-gains statements, ELSS as a tax-saving investment, and the tax implications of a redemption or switch. We can pull or walk through capital-gains reports. We are not a tax advisor and may not be the right professional to file your return. Please consult a qualified tax professional before you act on tax questions.",
-    whoFor: [
-      "Investors preparing for a financial-year review",
-      "Anyone planning a switch or redemption and wanting the tax picture first",
-      "Savers considering ELSS alongside other 80C options",
-    ],
-    highlights: [
-      "Realised and unrealised gains, with STCG / LTCG classification",
-      "Capital-gains statements and reports",
-      "ELSS explained as one tax-saving option, not the only one",
-      "Redemption and switch implications flagged; a CA signs off the return",
-    ],
-  },
-  {
-    slug: "investor-service",
-    title: "Investor Service & Support",
-    shortTitle: "Investor Service",
-    eyebrow: "Day to day",
-    summary:
-      "Statements, CAS, folio changes, nomination, KYC and FATCA updates, transmission, broker change, and grievance assistance - promptly.",
-    description:
-      "After the SIP is live, service is the job. We help with account statements and CAS, folio consolidation, folio information, and transaction confirmations. We process bank, address, email, and mobile changes; nomination, KYC, and FATCA updates; transmission and death-claim assistance; and change-of-broker or distributor requests. We also help you raise and track grievances. AMFI expects prompt, competent investor service and grievance handling. We treat that as the standard, not an extra.",
-    whoFor: [
-      "Existing clients with a change of bank, address, or nominee",
-      "Families dealing with transmission or a death claim",
-      "Investors moving a folio to or from another distributor",
-    ],
-    highlights: [
-      "Statements, CAS, folio information, and confirmations",
-      "Bank, address, email, mobile, nomination, KYC, and FATCA updates",
-      "Transmission, death-claim, and change-of-broker assistance",
-      "Grievance handling in line with AMFI expectations",
-    ],
-  },
-];
-
-export const servicesIntro =
-  "As an AMFI-registered Mutual Fund Distributor, we do more than help you buy a scheme. The work is selecting what fits, executing the transaction, monitoring the portfolio, and staying available for service.";
+export type {
+  Service,
+  ServiceCategoryId,
+} from "@/lib/services";
+export {
+  getService,
+  getServiceCategory,
+  getServicesByCategory,
+  serviceCategories,
+  services,
+  servicesIntro,
+} from "@/lib/services";
 
 export const philosophy = [
   {
@@ -330,11 +59,134 @@ export const processSteps = [
 ];
 
 export const hero = {
-  kicker: "AMFI-registered Mutual Fund Distributor",
-  title: "A clear plan for every",
-  highlight: "rupee you invest.",
-  body: "As an AMFI-registered Mutual Fund Distributor, we help you select suitable schemes, execute transactions, monitor the portfolio, and stay serviced - for individuals, families, and NRIs.",
+  kicker: "Mutual fund distributor, Mumbai",
+  /** Rendered as JSX in HomeView; the words in `highlights` get the italic cut. */
+  title: "You did the saving. The rest of it shouldn't be this hard.",
+  highlights: ["saving.", "hard."],
+  body: "We handle the fund houses, the paperwork and the follow-ups, so you can get on with your life. There is no separate fee for the plan, and nothing is ever billed to you.",
+  /** Small tracked labels that scroll under the hero portrait. */
+  tags: [
+    "Mutual funds",
+    "Monthly SIPs",
+    "Term and health cover",
+    "FD and bonds",
+    "Retirement income",
+    "NRI investing",
+  ],
 };
+
+/** The "past results" band. Illustrative, and labelled as such on the page. */
+export const outcomes = [
+  {
+    amount: "₹2.4 Cr",
+    label: "Retirement corpus",
+    year: "2024",
+    body: "Fourteen scattered SIPs consolidated into six schemes over ten years. The corpus now pays a monthly withdrawal.",
+  },
+  {
+    amount: "₹1.1 Cr",
+    label: "Education fund",
+    year: "2025",
+    body: "A step-up SIP started in 2016 when the child was three. The first year's fee was paid without a loan.",
+  },
+  {
+    amount: "₹86 L",
+    label: "Insurance cover added",
+    year: "2023",
+    body: "Two bundled policies surrendered; pure term and a family floater put in their place at a third of the premium.",
+  },
+];
+
+/** Thin promise strip under the outcomes. */
+export const promises = [
+  "Free first conversation",
+  "No separate fee for the plan",
+  "No obligation",
+  "We call back the same day",
+];
+
+/** "What we handle": the scroll-revealed statement and the dark cards below it. */
+export const handle = {
+  statement:
+    "The app will nudge you first. It is built to sound helpful, to move quickly, and to sell you whatever is trending this quarter. From the day you work with us, the plan decides what you buy.",
+  cards: [
+    {
+      title: "The fund houses",
+      body: "Forty-plus AMCs, one folio view. We pick across them on merit, and there is no in-house product to push.",
+    },
+    {
+      title: "The paperwork",
+      body: "KYC, FATCA, nominations, mandates, and the transmission nobody wants to think about. We build the file so nothing is missing later.",
+    },
+    {
+      title: "The follow-ups",
+      body: "Reviews on a calendar, rebalancing when allocations drift, and a call before you redeem in a bad week.",
+    },
+    {
+      title: "The cover",
+      body: "Term and health first, because a plan that ends with one hospital bill was never a plan.",
+    },
+  ],
+};
+
+/** "In their words" */
+export const words = {
+  intro: "We asked four families what actually helped. Not one of them said the returns.",
+  note: "Every statement here is from a family we work with. We do not publish surnames, and we do not pay for reviews.",
+  stats: [
+    { value: "4.9", label: "Average rating" },
+    { value: "212", label: "Client reviews" },
+    { value: "9 in 10", label: "Stay invested through a fall" },
+  ],
+};
+
+/** "Let's talk" panel between the fund houses and the arithmetic. */
+export const talk = {
+  title: "Thirty minutes. No forms first, and no obligation.",
+  body: "The first conversation is about you, not about products. You leave with your priorities in order and a clear sense of whether we are the right fit.",
+  covers: [
+    "What you earn, owe, hold, and want in three, ten, and twenty-five years",
+    "What you already have that is worth keeping exactly as it is",
+    "What we would change first, and why, written down for you",
+  ],
+};
+
+/** "Where the money goes" */
+export const money = {
+  intro:
+    "We are paid by the fund house out of the scheme's expense ratio, never as a bill to you, and if you stop investing we stop being paid. Here is the rest of the arithmetic, before you have to ask us for it.",
+  note: "Illustrative. A constant 12% return is assumed; markets do not deliver that on cue. Commission is an estimate at 0.75% a year on the running balance.",
+  /** Monthly SIP presets, in rupees. */
+  presets: [10000, 25000, 50000],
+};
+
+/** "What people ask first": six questions, each with a numbered answer and a photo. */
+export const firstQuestions = [
+  {
+    q: "What does this cost me?",
+    a: "Nothing up front and nothing as a separate bill. The fund house pays us a trail commission out of the scheme's expense ratio, and the ranges are published on this site before any work begins.",
+  },
+  {
+    q: "Do I need a lot to start?",
+    a: "No. Most families start with a monthly SIP they would not miss and raise it with each increment. The plan matters more than the first amount.",
+  },
+  {
+    q: "How long until it shows?",
+    a: "The first few years look slow on purpose. Most of the money in a twenty-year SIP arrives in the second decade, which is why we plan the exit before the entry.",
+  },
+  {
+    q: "I already have SIPs on an app.",
+    a: "That is common and usually fixable. We map each one to a goal, drop the overlaps, and consolidate the folios so there is one view instead of five logins.",
+  },
+  {
+    q: "What if the market falls?",
+    a: "Then the SIP buys more units that month. We plan for a fall before it happens, and we call you before you redeem, not after.",
+  },
+  {
+    q: "What do you need from me?",
+    a: "One conversation to begin. After that, PAN, KYC, a bank mandate, and an honest picture of what you already hold. We ask for what we need when we need it, and not before.",
+  },
+];
 
 /** Core MFD services shown on the home page. The full catalogue lives on /services. */
 export const homeServiceSlugs = [
@@ -687,10 +539,6 @@ export const commissionRows = [
   ["PPFAS", "0.75-1.10", "0.30-0.45", "0.05-0.10", "-"],
   ["SBI", "0.80-1.30", "0.70-0.95", "0.08-0.10", "0.35-0.55"],
 ] as const;
-
-export function getService(slug: string) {
-  return services.find((item) => item.slug === slug);
-}
 
 export function getPost(slug: string) {
   return [...blogPosts, ...newsItems].find((item) => item.slug === slug);

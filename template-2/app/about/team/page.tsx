@@ -22,18 +22,18 @@ export default function TeamPage() {
                     width: 64,
                     height: 64,
                     borderRadius: 18,
-                    background: "var(--surface-dark)",
-                    color: "var(--accent-soft)",
+                    background: "var(--tint-accent)",
+                    color: "var(--brand-deep)",
                     display: "grid",
                     placeItems: "center",
-                    fontFamily: "var(--font-sans)",
+                    
                     fontSize: 24,
                     marginBottom: 18,
                   }}
                 >
                   {member.initials}
                 </p>
-                <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 32 }}>{member.name}</h2>
+                <h2 style={{ fontSize: 32 }}>{member.name}</h2>
                 <p style={{ color: "var(--accent-text)", margin: "8px 0 14px", fontWeight: 700 }}>
                   {member.role}
                 </p>

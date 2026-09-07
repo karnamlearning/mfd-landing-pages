@@ -5,17 +5,16 @@ import { Container, Eyebrow, PageHeroWrap } from "@/components/ui";
 
 const Title = styled.h1`
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(36px, 4.4vw, 56px);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  max-width: 18ch;
+  max-width: 20ch;
 `;
 
 const Meta = styled(Eyebrow)`
-  margin: 0 0 12px;
-  color: var(--accent);
+  margin: 0 0 18px;
 `;
 
 export function PageHero({ title, meta }: { title: string; meta?: string }) {

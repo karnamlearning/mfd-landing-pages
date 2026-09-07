@@ -48,7 +48,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Mission</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontSize: 30, margin: "8px 0 12px" }}>
                     Help every family we work with reach their goals with a clear plan.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -60,7 +60,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Vision</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontSize: 30, margin: "8px 0 12px" }}>
                     Be the trusted first call for every financial decision.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -72,7 +72,7 @@ export function AboutView() {
               <Item>
                 <Card>
                   <Eyebrow>Since {site.foundedYear}</Eyebrow>
-                  <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 30, margin: "8px 0 12px" }}>
+                  <h3 style={{ fontSize: 30, margin: "8px 0 12px" }}>
                     Registered, regulated, and transparent.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
@@ -98,7 +98,7 @@ export function AboutView() {
                 <Item key={item.title}>
                   <Card>
                     <IconBadge icon={philosophyIcons[index]} />
-                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 26, marginTop: 14 }}>
+                    <h3 style={{ fontSize: 26, marginTop: 14 }}>
                       {item.title}
                     </h3>
                     <p style={{ color: "var(--muted)", marginTop: 10, lineHeight: 1.7 }}>
@@ -111,7 +111,7 @@ export function AboutView() {
           </Stagger>
         </Container>
       </Section>
-      <Section $tone="navy">
+      <Section $tone="paper">
         <Container>
           <Reveal>
             <SectionTitle>Our Process</SectionTitle>
@@ -121,10 +121,10 @@ export function AboutView() {
               {processSteps.map((step, index) => (
                 <Item key={step.n}>
                   <div>
-                    <IconBadge icon={processIcons[index]} tone="dark" />
+                    <IconBadge icon={processIcons[index]} />
                     <Eyebrow style={{ marginTop: 14 }}>{step.n}</Eyebrow>
-                    <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 24 }}>{step.title}</h3>
-                    <p style={{ color: "var(--on-brand-soft)", marginTop: 8 }}>{step.body}</p>
+                    <h3 style={{ fontSize: 24 }}>{step.title}</h3>
+                    <p style={{ color: "var(--muted)", marginTop: 8, lineHeight: 1.7 }}>{step.body}</p>
                   </div>
                 </Item>
               ))}
@@ -147,11 +147,11 @@ export function AboutView() {
                         width: 56,
                         height: 56,
                         borderRadius: 16,
-                        background: "var(--surface-dark)",
-                        color: "var(--accent-soft)",
+                        background: "var(--tint-accent)",
+                        color: "var(--brand-deep)",
                         display: "grid",
                         placeItems: "center",
-                        fontFamily: "var(--font-sans)",
+                        
                         fontSize: 22,
                         fontWeight: 700,
                         marginBottom: 16,

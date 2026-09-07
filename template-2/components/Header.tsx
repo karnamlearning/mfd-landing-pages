@@ -1,33 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import { HiOutlineMenuAlt4, HiOutlineX } from "react-icons/hi";
-import { FiPhone, FiChevronDown } from "react-icons/fi";
 import { primaryNav, site, type NavItem } from "@/lib/site";
 import { navIcons } from "@/components/icons";
 import { Logo } from "@/components/Logo";
 import { ButtonLink, Container } from "@/components/ui";
 
-const Bar = styled.header.attrs({ className: "site-header" })``;
+/**
+ * A quiet letterhead bar: serif wordmark, plain text links, the phone number
+ * in text, and one dark button. Transparent over the cream hero and frosted
+ * once the page scrolls.
+ */
+const Bar = styled.header.attrs<{ $solid: boolean; $open: boolean }>(({ $solid, $open }) => ({
+  className: ["site-header", $solid ? "is-solid" : "", $open ? "is-open" : ""]
+    .filter(Boolean)
+    .join(" "),
+}))<{ $solid: boolean; $open: boolean }>``;
 
 const Row = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
-  gap: 24px;
-  padding: 0 18px;
+  min-height: 78px;
+  gap: 32px;
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
   gap: 2px;
+  margin-left: auto;
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;
@@ -40,36 +48,45 @@ const NavLink = styled(Link)<{ $active?: boolean }>`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 9px;
-  font-size: 13px;
-  font-weight: 600;
-  color: ${({ $active }) => ($active ? "var(--ink)" : "var(--muted)")};
+  padding: 8px 13px;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ $active }) => ($active ? "var(--ink)" : "rgb(var(--seed-ink) / 0.72)")};
+  transition: color 0.15s ease;
 
   &:hover {
     color: var(--ink);
   }
 `;
 
-const Drop = styled.div<{ $open: boolean; $wide?: boolean }>`
+/*
+ * The wrapper starts flush with the nav link and carries the visual gap as
+ * padding, so the pointer never leaves the item on its way down to the menu.
+ */
+const Drop = styled.div<{ $open: boolean }>`
   position: absolute;
-  top: calc(100% - 2px);
+  top: 100%;
   left: 0;
-  min-width: ${({ $wide }) => ($wide ? "540px" : "280px")};
+  padding-top: 10px;
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
+  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
+  transform: translateY(${({ $open }) => ($open ? "0" : "6px")});
+  pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
+  transition: 0.18s ease;
+`;
+
+const DropInner = styled.div<{ $wide?: boolean }>`
+  min-width: ${({ $wide }) => ($wide ? "520px" : "280px")};
   display: ${({ $wide }) => ($wide ? "grid" : "block")};
   grid-template-columns: ${({ $wide }) => ($wide ? "1fr 1fr" : "none")};
   max-height: min(72vh, 640px);
   overflow-y: auto;
-  padding: 12px;
+  padding: 10px;
   background: var(--surface-raised);
   color: var(--ink);
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
-  opacity: ${({ $open }) => ($open ? 1 : 0)};
-  visibility: ${({ $open }) => ($open ? "visible" : "hidden")};
-  transform: translateY(${({ $open }) => ($open ? "0" : "8px")});
-  pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
-  transition: 0.18s ease;
 `;
 
 const DropLink = styled(Link)`
@@ -77,58 +94,54 @@ const DropLink = styled(Link)`
   align-items: flex-start;
   gap: 10px;
   padding: 10px 12px;
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--ink);
 
   svg {
     margin-top: 2px;
     flex-shrink: 0;
-    color: var(--accent);
+    color: var(--brand);
   }
 
   small {
     display: block;
-    margin-top: 2px;
-    font-weight: 500;
+    margin-top: 3px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    font-weight: 400;
     color: var(--muted);
   }
 
   &:hover {
-    background: var(--surface);
+    background: var(--surface-alt);
   }
 `;
 
 const Actions = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 22px;
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1100px) {
     display: none;
   }
 `;
 
-const PhonePill = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  font-size: 13px;
-  font-weight: 650;
+const PhoneLink = styled.a`
+  font-size: 14px;
+  font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 
-  @media (max-width: 1320px) {
+  @media (max-width: 1240px) {
     display: none;
   }
 
   &:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    color: var(--brand);
   }
 `;
 
@@ -140,31 +153,41 @@ const Burger = styled.button`
   font-size: 26px;
   cursor: pointer;
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1100px) {
     display: grid;
   }
 `;
 
 const Drawer = styled.div`
   display: none;
-  padding: 0 18px 20px;
+  padding: 4px 0 24px;
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1100px) {
     display: grid;
-    gap: 6px;
+    gap: 2px;
   }
 `;
 
 const DrawerLink = styled(Link)`
-  padding: 10px 4px;
-  font-weight: 650;
+  display: block;
+  padding: 14px 4px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  color: var(--ink);
   border-bottom: 1px solid var(--line);
 `;
 
 const ChildLink = styled(Link)`
+  display: block;
   padding: 8px 4px 8px 14px;
   font-size: 14px;
   color: var(--muted);
+`;
+
+const DrawerPhone = styled.a`
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 500;
 `;
 
 function pathMatches(href: string, pathname: string) {
@@ -179,11 +202,22 @@ function itemActive(item: NavItem, pathname: string) {
   );
 }
 
+/** The wordmark is the home link, so "Home" only appears in the mobile drawer. */
+const desktopNav = primaryNav.filter((item) => item.href !== "/");
+
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [solid, setSolid] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [hoverLocked, setHoverLocked] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const closeDropdown = () => {
     setOpenMenu(null);
@@ -192,13 +226,12 @@ export function Header() {
   };
 
   return (
-    <Bar>
+    <Bar $solid={solid} $open={open}>
       <Container>
-        <div className="header-shell">
         <Row>
-          <Logo />
+          <Logo compact />
           <Nav aria-label="Primary">
-            {primaryNav.map((item) => (
+            {desktopNav.map((item) => (
               <Item
                 key={item.href}
                 onMouseEnter={() => {
@@ -211,39 +244,35 @@ export function Header() {
               >
                 <NavLink href={item.href} $active={itemActive(item, pathname)}>
                   {item.label}
-                  {item.children ? <FiChevronDown /> : null}
                 </NavLink>
                 {item.children ? (
-                  <Drop $open={openMenu === item.href} $wide={(item.children?.length ?? 0) > 6}>
-                    {item.children.map((child) => {
-                      const ChildIcon = navIcons[child.href];
-                      return (
-                        <DropLink
-                          key={child.href}
-                          href={child.href}
-                          onClick={closeDropdown}
-                        >
-                          {ChildIcon ? <ChildIcon size={16} aria-hidden /> : null}
-                          <span>
-                            {child.label}
-                            {child.description ? <small>{child.description}</small> : null}
-                          </span>
-                        </DropLink>
-                      );
-                    })}
+                  <Drop $open={openMenu === item.href}>
+                    <DropInner $wide={(item.children?.length ?? 0) > 6}>
+                      {item.children.map((child) => {
+                        const ChildIcon = navIcons[child.href];
+                        return (
+                          <DropLink key={child.href} href={child.href} onClick={closeDropdown}>
+                            {ChildIcon ? <ChildIcon size={16} aria-hidden /> : null}
+                            <span>
+                              {child.label}
+                              {child.description ? <small>{child.description}</small> : null}
+                            </span>
+                          </DropLink>
+                        );
+                      })}
+                    </DropInner>
                   </Drop>
                 ) : null}
               </Item>
             ))}
           </Nav>
           <Actions>
-            <PhonePill href={site.phoneHref}>
-              <FiPhone /> {site.phone}
-            </PhonePill>
+            <PhoneLink href={site.phoneHref}>{site.phone}</PhoneLink>
             <ButtonLink href="/contact">Book a consultation</ButtonLink>
           </Actions>
           <Burger
             aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <HiOutlineX /> : <HiOutlineMenuAlt4 />}
@@ -263,12 +292,12 @@ export function Header() {
                 ))}
               </div>
             ))}
-            <ButtonLink href="/contact" onClick={() => setOpen(false)}>
+            <DrawerPhone href={site.phoneHref}>{site.phone}</DrawerPhone>
+            <ButtonLink href="/contact" onClick={() => setOpen(false)} style={{ marginTop: 12 }}>
               Book a consultation
             </ButtonLink>
           </Drawer>
         ) : null}
-        </div>
       </Container>
     </Bar>
   );

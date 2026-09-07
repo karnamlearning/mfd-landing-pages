@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist } from "next/font/google";
+import { Geist, Newsreader } from "next/font/google";
 import { Toaster } from "sonner";
 import StyledComponentsRegistry from "@/lib/styled-components-registry";
 import { Header } from "@/components/Header";
@@ -8,17 +8,23 @@ import { MotionProvider } from "@/components/motion";
 import { site } from "@/lib/site";
 import "./globals.css";
 
+/** Body and UI: a quiet grotesk, small sizes, generous tracking on labels. */
 const ui = Geist({
   variable: "--font-ui",
   subsets: ["latin"],
   display: "swap",
 });
 
-const logo = Fraunces({
-  variable: "--font-logo-face",
+/**
+ * Every headline, the wordmark, and the italic highlight words. Newsreader is
+ * a variable font, so weight is left open; the optical-size axis is included
+ * so large display sizes get the finer cut.
+ */
+const serif = Newsreader({
+  variable: "--font-serif-face",
   subsets: ["latin"],
-  weight: "700",
-  style: "italic",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   display: "swap",
 });
 
@@ -38,7 +44,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${ui.variable} ${logo.variable}`} data-scroll-behavior="smooth">
+    <html lang="en" className={`${ui.variable} ${serif.variable}`} data-scroll-behavior="smooth">
       <body>
         <StyledComponentsRegistry>
           <MotionProvider>

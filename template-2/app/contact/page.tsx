@@ -22,9 +22,8 @@ export default function ContactPage() {
               <Eyebrow>Get in touch</Eyebrow>
               <h2
                 style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 32,
-                  margin: "8px 0 18px",
+                  fontSize: 34,
+                  margin: "8px 0 22px",
                 }}
               >
                 Request a callback

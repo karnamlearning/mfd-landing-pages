@@ -1,143 +1,95 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { toast } from "sonner";
 import { footerNav, site } from "@/lib/site";
 import { Logo } from "@/components/Logo";
-import { Button, Container } from "@/components/ui";
-import { contactIcons, socialIcons } from "@/components/icons";
+import { Container } from "@/components/ui";
+import { socialIcons } from "@/components/icons";
 
-const Wrap = styled.footer.attrs({ className: "on-dark-scope" })`
-  background: var(--surface-darkest);
-  color: var(--on-brand);
-  padding: 80px 0 28px;
-`;
+/*
+ * Cream footer with three link columns, the way the reference lays out
+ * "Site / What we take on / Reach us", then the regulatory fine print.
+ */
 
-const News = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 32px;
-  align-items: end;
-  padding-bottom: 48px;
-  margin-bottom: 48px;
-  border-bottom: 1px solid var(--line);
-
-  h2 {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3vw, 40px);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    max-width: 16ch;
-  }
-
-  p {
-    color: var(--muted);
-    margin-top: 10px;
-    max-width: 46ch;
-    line-height: 1.65;
-  }
-
-  @media (max-width: 800px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 200px;
-  min-height: 50px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface-raised);
+const Wrap = styled.footer`
+  background: var(--surface);
   color: var(--ink);
-  font-size: 14px;
-
-  &:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
+  padding: 88px 0 32px;
+  border-top: 1px solid var(--line);
 `;
 
-const Grid = styled.div`
+const Top = styled.div`
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 36px;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: 48px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
 `;
 
+const Blurb = styled.p`
+  margin-top: 22px;
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+`;
+
 const ColTitle = styled.h3`
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 8px 0 16px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 6px 0 20px;
 `;
 
 const List = styled.ul`
   list-style: none;
   display: grid;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--on-brand-soft);
+  gap: 12px;
+  font-size: 14.5px;
+  color: var(--ink);
+
+  a:hover {
+    color: var(--brand);
+  }
 `;
 
-const Address = styled.p`
-  margin: 18px 0 14px;
-  line-height: 1.7;
-  font-size: 14px;
-  color: var(--muted);
-  white-space: pre-line;
-`;
+const Reach = styled.ul`
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink);
 
-const Fine = styled.p`
-  margin-top: 36px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--on-brand-mute);
-`;
+  a:hover {
+    color: var(--brand);
+  }
 
-const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: 18px;
-  font-size: 13px;
-  opacity: 0.72;
-`;
-
-const IconRow = styled.li`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  svg {
-    flex-shrink: 0;
-    opacity: 0.85;
+  small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
   }
 `;
 
 const Social = styled.div`
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 26px;
 
   a {
     width: 36px;
@@ -146,17 +98,52 @@ const Social = styled.div`
     place-items: center;
     border: 1px solid var(--line-strong);
     border-radius: 50%;
+    color: var(--ink);
+    transition: 0.15s ease;
+  }
+
+  a:hover {
+    background: var(--brand-deep);
+    border-color: var(--brand-deep);
+    color: var(--on-brand);
   }
 `;
 
-const Chip = styled.span`
-  display: inline-block;
-  margin: 0 8px 8px 0;
-  padding: 8px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 650;
+const Fine = styled.div`
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 3fr);
+  gap: 48px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted);
+
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+`;
+
+const Bottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  font-size: 12.5px;
+  color: var(--muted);
+
+  a {
+    color: var(--ink);
+  }
 `;
 
 const amfi = site.registrations.find((item) => item.label.startsWith("AMFI"));
@@ -169,67 +156,29 @@ function describe(item: typeof amfi) {
 }
 
 export function Footer() {
-  const Phone = contactIcons.phone;
-  const Mail = contactIcons.mail;
-  const [email, setEmail] = useState("");
-
   return (
     <Wrap>
       <Container>
-        <News>
+        <Top>
           <div>
-            <h2>Subscribe to our notes</h2>
-            <p>Get the latest planning insights and market context delivered to your inbox.</p>
-          </div>
-          <Form
-            onSubmit={(event) => {
-              event.preventDefault();
-              if (!email.trim()) return;
-              toast.success("Thanks - we will be in touch with the next note.");
-              setEmail("");
-            }}
-          >
-            <Input
-              type="email"
-              required
-              placeholder="Your email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              aria-label="Email address"
-            />
-            <Button type="submit">Subscribe</Button>
-          </Form>
-        </News>
-        <Grid>
-          <div>
-            <Logo onDark />
-            <Address>{site.address.lines.join("\n")}</Address>
-            <List>
-              <IconRow>
-                <Phone size={14} />
-                <a href={site.phoneHref}>{site.phone}</a>
-              </IconRow>
-              <IconRow>
-                <Mail size={14} />
-                <a href={`mailto:${site.email}`}>{site.email}</a>
-              </IconRow>
-            </List>
+            <Logo />
+            <Blurb>{site.blurb}</Blurb>
             <Social>
               {site.social.map((item) => {
                 const Icon = socialIcons[item.name];
                 if (!Icon) return null;
                 return (
                   <a key={item.name} href={item.href} aria-label={item.name}>
-                    <Icon size={16} />
+                    <Icon size={14} />
                   </a>
                 );
               })}
             </Social>
           </div>
           <div>
-            <ColTitle>Company</ColTitle>
+            <ColTitle>Site</ColTitle>
             <List>
-              {footerNav.company.map((item) => (
+              {footerNav.site.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>
@@ -237,9 +186,9 @@ export function Footer() {
             </List>
           </div>
           <div>
-            <ColTitle>Services</ColTitle>
+            <ColTitle>What we handle</ColTitle>
             <List>
-              {footerNav.offerings.map((item) => (
+              {footerNav.handle.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>
@@ -247,29 +196,54 @@ export function Footer() {
             </List>
           </div>
           <div>
-            <ColTitle>Certification</ColTitle>
-            {site.registrations.slice(0, 3).map((item) => (
-              <Chip key={item.value}>
-                {item.label}: {item.value}
-              </Chip>
-            ))}
+            <ColTitle>Reach us</ColTitle>
+            <Reach>
+              <li>
+                <small>Phone</small>
+                <a href={site.phoneHref}>{site.phone}</a>
+              </li>
+              <li>
+                <small>Email</small>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+              <li>
+                <small>Office</small>
+                <span>{site.address.lines.slice(1).join(" ")}</span>
+              </li>
+              <li>
+                <small>Hours</small>
+                <span>{site.hours}</span>
+              </li>
+            </Reach>
           </div>
-        </Grid>
+        </Top>
         <Fine>
-          {site.legalName} is an AMFI-registered Mutual Fund Distributor
-          {amfi ? ` (${describe(amfi)})` : ""}
-          {apmi ? ` and is registered with APMI (${describe(apmi)})` : ""}. Mutual fund
-          investments are subject to market risks; read all scheme-related documents
-          carefully before investing. Past performance is not indicative of future
-          returns. Content on this website is for information only and is not
-          personalised investment advice. We do not offer guaranteed returns.
-          <br />
-          <a href={site.scores}>SEBI SCORES</a>
-          {" · "}
-          <a href={site.smartOdr}>SMART ODR</a>
+          <div>
+            {footerNav.legal.map((item, index) => (
+              <span key={item.href}>
+                {index > 0 ? " · " : ""}
+                <Link href={item.href}>{item.label}</Link>
+              </span>
+            ))}
+            <br />
+            <a href={site.scores}>SEBI SCORES</a>
+            {" · "}
+            <a href={site.smartOdr}>SMART ODR</a>
+          </div>
+          <p>
+            {site.legalName} is an AMFI-registered Mutual Fund Distributor
+            {amfi ? ` (${describe(amfi)})` : ""}
+            {apmi ? ` and is registered with APMI (${describe(apmi)})` : ""}. Mutual fund
+            investments are subject to market risks; read all scheme-related documents
+            carefully before investing. Past performance is not indicative of future
+            returns. Content on this website is for information only and is not
+            personalised investment advice. We do not offer guaranteed returns.
+          </p>
         </Fine>
         <Bottom>
-          <span>© {new Date().getFullYear()} {site.legalName}. All rights reserved.</span>
+          <span>
+            © {new Date().getFullYear()} {site.legalName}. All rights reserved.
+          </span>
           <span>Designed &amp; developed by Advisorkhoj.com</span>
         </Bottom>
       </Container>

@@ -1,39 +1,25 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { calculatorMeta, type CalculatorSlug } from "@/lib/calculators";
-import { CalculatorPanel } from "@/components/calculators/SipWidget";
-import { PageHero } from "@/components/PageHero";
-import { ButtonLink, Container, Section } from "@/components/ui";
+"use client";
 
-type Props = { params: Promise<{ slug: string }> };
+import { useEffect } from "react";
+import { notFound, useParams } from "next/navigation";
+import { calculatorMeta } from "@/lib/calculators";
 
-export function generateStaticParams() {
-  return calculatorMeta.map((item) => ({ slug: item.slug }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+/** Legacy `/calculators/[slug]` URLs bounce into the single-page workspace. */
+export default function CalculatorDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
   const item = calculatorMeta.find((entry) => entry.slug === slug);
-  if (!item) return { title: "Calculator" };
-  return { title: item.title, description: item.summary };
-}
 
-export default async function CalculatorDetailPage({ params }: Props) {
-  const { slug } = await params;
-  const item = calculatorMeta.find((entry) => entry.slug === slug);
+  useEffect(() => {
+    if (!item) return;
+    window.location.replace(`/calculators#${item.slug}`);
+  }, [item]);
+
   if (!item) notFound();
 
   return (
-    <>
-      <PageHero title={item.title} />
-      <Section>
-        <Container>
-          <CalculatorPanel slug={item.slug as CalculatorSlug} />
-          <ButtonLink href="/contact" $variant="navy" style={{ marginTop: 24 }}>
-            Discuss this goal with us
-          </ButtonLink>
-        </Container>
-      </Section>
-    </>
+    <p style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)" }}>
+      Opening {item.title}…
+    </p>
   );
 }
