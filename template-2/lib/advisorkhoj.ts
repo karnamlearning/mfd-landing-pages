@@ -103,24 +103,40 @@ function normaliseImages(html: string): string {
  * Strip anchors but keep their text, per the brief: no hyperlinks are to be
  * carried across from the source articles, news, or mutual fund topics. Also
  * removes scripts, styles, iframes and inline event handlers, since this HTML
- * is injected with dangerouslySetInnerHTML, and rewrites lazy-loaded images so
- * they actually display. Native `loading="lazy"` is omitted: `overflow-x: clip`
- * on html/body makes the browser treat off-screen images as never intersecting.
+ * is injected with dangerouslySetInnerHTML. Forms, inputs, and "Download KIM/SID"
+ * CTAs from the upstream news body are dropped too. Lazy-loaded images are
+ * rewritten so they actually display. Native `loading="lazy"` is omitted:
+ * `overflow-x: clip` on html/body makes off-screen images never intersect.
  */
 export function stripLinks(html: string): string {
   if (!html) return "";
-  return normaliseImages(
-    html
-      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
-      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")
-      .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, "")
-      .replace(/<a\b[^>]*>/gi, "")
-      .replace(/<\/a>/gi, "")
-      .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")
-      .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
-      .replace(/\sstyle\s*=\s*"[^"]*"/gi, "")
-      .replace(/\sclass\s*=\s*"[^"]*"/gi, ""),
-  );
+  let out = html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, "")
+    .replace(/<form\b[^>]*>[\s\S]*?<\/form>/gi, "")
+    .replace(/<a\b[^>]*>[\s\S]*?\bDownload\b[\s\S]*?<\/a>/gi, "")
+    .replace(/<input\b[^>]*>/gi, "")
+    .replace(/<button\b[^>]*>[\s\S]*?<\/button>/gi, "")
+    .replace(/<select\b[^>]*>[\s\S]*?<\/select>/gi, "")
+    .replace(/<textarea\b[^>]*>[\s\S]*?<\/textarea>/gi, "")
+    .replace(/<ul\b[^>]*typeahead[^>]*>[\s\S]*?<\/ul>/gi, "")
+    .replace(/<span\b[^>]*searchAdvisorsInThisCity[^>]*>[\s\S]*?<\/span>/gi, "")
+    .replace(/Locate [^<]{0,120}in your city/gi, "")
+    .replace(/<a\b[^>]*>/gi, "")
+    .replace(/<\/a>/gi, "")
+    .replace(/\son\w+\s*=\s*"[^"]*"/gi, "")
+    .replace(/\son\w+\s*=\s*'[^']*'/gi, "")
+    .replace(/\sstyle\s*=\s*"[^"]*"/gi, "")
+    .replace(/\sclass\s*=\s*"[^"]*"/gi, "");
+
+  for (let i = 0; i < 6; i += 1) {
+    const next = out.replace(/<(div|span|p|section|li)\b[^>]*>\s*<\/\1>/gi, "");
+    if (next === out) break;
+    out = next;
+  }
+
+  return normaliseImages(out);
 }
 
 /**

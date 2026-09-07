@@ -1,34 +1,34 @@
 /* ============================================================================
    PALETTE - THE ONLY BLOCK YOU NEED TO EDIT TO RE-SKIN THE SITE
    ----------------------------------------------------------------------------
-   Warm cream paper, pale sage panels, and a deep forest green that carries the
-   primary button, the dark panels, and accent text. Seeds are raw "R G B"
-   channels so translucent layers can be built with rgb(var(--seed) / <alpha>).
+   Cool paper, pale blue panels, and the royal blue from the Nila seal
+   (rgb 38 71 150) for buttons, dark panels, and accent text. Seeds are raw
+   "R G B" channels so translucent layers can use rgb(var(--seed) / <alpha>).
    ============================================================================ */
 :root {
-  /* Brand - forest green. Primary button, dark panels, table header. */
-  --seed-brand-deep: 24 54 40;
-  --seed-brand: 31 66 49;
-  --seed-brand-soft: 74 112 90;
+  /* Brand - logo royal blue. Primary button, dark panels, table header. */
+  --seed-brand-deep: 24 48 112;
+  --seed-brand: 38 71 150;
+  --seed-brand-soft: 86 118 186;
 
-  /* Accent - the same forest green on light surfaces; a soft mint on dark ones. */
-  --seed-accent: 31 66 49;
-  --seed-accent-soft: 190 219 196;
-  --seed-accent-strong: 24 54 40;
+  /* Accent - the same blue on light surfaces; a soft sky on dark ones. */
+  --seed-accent: 38 71 150;
+  --seed-accent-soft: 196 214 240;
+  --seed-accent-strong: 24 48 112;
 
-  /* Surfaces - cream page, white cards, pale sage bands */
-  --seed-surface: 247 246 242;
+  /* Surfaces - cool paper, white cards, pale blue bands */
+  --seed-surface: 246 248 252;
   --seed-surface-raised: 255 255 255;
-  --seed-sage: 232 236 228;
-  --seed-on-brand: 246 247 243;
+  --seed-sage: 230 238 248;
+  --seed-on-brand: 246 248 252;
 
   /* Text */
-  --seed-ink: 22 26 23;
-  --seed-muted: 104 110 104;
+  --seed-ink: 18 24 38;
+  --seed-muted: 92 100 116;
 
   /* Dark panels */
-  --seed-panel: 31 66 49;
-  --seed-panel-deep: 22 48 36;
+  --seed-panel: 38 71 150;
+  --seed-panel-deep: 20 40 96;
 
   /* Status */
   --seed-positive: 22 150 110;
@@ -85,7 +85,7 @@
   --surface-dark: rgb(var(--seed-panel));
   --surface-darkest: rgb(var(--seed-panel-deep));
 
-  /* Primary call to action: forest green pill, cream text */
+  /* Primary call to action: royal blue pill, cream text */
   --cta-bg: var(--brand-deep);
   --cta-bg-hover: var(--brand);
   --cta-text: var(--on-brand);

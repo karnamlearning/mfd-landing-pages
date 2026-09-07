@@ -356,6 +356,14 @@ export function Header() {
           </Nav>
           <Actions>
             <PhoneLink href={site.phoneHref}>{site.phone}</PhoneLink>
+            <ButtonLink
+              href={site.portal.login}
+              $variant="navy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Client Login
+            </ButtonLink>
             <ButtonLink href="/contact">Book a consultation</ButtonLink>
           </Actions>
           <Burger
@@ -416,6 +424,15 @@ export function Header() {
             })}
             <DrawerActions>
               <DrawerPhone href={site.phoneHref}>{site.phone}</DrawerPhone>
+              <ButtonLink
+                href={site.portal.login}
+                $variant="navy"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setTimeout(() => setOpenedAt(null), 0)}
+              >
+                Client Login
+              </ButtonLink>
               <ButtonLink href="/contact" onClick={() => setTimeout(() => setOpenedAt(null), 0)}>
                 Book a consultation
               </ButtonLink>

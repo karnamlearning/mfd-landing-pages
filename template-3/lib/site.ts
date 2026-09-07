@@ -81,7 +81,7 @@ export const site = {
     { name: "YouTube", href: "https://www.youtube.com/" },
   ],
   portal: {
-    login: "#login",
+    login: "https://nilainvestment.themfbox.com/",
     signup: "#signup",
   },
   scores: "https://scores.sebi.gov.in/",

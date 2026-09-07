@@ -4,11 +4,11 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 
 export const Container = styled.div`
-  width: min(1180px, calc(100% - 48px));
+  width: min(1360px, calc(100% - 80px));
   margin: 0 auto;
 
   @media (max-width: 640px) {
-    width: min(1180px, calc(100% - 28px));
+    width: min(1360px, calc(100% - 28px));
   }
 `;
 

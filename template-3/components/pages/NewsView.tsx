@@ -139,40 +139,13 @@ const RecentRow = styled(Link)`
   }
 `;
 
-const Pager = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 32px;
-  font-size: 13px;
-  color: var(--muted);
-`;
-
-const PageLink = styled(Link)`
-  border: 1px solid var(--line-strong);
-  padding: 9px 16px;
-  font-weight: 750;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink);
-
-  &:hover {
-    background: var(--ink);
-    color: var(--surface);
-  }
-`;
-
 const Empty = styled.p`
   padding: 40px 0;
   color: var(--muted);
 `;
 
-function href(category: string, page: number) {
-  const params = new URLSearchParams();
-  if (category) params.set("category", category);
-  if (page > 1) params.set("page", String(page));
-  const q = params.toString();
-  return q ? `/news?${q}` : "/news";
+function href(category: string) {
+  return category ? `/news?category=${encodeURIComponent(category)}` : "/news";
 }
 
 export function NewsView({
@@ -180,15 +153,11 @@ export function NewsView({
   recent,
   categories,
   category,
-  page,
-  hasNext,
 }: {
   items: NewsCard[];
   recent: NewsCard[];
   categories: string[];
   category: string;
-  page: number;
-  hasNext: boolean;
 }) {
   return (
     <>
@@ -203,7 +172,7 @@ export function NewsView({
                   return (
                     <Chip
                       key={name}
-                      href={href(value, 1)}
+                      href={href(value)}
                       $active={category === value}
                       scroll={false}
                     >
@@ -232,20 +201,6 @@ export function NewsView({
                   category.
                 </Empty>
               ) : null}
-
-              <Pager>
-                {page > 1 ? (
-                  <PageLink href={href(category, page - 1)} scroll={false}>
-                    Previous
-                  </PageLink>
-                ) : null}
-                <span>Page {page}</span>
-                {hasNext ? (
-                  <PageLink href={href(category, page + 1)} scroll={false}>
-                    Next
-                  </PageLink>
-                ) : null}
-              </Pager>
             </div>
 
             <Panel>

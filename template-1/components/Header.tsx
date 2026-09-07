@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import styled from "styled-components";
 import { HiOutlineMenuAlt4, HiOutlineX } from "react-icons/hi";
 import { FiChevronDown } from "react-icons/fi";
-import { primaryNav, type NavItem } from "@/lib/site";
+import { primaryNav, site, type NavItem } from "@/lib/site";
 import { navIcons } from "@/components/icons";
 import { Logo } from "@/components/Logo";
 import { ButtonLink, Container } from "@/components/ui";
@@ -363,6 +363,14 @@ export function Header() {
             ))}
           </Nav>
           <Actions>
+            <ButtonLink
+              href={site.portal.login}
+              $variant="navy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Client Login
+            </ButtonLink>
             <ButtonLink href="/contact">Book a consultation</ButtonLink>
           </Actions>
           <Burger
@@ -422,6 +430,15 @@ export function Header() {
               );
             })}
             <DrawerActions>
+              <ButtonLink
+                href={site.portal.login}
+                $variant="navy"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setTimeout(() => setOpenedAt(null), 0)}
+              >
+                Client Login
+              </ButtonLink>
               <ButtonLink href="/contact" onClick={() => setTimeout(() => setOpenedAt(null), 0)}>
                 Book a consultation
               </ButtonLink>

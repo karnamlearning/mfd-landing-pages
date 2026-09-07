@@ -16,10 +16,8 @@ export const revalidate = 21600;
  */
 const CATEGORIES = ["All", "Mutual Fund", "NFO", "BFSI Industry", "Income Tax"];
 
-const PER_PAGE = 12;
-
 type Props = {
-  searchParams: Promise<{ category?: string; page?: string }>;
+  searchParams: Promise<{ category?: string }>;
 };
 
 function toCard(item: Awaited<ReturnType<typeof getNews>>["items"][number]): NewsCard {
@@ -34,12 +32,11 @@ function toCard(item: Awaited<ReturnType<typeof getNews>>["items"][number]): New
 }
 
 export default async function NewsPage({ searchParams }: Props) {
-  const { category = "", page: rawPage } = await searchParams;
-  const page = Math.max(1, Number(rawPage) || 1);
+  const { category = "" } = await searchParams;
 
   const [feed, latest] = await Promise.all([
-    getNews(page, category),
-    page === 1 && !category ? Promise.resolve(null) : getNews(1, ""),
+    getNews(1, category),
+    category ? getNews(1, "") : Promise.resolve(null),
   ]);
 
   const recentSource = latest ?? feed;
@@ -50,8 +47,6 @@ export default async function NewsPage({ searchParams }: Props) {
       recent={recentSource.items.slice(0, 5).map(toCard)}
       categories={CATEGORIES}
       category={category}
-      page={page}
-      hasNext={page * PER_PAGE < feed.total}
     />
   );
 }

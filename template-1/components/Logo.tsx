@@ -58,7 +58,7 @@ export function LogoMark({ size = 48 }: { size?: number }) {
   return (
     <Seal $size={size} aria-hidden>
       <Image
-        src="/images/logo.png?v=3"
+        src="/images/logo.png?v=4"
         alt=""
         width={size}
         height={size}
