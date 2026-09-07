@@ -6,3 +6,4 @@
 - Check and fix mobile views
 - Add Home link
 - Make calculators fix on scrolling like in template 1, in 2 and 3
+- Fix Mobile View

@@ -17,8 +17,9 @@ import {
   SectionTitle,
 } from "@/components/ui";
 
-const amfi = site.registrations.find((item) => item.label.startsWith("AMFI"));
-const apmi = site.registrations.find((item) => item.label.startsWith("APMI"));
+const registrationText = site.registrations
+  .map((item) => `${item.label.startsWith("AMFI") ? "AMFI" : item.label} ${item.value}`)
+  .join(" and ");
 
 export function AboutView() {
   return (
@@ -77,10 +78,8 @@ export function AboutView() {
                     Registered, regulated, and transparent.
                   </h3>
                   <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-                    {[amfi ? `AMFI ${amfi.value}` : null, apmi ? `APMI ${apmi.value}` : null]
-                      .filter(Boolean)
-                      .join(" and ")}
-                    . Mutual fund distribution with open architecture across fund houses.
+                    {registrationText}. Mutual fund distribution with open architecture across
+                    fund houses.
                   </p>
                 </Card>
               </Item>

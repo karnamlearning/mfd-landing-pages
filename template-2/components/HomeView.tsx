@@ -1523,7 +1523,7 @@ function Questions() {
             </AnimatePresence>
             <Stamp
               id="stamp-answers"
-              href="/faqs"
+              href="/mutual-funds"
               label="Straight answers · No jargon"
               style={{ right: 22, bottom: 22 }}
             />

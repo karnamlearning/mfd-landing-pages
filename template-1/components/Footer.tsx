@@ -147,14 +147,16 @@ const Social = styled.div`
 `;
 
 /* Registration numbers come from lib/site.ts so the disclaimer never drifts. */
-const amfi = site.registrations.find((item) => item.label.startsWith("AMFI"));
-const apmi = site.registrations.find((item) => item.label.startsWith("APMI"));
+type Registration = (typeof site.registrations)[number];
 
-function describe(item: typeof amfi) {
-  if (!item) return "";
-  const valid = "validTill" in item && item.validTill ? `, valid till ${item.validTill}` : "";
-  return `${item.value}${valid}`;
+function describe(item: Registration) {
+  return `${item.value}${item.detail ? `, ${item.detail}` : ""}`;
 }
+
+const amfiText = site.registrations
+  .filter((item) => item.label.startsWith("AMFI"))
+  .map(describe)
+  .join("; ");
 
 const pills = [
   { label: "Home", href: "/" },
@@ -163,7 +165,7 @@ const pills = [
   { label: "Calculators", href: "/calculators" },
   { label: "Blog", href: "/blog" },
   { label: "News", href: "/news" },
-  { label: "FAQs", href: "/faqs" },
+  { label: "Mutual Funds", href: "/mutual-funds" },
   ...footerNav.company.filter((item) => ["/disclosures", "/privacy", "/terms"].includes(item.href)),
 ];
 
@@ -204,8 +206,7 @@ export function Footer() {
 
         <Fine>
           {site.legalName} is an AMFI-registered Mutual Fund Distributor
-          {amfi ? ` (${describe(amfi)})` : ""}
-          {apmi ? ` and is registered with APMI (${describe(apmi)})` : ""}. Mutual fund
+          {amfiText ? ` (${amfiText})` : ""}. Mutual fund
           investments are subject to market risks; read all scheme-related documents
           carefully before investing. Past performance is not indicative of future
           returns. Content on this website is for information only and is not

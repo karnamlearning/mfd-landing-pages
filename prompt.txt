@@ -1,0 +1,40 @@
+1. Company Info:
+```
+Building No-66/1858 AI , Veekshnam Road	Ernakulam-682018	682018	Ernakulam
+9895096596
+nilainvestmentservices@gmail.com
+ARN-131835	EUIN- E008304
+ARN-97263	EUIN - E111790
+156 CR Asset UM
+552 Investors
+```
+
+2. Update FAQ Endpoint:
+
+- List:
+```
+https://web-api.advisorkhoj.com/common/getMutualFunds
+```
+
+- Single Item:
+```
+https://web-api.advisorkhoj.com/common/getMutualFundContent?title=How%20do%20mutual%20funds%20work
+```
+
+- Rename "FAQ" to "Mutual Funds" as insights will be related to Mutual Funds
+
+3. Remove Hyperlinks, that might come in articles, news, and FAQs
+
+4. Images aren't displaying of the HTML response.
+
+5. Fix Mobile view, especially navbar, and Calculators
+
+6. When going to new page, scroll to top
+
+7. Add Home Navlink
+
+6. Fix Alignment for Privacy Policy and Terms of Services
+
+7. Make calculators fix on scrolling in templates 2 and 3 like in template 1.
+
+8. Update our services to have tabs, clicking tabs should scroll to the particular service, and make it sticky like calculators

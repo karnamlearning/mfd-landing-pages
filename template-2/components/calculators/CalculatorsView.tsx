@@ -26,7 +26,7 @@ const isSlug = (value: string): value is CalculatorSlug =>
 
 const Rail = styled.div`
   position: sticky;
-  top: 76px;
+  top: 78px;
   z-index: 20;
   background: var(--surface-veil);
   backdrop-filter: blur(10px);

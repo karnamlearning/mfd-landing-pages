@@ -44,11 +44,12 @@ const Top = styled.div`
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 
   @media (max-width: 940px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 `;
 
 const Inputs = styled.div`
+  min-width: 0;
   padding: 30px;
   display: grid;
   align-content: start;
@@ -60,6 +61,7 @@ const Inputs = styled.div`
 `;
 
 const Output = styled.div.attrs({ className: "on-dark-scope" })`
+  min-width: 0;
   padding: 30px;
   background: var(--surface-darkest);
   color: var(--on-brand);

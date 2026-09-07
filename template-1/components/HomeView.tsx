@@ -68,7 +68,7 @@ const stat = (index: number) => {
   return `${"prefix" in item ? item.prefix : ""}${item.value.toLocaleString("en-IN")}${item.suffix}`;
 };
 
-const firmArn = site.registrations.find((item) => item.detail === "Firm registration");
+const firmArn = site.registrations.find((item) => item.label.startsWith("AMFI"));
 
 const comparison = [
   {

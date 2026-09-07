@@ -173,14 +173,16 @@ const Chip = styled.span`
   font-weight: 650;
 `;
 
-const amfi = site.registrations.find((item) => item.label.startsWith("AMFI"));
-const apmi = site.registrations.find((item) => item.label.startsWith("APMI"));
+type Registration = (typeof site.registrations)[number];
 
-function describe(item: typeof amfi) {
-  if (!item) return "";
-  const valid = "validTill" in item && item.validTill ? `, valid till ${item.validTill}` : "";
-  return `${item.value}${valid}`;
+function describe(item: Registration) {
+  return `${item.value}${item.detail ? `, ${item.detail}` : ""}`;
 }
+
+const amfiText = site.registrations
+  .filter((item) => item.label.startsWith("AMFI"))
+  .map(describe)
+  .join("; ");
 
 export function Footer() {
   const Phone = contactIcons.phone;
@@ -275,8 +277,7 @@ export function Footer() {
           </Grid>
           <Fine>
             {site.legalName} is an AMFI-registered Mutual Fund Distributor
-            {amfi ? ` (${describe(amfi)})` : ""}
-            {apmi ? ` and is registered with APMI (${describe(apmi)})` : ""}. Mutual fund
+            {amfiText ? ` (${amfiText})` : ""}. Mutual fund
             investments are subject to market risks; read all scheme-related documents
             carefully before investing. Past performance is not indicative of future
             returns. Content on this website is for information only and is not

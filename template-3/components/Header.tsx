@@ -115,6 +115,10 @@ const Actions = styled.div`
 
 const Burger = styled.button`
   display: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  margin-right: -8px;
   background: none;
   border: 0;
   color: inherit;
@@ -126,31 +130,100 @@ const Burger = styled.button`
   }
 `;
 
-const Drawer = styled.div`
+/* ---------------------------------------------------------- mobile drawer --- */
+
+/*
+ * The drawer lives inside the fixed header, so it scrolls on its own when the
+ * list is taller than the screen. Sections with children fold open one at a
+ * time; the section for the current page starts open.
+ */
+const Drawer = styled.nav`
   display: none;
-  padding: 0 0 20px;
 
   @media (max-width: 980px) {
-    display: grid;
-    gap: 6px;
+    display: block;
+    max-height: calc(100dvh - 76px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px 0 24px;
+    border-top: 1px solid rgb(var(--seed-on-brand) / 0.12);
   }
 `;
 
-const DrawerLink = styled(Link)`
-  padding: 10px 0;
-  font-weight: 650;
+const DrawerRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   border-bottom: 1px solid rgb(var(--seed-on-brand) / 0.12);
 `;
 
-const ChildLink = styled(Link)`
-  padding: 8px 0 8px 14px;
-  font-size: 14px;
-  color: var(--on-brand-mute);
+const DrawerLink = styled(Link)<{ $active?: boolean }>`
+  flex: 1;
+  min-width: 0;
+  display: block;
+  padding: 15px 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${({ $active }) => ($active ? "var(--accent)" : "var(--on-brand)")};
+`;
+
+const Expand = styled.button<{ $open: boolean }>`
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: ${({ $open }) => ($open ? "rgb(var(--seed-accent) / 0.16)" : "transparent")};
+  color: ${({ $open }) => ($open ? "var(--accent)" : "var(--on-brand)")};
+  cursor: pointer;
+
+  svg {
+    transition: transform 0.2s ease;
+    transform: rotate(${({ $open }) => ($open ? "180deg" : "0deg")});
+  }
+`;
+
+const DrawerChildren = styled.div`
+  display: grid;
+  gap: 2px;
+  padding: 8px 0 14px;
+  border-bottom: 1px solid rgb(var(--seed-on-brand) / 0.12);
+`;
+
+const ChildLink = styled(Link)<{ $active?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: ${({ $active }) => ($active ? "var(--accent)" : "var(--on-brand-mute)")};
+  background: ${({ $active }) => ($active ? "rgb(var(--seed-accent) / 0.12)" : "transparent")};
+
+  svg {
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+`;
+
+const DrawerActions = styled.div`
+  display: grid;
+  gap: 10px;
+  padding-top: 20px;
+
+  a {
+    width: 100%;
+  }
 `;
 
 function pathMatches(href: string, pathname: string) {
-  if (href === "/") return pathname === "/";
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const path = href.split("#")[0];
+  if (path === "/") return pathname === "/";
+  return pathname === path || pathname.startsWith(`${path}/`);
 }
 
 function itemActive(item: NavItem, pathname: string) {
@@ -162,10 +235,16 @@ function itemActive(item: NavItem, pathname: string) {
 
 export function Header() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  // The drawer remembers the path it opened on, so a navigation closes it
+  // without an effect having to watch the pathname.
+  const [openedAt, setOpenedAt] = useState<string | null>(null);
+  const open = openedAt === pathname;
+  const [expanded, setExpanded] = useState<string | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [hoverLocked, setHoverLocked] = useState(false);
-  const [solid, setSolid] = useState(pathname !== "/");
+  // Inner pages are always solid; the home page turns solid once scrolled.
+  const [scrolled, setScrolled] = useState(false);
+  const solid = pathname !== "/" || scrolled;
   const leaveTimer = useRef<number | null>(null);
 
   const clearLeave = () => {
@@ -176,16 +255,29 @@ export function Header() {
   };
 
   useEffect(() => {
-    setOpen(false);
-    if (pathname !== "/") {
-      setSolid(true);
-      return;
-    }
-    const onScroll = () => setSolid(window.scrollY > 24);
+    if (pathname !== "/") return;
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const toggleDrawer = () => {
+    if (open) {
+      setOpenedAt(null);
+      return;
+    }
+    const current = primaryNav.find((item) => item.children && itemActive(item, pathname));
+    setExpanded(current?.href ?? null);
+    setOpenedAt(pathname);
+  };
 
   const closeDropdown = () => {
     clearLeave();
@@ -197,7 +289,7 @@ export function Header() {
   useEffect(() => () => clearLeave(), []);
 
   return (
-    <Bar className={`site-header${solid || open ? " is-solid" : ""}`}>
+    <Bar className={`site-header${solid || open ? " is-solid" : ""}${open ? " is-open" : ""}`}>
       <Container>
         <Row>
           <Logo />
@@ -242,27 +334,67 @@ export function Header() {
           <Actions>
             <ButtonLink href="/contact">Book a consultation</ButtonLink>
           </Actions>
-          <Burger aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen((v) => !v)}>
+          <Burger
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={toggleDrawer}
+          >
             {open ? <HiOutlineX /> : <HiOutlineMenuAlt4 />}
           </Burger>
         </Row>
         {open ? (
-          <Drawer>
-            {primaryNav.map((item) => (
-              <div key={item.href}>
-                <DrawerLink href={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </DrawerLink>
-                {item.children?.map((child) => (
-                  <ChildLink key={child.href} href={child.href} onClick={() => setOpen(false)}>
-                    {child.label}
-                  </ChildLink>
-                ))}
-              </div>
-            ))}
-            <ButtonLink href="/contact" onClick={() => setOpen(false)}>
-              Book a consultation
-            </ButtonLink>
+          <Drawer id="mobile-nav" aria-label="Mobile">
+            {primaryNav.map((item) => {
+              const isOpen = expanded === item.href;
+              return (
+                <div key={item.href}>
+                  <DrawerRow>
+                    <DrawerLink
+                      href={item.href}
+                      $active={itemActive(item, pathname)}
+                      onClick={() => setOpenedAt(null)}
+                    >
+                      {item.label}
+                    </DrawerLink>
+                    {item.children ? (
+                      <Expand
+                        type="button"
+                        $open={isOpen}
+                        aria-expanded={isOpen}
+                        aria-label={`${isOpen ? "Collapse" : "Expand"} ${item.label}`}
+                        onClick={() => setExpanded(isOpen ? null : item.href)}
+                      >
+                        <FiChevronDown size={18} />
+                      </Expand>
+                    ) : null}
+                  </DrawerRow>
+                  {item.children && isOpen ? (
+                    <DrawerChildren>
+                      {item.children.map((child) => {
+                        const ChildIcon = navIcons[child.href];
+                        return (
+                          <ChildLink
+                            key={child.href}
+                            href={child.href}
+                            $active={pathMatches(child.href, pathname) && child.href.indexOf("#") < 0}
+                            onClick={() => setOpenedAt(null)}
+                          >
+                            {ChildIcon ? <ChildIcon size={15} aria-hidden /> : null}
+                            {child.label}
+                          </ChildLink>
+                        );
+                      })}
+                    </DrawerChildren>
+                  ) : null}
+                </div>
+              );
+            })}
+            <DrawerActions>
+              <ButtonLink href="/contact" onClick={() => setOpenedAt(null)}>
+                Book a consultation
+              </ButtonLink>
+            </DrawerActions>
           </Drawer>
         ) : null}
       </Container>

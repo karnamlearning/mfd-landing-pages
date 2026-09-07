@@ -69,6 +69,7 @@
   --cta-text: var(--ink);
   --edge-highlight: rgb(255 255 255 / 0.55);
 
+  --header-height: 76px;
   --radius: 0px;
   --shadow: none;
   --shadow-accent: none;
@@ -89,10 +90,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* `clip`, not `hidden`: hidden would turn <body> into a scroll container and
+   silently break every position: sticky element on the site. */
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

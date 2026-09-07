@@ -1,53 +1,41 @@
 export const site = {
-  name: "Aarohan Wealth",
-  legalName: "Aarohan Wealth Advisors LLP",
-  shortName: "Aarohan",
+  name: "Nila Investment Services",
+  legalName: "Nila Investment Services",
+  shortName: "Nila",
   /** Small line under the name in the logo. Keep it to two or three words. */
   logoTagline: "Mutual Fund Distributor",
   tagline: "Plan your goals. Invest with confidence.",
   description:
     "Mutual fund distribution, insurance, and FD & bond services - helping investors select, execute, monitor, and stay serviced.",
   foundedYear: 2014,
-  url: "https://www.aarohanwealth.in",
-  email: "hello@aarohanwealth.in",
-  advisorEmail: "advisor@aarohanwealth.in",
-  phone: "+91 98765 43210",
-  phoneHref: "tel:+919876543210",
-  whatsapp: "https://wa.me/919876543210",
+  url: "https://www.nilainvestmentservices.com",
+  email: "nilainvestmentservices@gmail.com",
+  advisorEmail: "nilainvestmentservices@gmail.com",
+  phone: "+91 98950 96596",
+  phoneHref: "tel:+919895096596",
+  whatsapp: "https://wa.me/919895096596",
   hours: "Mon – Sat, 9:30 AM – 6:30 PM",
   address: {
     lines: [
-      "Aarohan Wealth Advisors LLP",
-      "4th Floor, Meridian House,",
-      "Plot 12, Bandra Kurla Complex,",
-      "Mumbai, Maharashtra 400051",
+      "Nila Investment Services",
+      "Building No-66/1858 AI, Veekshnam Road,",
+      "Ernakulam, Kerala 682018",
     ],
-    city: "Mumbai",
-    mapUrl: "https://maps.google.com/?q=Bandra+Kurla+Complex+Mumbai",
+    city: "Ernakulam",
+    mapUrl:
+      "https://maps.google.com/?q=Building+No-66%2F1858+AI%2C+Veekshnam+Road%2C+Ernakulam+682018",
   },
+  /** AMFI registrations, each with the employee unique identification number (EUIN). */
   registrations: [
     {
       label: "AMFI Registration",
-      value: "ARN-248761",
-      detail: "Firm registration",
-      validTill: "31 Jan 2028",
+      value: "ARN-131835",
+      detail: "EUIN E008304",
     },
     {
       label: "AMFI Registration",
-      value: "ARN-136842",
-      detail: "Principal Officer",
-      validTill: "30 Nov 2027",
-    },
-    {
-      label: "APMI Registration",
-      value: "APRN01840",
-      detail: "Portfolio Management distribution",
-      validTill: "28 Feb 2027",
-    },
-    {
-      label: "FPSB India",
-      value: "IN-48210",
-      detail: "Certified Financial Planner",
+      value: "ARN-97263",
+      detail: "EUIN E111790",
     },
   ],
   /**
@@ -65,18 +53,18 @@ export const site = {
     },
     {
       icon: "families",
-      value: 2500,
-      suffix: "+",
-      label: "Families served",
-      note: "Across India and overseas",
+      value: 552,
+      suffix: "",
+      label: "Investors",
+      note: "Families and individuals we service",
     },
     {
       icon: "assets",
-      value: 350,
+      value: 156,
       prefix: "₹",
-      suffix: " Cr+",
-      label: "Client investments",
-      note: "SIPs and folios we service",
+      suffix: " Cr",
+      label: "Assets under management",
+      note: "Mutual fund assets we service",
     },
     {
       icon: "amcs",
@@ -179,7 +167,7 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: "Blog", href: "/blog" },
       { label: "News", href: "/news" },
-      { label: "FAQs", href: "/faqs" },
+      { label: "Mutual Funds", href: "/mutual-funds" },
     ],
   },
   { label: "Contact", href: "/contact" },
@@ -202,10 +190,10 @@ export const footerNav = {
     { label: "Blog", href: "/blog" },
     { label: "News", href: "/news" },
   ],
-  faqs: [
-    { label: "Mutual Fund FAQs", href: "/faqs#mutual-funds" },
-    { label: "NRI Corner FAQs", href: "/faqs#nri" },
-    { label: "Financial Planning", href: "/faqs#planning" },
+  learn: [
+    { label: "Mutual Funds", href: "/mutual-funds" },
+    { label: "Blog", href: "/blog" },
+    { label: "News", href: "/news" },
   ],
 };
 

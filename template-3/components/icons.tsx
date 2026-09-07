@@ -134,7 +134,7 @@ export const socialIcons: Record<string, IconType> = {
 export const navIcons: Record<string, IconType> = {
   "/blog": FiBookOpen,
   "/news": FiRadio,
-  "/faqs": FiHelpCircle,
+  "/mutual-funds": FiHelpCircle,
 };
 
 export const calculatorIcons: Record<string, IconType> = {

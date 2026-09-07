@@ -212,6 +212,7 @@ export function ChipRow({
 const InputRow = styled.div`
   display: flex;
   align-items: stretch;
+  min-width: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
   transition:
@@ -381,6 +382,7 @@ export function SliderField({
 const StepRow = styled.div`
   display: flex;
   align-items: stretch;
+  min-width: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
 `;
@@ -489,7 +491,8 @@ export function StepperField({
 const Seg = styled.div`
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 1fr;
+  grid-auto-columns: minmax(0, 1fr);
+  min-width: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
 `;
@@ -497,6 +500,7 @@ const Seg = styled.div`
 const SegCell = styled.div`
   position: relative;
   display: grid;
+  min-width: 0;
 
   & + & {
     border-left: 1px solid var(--line);
@@ -512,6 +516,7 @@ const SegPill = styled(motion.span)`
 const SegButton = styled.button<{ $on: boolean }>`
   position: relative;
   z-index: 1;
+  min-width: 0;
   border: 0;
   background: transparent;
   cursor: pointer;

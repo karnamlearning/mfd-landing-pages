@@ -5,6 +5,7 @@ import {
   getServicesByCategory,
 } from "@/lib/content";
 import { PageHero } from "@/components/PageHero";
+import { ServiceTabs } from "@/components/ServiceTabs";
 import { IconBadge } from "@/components/icons";
 import {
   ButtonLink,
@@ -27,6 +28,9 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero title="Our Services" meta="What we do" />
+      <ServiceTabs
+        tabs={serviceCategories.map((category) => ({ id: category.id, label: category.title }))}
+      />
       <Section>
         <Container>
           <Lead style={{ marginBottom: 48, maxWidth: "62ch" }}>{servicesIntro}</Lead>
@@ -37,7 +41,7 @@ export default function ServicesPage() {
               <div
                 key={category.id}
                 id={category.id}
-                style={{ marginBottom: 72, scrollMarginTop: 100 }}
+                style={{ marginBottom: 72, scrollMarginTop: 150 }}
               >
                 <Eyebrow>{category.eyebrow}</Eyebrow>
                 <Display style={{ maxWidth: "14ch", marginTop: 8 }}>{category.title}</Display>

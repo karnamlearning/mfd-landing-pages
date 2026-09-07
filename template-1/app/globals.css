@@ -91,6 +91,7 @@
   --cta-text: var(--on-brand);
   --edge-highlight: rgb(255 255 255 / 0.7);
 
+  --header-height: 76px;
   --radius: 20px;
   --radius-sm: 14px;
   --shadow:
@@ -264,6 +265,12 @@ header.site-header {
 
 header.site-header.is-solid {
   border-bottom-color: var(--line);
+}
+
+header.site-header.is-open {
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
