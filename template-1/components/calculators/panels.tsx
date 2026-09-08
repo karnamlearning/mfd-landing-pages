@@ -14,7 +14,6 @@ import {
   ControlStack,
   ControlWide,
   MoneyField,
-  Segmented,
   SelectField,
   SliderField,
   StepperField,
@@ -35,10 +34,8 @@ const FILL = {
   existing: "--positive",
 } as const;
 
-const PLAN_OPTIONS = [
-  { value: "Regular" as const, label: "Regular" },
-  { value: "Direct" as const, label: "Direct" },
-];
+/** Research tools always query Regular plans. */
+const SCHEME_PLAN_TYPE = "Regular" as const;
 
 const ActionRow = styled.div`
   display: flex;
@@ -272,7 +269,6 @@ function useCategories() {
 function TrailingReturns() {
   const categories = useCategories();
   const [category, setCategory] = useState("Equity: Flexi Cap");
-  const [plan, setPlan] = useState<"Regular" | "Direct">("Regular");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [rows, setRows] = useState<Record<string, unknown>[]>([]);
@@ -287,7 +283,7 @@ function TrailingReturns() {
     try {
       const payload = await callResearch("getSchemePerformanceReturns", {
         category,
-        scheme_plan_type: plan,
+        scheme_plan_type: SCHEME_PLAN_TYPE,
       });
       const list = asList(payload).map((item) => asRecord(item)).filter(Boolean) as Record<string, unknown>[];
       setRows(list.slice(0, 40));
@@ -297,7 +293,7 @@ function TrailingReturns() {
     } finally {
       setLoading(false);
     }
-  }, [category, plan]);
+  }, [category]);
 
   return (
     <ResearchPanel
@@ -312,7 +308,6 @@ function TrailingReturns() {
             options={(categories.length ? categories : [category]).map((c) => ({ value: c, label: c }))}
             onChange={setCategory}
           />
-          <Segmented label="Plan type" value={plan} options={PLAN_OPTIONS} onChange={setPlan} />
         </>
       }
     >
@@ -337,7 +332,6 @@ function TrailingReturns() {
 function MfSipReturns() {
   const categories = useCategories();
   const [category, setCategory] = useState("Equity: Flexi Cap");
-  const [plan, setPlan] = useState<"Regular" | "Direct">("Regular");
   const [period, setPeriod] = useState("1");
   const [amount, setAmount] = useState("3000");
   const [periods, setPeriods] = useState<{ value: string; label: string }[]>([]);
@@ -382,7 +376,7 @@ function MfSipReturns() {
         category,
         period,
         amount,
-        scheme_plan_type: plan,
+        scheme_plan_type: SCHEME_PLAN_TYPE,
       });
       const list = asList(payload).map((item) => asRecord(item)).filter(Boolean) as Record<string, unknown>[];
       setRows(list.slice(0, 40));
@@ -392,7 +386,7 @@ function MfSipReturns() {
     } finally {
       setLoading(false);
     }
-  }, [amount, category, period, plan]);
+  }, [amount, category, period]);
 
   return (
     <ResearchPanel
@@ -422,7 +416,6 @@ function MfSipReturns() {
             }))}
             onChange={setAmount}
           />
-          <Segmented label="Plan type" value={plan} options={PLAN_OPTIONS} onChange={setPlan} />
         </>
       }
     >
@@ -445,7 +438,6 @@ function MfSipReturns() {
 function MfLumpsumReturns() {
   const categories = useCategories();
   const [category, setCategory] = useState("Equity: Flexi Cap");
-  const [plan, setPlan] = useState<"Regular" | "Direct">("Regular");
   const [period, setPeriod] = useState("5");
   const [amount, setAmount] = useState("10000");
   const [periods, setPeriods] = useState<{ value: string; label: string }[]>([]);
@@ -490,7 +482,7 @@ function MfLumpsumReturns() {
         category,
         period,
         amount,
-        scheme_plan_type: plan,
+        scheme_plan_type: SCHEME_PLAN_TYPE,
       });
       const list = asList(payload).map((item) => asRecord(item)).filter(Boolean) as Record<string, unknown>[];
       setRows(list.slice(0, 40));
@@ -500,7 +492,7 @@ function MfLumpsumReturns() {
     } finally {
       setLoading(false);
     }
-  }, [amount, category, period, plan]);
+  }, [amount, category, period]);
 
   return (
     <ResearchPanel
@@ -530,7 +522,6 @@ function MfLumpsumReturns() {
             }))}
             onChange={setAmount}
           />
-          <Segmented label="Plan type" value={plan} options={PLAN_OPTIONS} onChange={setPlan} />
         </>
       }
     >

@@ -356,6 +356,16 @@ const Centered = styled.div`
     margin-top: 16px;
     max-width: 52ch;
   }
+
+  @media (max-width: 640px) {
+    ${Display} {
+      max-width: none;
+    }
+
+    ${Lead} {
+      font-size: 15px;
+    }
+  }
 `;
 
 /*
@@ -370,20 +380,24 @@ const Explorer = styled.div`
   gap: 24px;
   margin-top: 48px;
   align-items: start;
+  min-width: 0;
 
   @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
   }
 `;
 
 const Rows = styled.div`
   display: grid;
   gap: 10px;
+  min-width: 0;
 `;
 
 const Row = styled.div<{ $open: boolean }>`
   position: relative;
   overflow: hidden;
+  min-width: 0;
   border-radius: 20px;
   background: ${({ $open }) => ($open ? "var(--surface-raised)" : "transparent")};
   border: 1px solid ${({ $open }) => ($open ? "var(--line-strong)" : "var(--line)")};
@@ -396,6 +410,7 @@ const Row = styled.div<{ $open: boolean }>`
 
 const RowButton = styled.button<{ $open: boolean }>`
   width: 100%;
+  min-width: 0;
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr) auto;
   gap: 16px;
@@ -429,10 +444,12 @@ const RowButton = styled.button<{ $open: boolean }>`
     font-size: 18px;
     font-weight: 700;
     letter-spacing: -0.025em;
+    overflow-wrap: break-word;
   }
 
   svg {
     color: var(--muted);
+    flex-shrink: 0;
     transform: rotate(${({ $open }) => ($open ? "180deg" : "0deg")});
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -441,6 +458,21 @@ const RowButton = styled.button<{ $open: boolean }>`
     outline: 2px solid var(--accent);
     outline-offset: -4px;
     border-radius: 20px;
+  }
+
+  @media (max-width: 640px) {
+    gap: 12px;
+    padding: 16px;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+
+    i {
+      width: 34px;
+      height: 34px;
+    }
+
+    strong {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -451,6 +483,7 @@ const RowBody = styled(motion.div)`
 const RowInner = styled.div`
   display: grid;
   gap: 14px;
+  min-width: 0;
   padding: 0 20px 22px 74px;
 
   p {
@@ -481,7 +514,7 @@ const RowInner = styled.div`
     color: var(--accent-strong);
   }
 
-  a {
+  > a {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -491,7 +524,45 @@ const RowInner = styled.div`
   }
 
   @media (max-width: 640px) {
-    padding-left: 20px;
+    padding: 0 16px 20px;
+  }
+`;
+
+const MobileDetail = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: grid;
+    gap: 12px;
+    padding-top: 4px;
+  }
+
+  small {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+`;
+
+const MobileActions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: stretch;
+  padding-top: 4px;
+
+  a {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    height: auto;
+    min-height: 48px;
+    padding: 12px 16px;
+    line-height: 1.3;
   }
 `;
 
@@ -521,6 +592,7 @@ const ExplorerPanel = styled.div.attrs({ className: "on-dark-scope" })`
   top: 100px;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 440px;
   padding: 32px;
   border-radius: 24px;
@@ -528,8 +600,7 @@ const ExplorerPanel = styled.div.attrs({ className: "on-dark-scope" })`
   color: var(--on-brand);
 
   @media (max-width: 900px) {
-    position: static;
-    min-height: 0;
+    display: none;
   }
 `;
 
@@ -617,6 +688,16 @@ const PanelFoot = styled.div`
   align-items: center;
   margin-top: auto;
   padding-top: 28px;
+  min-width: 0;
+
+  a {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    height: auto;
+    min-height: 48px;
+    line-height: 1.3;
+  }
 `;
 
 function ServiceExplorer() {
@@ -624,8 +705,17 @@ function ServiceExplorer() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [cycle, setCycle] = useState(0);
+  const [narrow, setNarrow] = useState(false);
   const count = homeServices.length;
-  const running = !paused && !reduce;
+  const running = !paused && !reduce && !narrow;
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 900px)");
+    const sync = () => setNarrow(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     if (!running) return;
@@ -690,6 +780,25 @@ function ServiceExplorer() {
                       <Link href={`/services/${service.slug}`}>
                         Learn more <FiArrowRight size={14} aria-hidden />
                       </Link>
+                      <MobileDetail>
+                        <small>Who it is for</small>
+                        <ul>
+                          {service.whoFor.map((item) => (
+                            <li key={item}>
+                              <FiCheck size={14} aria-hidden />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                        <MobileActions>
+                          <ButtonLink href="/contact">
+                            Talk to us about {service.shortTitle} <FiArrowUpRight />
+                          </ButtonLink>
+                          <ButtonLink href="/services" $variant="ghost">
+                            All services
+                          </ButtonLink>
+                        </MobileActions>
+                      </MobileDetail>
                     </RowInner>
                   </RowBody>
                 ) : null}

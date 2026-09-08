@@ -129,7 +129,7 @@ export const calculatorMeta = [
     eyebrow: "MF research",
     group: "research" as const,
     summary:
-      "Compare category trailing returns across schemes for Regular or Direct plans.",
+      "Compare category trailing returns across Regular plans.",
   },
   {
     slug: "mf-sip-returns",
