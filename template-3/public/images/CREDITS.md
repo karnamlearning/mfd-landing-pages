@@ -27,5 +27,10 @@ All photos below are from Unsplash and used under the Unsplash License
 | about-women.jpg | https://unsplash.com/photos/O_H7BlvtZ8Y (Varun Gaba) |
 | why-father-child.jpg | https://unsplash.com/photos/oG6mE4Z6UME (BenMoses M) |
 | contact-cafe.jpg | https://unsplash.com/photos/5U_28ojjgms (Redd Francisco) |
+| indian-family.jpg | https://unsplash.com/photos/ZWbBxZ6zTwM (Luemen Rutkowski) |
 
-indian-family.jpg was already present in the project before this set was added.
+| logo.png | Nila’s own mark (not stock). |
+
+This template’s /public/images folder currently has logo.png only. The other files above are referenced in code (same set as template-2) but are not on disk here, so those photos will 404 until they are copied over.
+
+License check (Sep 2026): listed Unsplash photos are under the Unsplash License (free personal and commercial use; attribution not required). Images inside news, blog, and mutual-fund HTML come from Advisorkhoj / AMCs and are not part of this Unsplash set.

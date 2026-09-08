@@ -27,5 +27,8 @@ All photos below are from Unsplash and used under the Unsplash License
 | about-women.jpg | https://unsplash.com/photos/O_H7BlvtZ8Y (Varun Gaba) |
 | why-father-child.jpg | https://unsplash.com/photos/oG6mE4Z6UME (BenMoses M) |
 | contact-cafe.jpg | https://unsplash.com/photos/5U_28ojjgms (Redd Francisco) |
+| indian-family.jpg | https://unsplash.com/photos/ZWbBxZ6zTwM (Luemen Rutkowski) |
 
-indian-family.jpg was already present in the project before this set was added.
+| logo.png | Nila’s own mark (not stock). |
+
+License check (Sep 2026): listed Unsplash photos are under the Unsplash License (free personal and commercial use; attribution not required). Default Next.js SVGs in /public (file, vercel, window) are unused. Images inside news, blog, and mutual-fund HTML come from Advisorkhoj / AMCs and are not part of this Unsplash set.

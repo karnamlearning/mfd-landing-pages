@@ -1,0 +1,232 @@
+Questions for Nila — website copy
+=================================
+
+Use this as a call / email checklist. We already have address, phone, email, both ARNs + EUINs, 156 Cr AUM, and 552 investors. Everything else on the site is template copy and needs Nila’s words (or a keep / drop / rewrite).
+
+Please ask them to send copy in English. Short answers are fine; we can polish tone.
+
+
+1. Brand and company
+--------------------
+
+1. What is the exact legal / registered name to show on the site and in the footer? (We currently use “Nila Investment Services”.)
+2. Is there a shorter brand name for the logo and large footer wordmark? (We currently use “Nila”.)
+3. What tagline should sit under the logo? DONE — “Investment services”.
+4. What is the main website tagline / one-liner? (Currently: “Plan your goals. Invest with confidence.”)
+5. In one or two sentences, how should we describe the firm? (Home, about, and Google/SEO description.)
+6. In which year was the firm founded / when did you start this practice?
+7. Confirm the public website URL. (Currently assumed: https://www.nilainvestmentservices.com)
+8. Who do the two ARNs belong to, by name?
+   - ARN-131835 / EUIN E008304
+   - ARN-97263 / EUIN E111790
+9. Besides AMFI, what other registrations should we publish? (IRDAI / insurance licence number, GST, any other.)
+10. Are you a SEBI-registered Investment Adviser, or only an AMFI-registered Mutual Fund Distributor? (Footer currently says you are not an IA.)
+
+
+2. Home page
+------------
+
+11. Hero headline — what should the main line say? (Currently: “A clear plan for every rupee you invest.”)
+12. Hero supporting paragraph — 2–3 sentences on who you help and how.
+13. Preferred primary button text? (Currently: “Book a consultation”.)
+14. Preferred secondary button text? (Currently: “Our services”.)
+15. “What we do” section intro — a short paragraph under the heading.
+16. Which 4 services should be featured on the home page? (Currently: Scheme Selection, SIP Services, Portfolio Monitoring, Retirement Planning.)
+17. “Why families stay with us” / philosophy — 3 short points with a title + 1–2 sentences each. (Currently: Goal-based, Open architecture, Transparent and reviewed.)
+18. Process — 4 steps, each with a title + 1–2 sentences. (Currently: Understand → Plan → Invest → Review.)
+19. Goals list — which investor goals should we list? (Currently: retirement, children’s education/marriage, home, tax-efficient wealth, emergency fund/protection, wealth transfer.)
+20. “Why an MFD vs doing it yourself” — 5–6 comparison lines, or confirm we can keep a generic version.
+21. Closing contact heading + one line. (Currently: “Bring your goals. Leave with a plan.” / “We reply within one business day.”)
+22. Confirm the reply-time promise we can print. (Currently: one business day.)
+
+
+3. About page
+-------------
+
+23. About opening — 2 short paragraphs: who you are, where you are based, who you serve (individuals / families / NRIs / business owners).
+24. Mission — heading + 2–3 sentences.
+25. Vision — heading + 2–3 sentences.
+26. Do you want a short firm story (how Nila started, why Ernakulam / Kerala)?
+27. Do you serve NRIs? If yes, from which countries / with what caveats should we mention this?
+
+
+4. Team
+-------
+
+For each person who should appear on About and /about/team:
+
+28. Full name
+29. Designation / role
+30. 2–4 sentence bio (experience, what they do for clients)
+31. Photo (headshot, if they want one on the site)
+32. Which ARN / EUIN / insurance licence sits against that person?
+
+Note: current names (Ananya Mehra, Rohan Iyer, Sara Khan, Vikram Shah) are dummy template people and must be replaced.
+
+
+5. Services — what you actually offer
+-------------------------------------
+
+This is the most important copy block. The site currently has three categories and a long catalogue. We should only publish what Nila is authorised to do and wants to sell.
+
+33. Confirm the three category headings, or tell us what to change:
+    - Mutual Funds
+    - Insurance
+    - FD & Bonds
+34. One intro sentence for the Services page. (Currently: “Mutual funds, insurance, and fixed-income solutions under one roof…”)
+35. One short paragraph for each category you want to keep.
+36. Tick keep / drop / rewrite for every item below. For each KEEP, please send:
+    - Preferred title
+    - 2–3 sentence description
+    - 3–4 bullet points of what you actually do
+    - Who it is for (optional)
+
+Mutual Funds (currently on the site)
+- Investor Onboarding (KYC / CKYC, FATCA, nomination, folio)
+- Investor Profiling & Understanding Requirements
+- Mutual Fund Scheme Selection
+- SIP Services
+- Lumpsum Investment Services
+- Transaction Execution
+- Portfolio Monitoring
+- Goal-Based Investment Support
+- Retirement Planning Support
+- Tax & Capital Gains Support
+- Investor Service & Support
+
+Insurance (currently on the site — only keep if you are licensed)
+- Insurance Needs Analysis
+- Life Insurance Planning
+- Term Insurance
+- Health Insurance
+- Personal Accident Insurance
+- Motor Insurance
+- Travel Insurance
+- Home / Property Insurance
+- Business Insurance
+- Policy Comparison & Selection
+- Policy Servicing
+- Premium Renewal Assistance
+- Claims Assistance
+- Nomination & Beneficiary Guidance
+- Policy Review
+- Insurance Portfolio Management
+- Customer Education
+- Riders / Add-on Guidance
+- Documentation Support
+- Post-Sale Relationship Management
+
+FD & Bonds (currently on the site — only keep if you distribute these)
+- Investment Requirement Analysis
+- FD Product Selection
+- FD Rate Comparison
+- Corporate FD Distribution
+- Bond Selection
+- Government Securities
+- Tax-Saving Investments
+- Regular Income Planning
+- Laddering Strategy
+- Maturity Planning
+- Interest Payout Planning
+- Portfolio Diversification
+- Credit Risk Assessment
+- Yield & Return Comparison
+- Liquidity Assessment
+- Application & Transaction Assistance
+- Renewal Management
+- Interest & Maturity Tracking
+- TDS / Tax Documentation Support
+- Bond Portfolio Management
+- Secondary Market Assistance
+- Reinvestment Services
+- Investor Statements
+- Ongoing Customer Service
+
+37. Any service missing from the lists above that you want on the site?
+38. Which AMCs / fund houses should we name as partners? (We currently list a generic 15 names.)
+39. If insurance stays: which insurers do you represent?
+40. If FD & Bonds stays: which banks / NBFCs / issuers do you distribute?
+
+
+6. Stats (home numbers)
+-----------------------
+
+We already have 552 investors and 156 Cr. Please confirm wording and the rest.
+
+41. Confirm: 552 investors — is that the public number, and should we say “investors” or “families”?
+42. Confirm: ₹156 Cr — is this AUM, AUAum, or “assets we service”? Preferred label?
+43. Years of experience / since year — what number and label should we print?
+44. Number of fund houses you work with? (Currently “40+”.)
+45. Any other number you want on the home stat band?
+
+
+7. Testimonials / client stories
+--------------------------------
+
+Current quotes are dummy (Neelima R., Farhan Q., Latha M., Arjun D.). Do not publish them as Nila’s.
+
+46. Can we use real client testimonials? If yes, for each:
+    - Quote (2–4 sentences)
+    - Name to display (full / first name + initial / “Client, Kochi”)
+    - City / occupation (optional)
+    - Written permission to publish
+47. If no real quotes yet, should we hide the testimonials section until you have them?
+
+
+8. Contact, hours, login, social
+--------------------------------
+
+We already have:
+- Address: Building No-66/1858 AI, Veekshnam Road, Ernakulam 682018
+- Phone: +91 98950 96596
+- Email: nilainvestmentservices@gmail.com
+
+48. Confirm the address line-by-line as it should appear.
+49. Any landmark / floor / building name to add?
+50. Office hours for the site? (Currently assumed: Mon–Sat, 9:30 AM – 6:30 PM.)
+51. Is WhatsApp the same number? Any second phone?
+52. Any other emails (grievance, advisor, accounts)?
+53. Client login URL — confirm https://nilainvestment.themfbox.com/ and the button label (“Client Login”).
+54. Is there a client signup / registration URL?
+55. Social profile URLs to link (LinkedIn, Instagram, Facebook, YouTube, X). Leave blank if none.
+56. Google Maps listing / preferred map pin.
+57. Contact form: are income range, net worth, and time horizon OK to ask, or should the form only be name / email / phone / message?
+
+
+9. Commission disclosures
+-------------------------
+
+Current table is sample template data and must not go live as Nila’s.
+
+58. Please share the latest commission / trail disclosure (AMC-wise ranges, or the official PDF / page we should publish).
+59. City category for disclosure (if relevant).
+60. Any other statutory disclosure copy you already use (risk disclaimer, MF box, insurance disclaimer).
+
+
+10. Legal pages
+---------------
+
+61. Do you already have a Privacy Policy and Terms of Service we should use as-is?
+62. Grievance officer name, email, and phone (for terms / footer).
+63. Confirm we may keep standard MF risk language + SEBI SCORES + SMART ODR links.
+64. Any Malayalam statutory line, or English only?
+
+
+11. Photos and assets
+---------------------
+
+65. Final logo files (transparent PNG / SVG). Colour and dark-background versions if you have them.
+66. Team photos and, if you want them, office / meeting photos.
+67. Are stock photos on the home page acceptable, or should we replace with your photos only?
+68. Any photos we must not use (faces, clients, other brands)?
+
+
+12. Other copy decisions
+------------------------
+
+69. Preferred language of the site: English only, or English + Malayalam for key pages?
+70. Calculators: keep all 7 (Crorepati, SIP Return, Retirement, SIP Step-Up, Lumpsum Target, Children Education, Target Amount SIP), or drop / rename any?
+71. Insights (Blog / News / Mutual Funds explainer): is Advisorkhoj-fed content OK, or do you want your own articles too?
+72. Any words you never want on the site? (e.g. “advice”, “guaranteed”, “wealth manager”, “AUM”.)
+73. Any competitor / old site copy we should match or avoid?
+74. Who will approve final copy, and by when?
