@@ -30,6 +30,7 @@ const Seal = styled.span<{ $size: number }>`
 const Word = styled.span`
   display: flex;
   flex-direction: column;
+  gap: 4px;
   line-height: 1.05;
 `;
 
@@ -40,17 +41,12 @@ const Name = styled.strong`
   letter-spacing: -0.03em;
 `;
 
-const Sub = styled.small`
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.7;
-  font-weight: 650;
-  margin-top: 3px;
-
-  @media (max-width: 640px) {
-    display: none;
-  }
+const Sub = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 22ch;
+  opacity: 0.8;
 `;
 
 export function LogoMark({ size = 44 }: { size?: number }) {
@@ -69,13 +65,13 @@ export function LogoMark({ size = 44 }: { size?: number }) {
   );
 }
 
-export function Logo() {
+export function Logo({ showAmfiTag = true }: { showAmfiTag?: boolean }) {
   return (
     <Mark href="/" aria-label={site.name}>
       <LogoMark />
       <Word>
-        <Name>{site.name}</Name>
-        <Sub>{site.logoTagline}</Sub>
+        <Name>{site.shortName}</Name>
+        {showAmfiTag ? <Sub>{site.amfiMark.tagline}</Sub> : null}
       </Word>
     </Mark>
   );

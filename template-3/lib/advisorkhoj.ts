@@ -3,9 +3,7 @@
  *
  * Endpoints in use:
  *   getFundNews?page_id=&category=   news feed, 12 per page
- *   getArticles?page_id=             articles, 9 per page (page_id is the ONLY
- *                                    parameter it honours - amc/search/title
- *                                    filters are accepted but ignored)
+ *   getArticleByTitleAmc?title=&amc= one article by title
  *   getMutualFunds                   mutual fund topic titles
  *   getMutualFundContent?title=      one topic's explainer
  *
@@ -217,17 +215,9 @@ export async function findNews(slug: string, maxPages = 6) {
 
 /* -------------------------------------------------------------- articles --- */
 
-export async function getArticles(page = 1) {
-  const data = await get<{ article: AkArticle[]; totalCount: number }>(
-    `getArticles?page_id=${page}`,
-  );
-  return { items: data?.article ?? [], total: data?.totalCount ?? 0 };
-}
-
 /**
- * The six articles the blog launches with, in the order given. The API has no
- * lookup by id or slug, so they are located by paging. Bounded and cached: the
- * cost is paid once per revalidation window, not per request.
+ * The articles the blog launches with, in the order given. Title lookup uses
+ * the slug with hyphens turned into spaces, plus the partner AMC code.
  */
 export const PINNED_ARTICLE_SLUGS = [
   "role-of-asset-allocation-in-achieving-your-financial-goals",
@@ -237,35 +227,30 @@ export const PINNED_ARTICLE_SLUGS = [
   "how-to-create-long-term-wealth-with-sip-top-up"
 ] as const;
 
-const SCAN_PAGES = 130;
-const SCAN_CONCURRENCY = 10;
+const PINNED_ARTICLE_AMC = "nimf";
+
+function titleFromSlug(slug: string) {
+  return slug.replace(/-/g, " ");
+}
+
+async function getArticleByTitleAmc(title: string, amc = PINNED_ARTICLE_AMC) {
+  const data = await get<{ articles?: AkArticle | null }>(
+    `getArticleByTitleAmc?title=${encodeURIComponent(title)}&amc=${encodeURIComponent(amc)}`,
+  );
+  return data?.articles ?? null;
+}
 
 export async function getPinnedArticles(): Promise<AkArticle[]> {
-  const wanted = new Set<string>(PINNED_ARTICLE_SLUGS);
-  const found = new Map<string, AkArticle>();
-
-  for (let page = 1; page <= SCAN_PAGES && found.size < wanted.size;) {
-    const batch: Promise<{ items: AkArticle[] }>[] = [];
-    for (let i = 0; i < SCAN_CONCURRENCY && page <= SCAN_PAGES; i += 1, page += 1) {
-      batch.push(getArticles(page));
-    }
-    const pages = await Promise.all(batch);
-    for (const { items } of pages) {
-      for (const article of items) {
-        const slug = slugOf(article.disqus_url).toLowerCase();
-        if (wanted.has(slug) && !found.has(slug)) found.set(slug, article);
-      }
-    }
-  }
-
-  return PINNED_ARTICLE_SLUGS.map((slug) => found.get(slug)).filter(
-    (a): a is AkArticle => Boolean(a),
+  const results = await Promise.all(
+    PINNED_ARTICLE_SLUGS.map((slug) => getArticleByTitleAmc(titleFromSlug(slug))),
   );
+  return results.filter((article): article is AkArticle => Boolean(article));
 }
 
 export async function findArticle(slug: string) {
-  const pinned = await getPinnedArticles();
-  return pinned.find((a) => routeSlug(a.disqus_url) === slug.toLowerCase()) ?? null;
+  const pin = PINNED_ARTICLE_SLUGS.find((s) => safeSlug(s) === slug.toLowerCase());
+  if (!pin) return null;
+  return getArticleByTitleAmc(titleFromSlug(pin));
 }
 
 /* ---------------------------------------------------------- mutual funds --- */

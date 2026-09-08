@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { findArticle, pinnedRouteSlugs, stripLinks, toText } from "@/lib/advisorkhoj";
+import { findArticle, pinnedRouteSlugs, toHtml, toText } from "@/lib/advisorkhoj";
 import { formatDate } from "@/lib/format";
 import { PageHero } from "@/components/PageHero";
 import { Prose } from "@/components/Prose";
@@ -30,7 +30,7 @@ export default async function BlogArticlePage({ params }: Props) {
   if (!article) notFound();
 
   const author = `${article.authorFirstName ?? ""} ${article.authorLastName ?? ""}`.trim();
-  const html = stripLinks(article.contents);
+  const html = toHtml(article.contents);
 
   return (
     <>

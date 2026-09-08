@@ -5,6 +5,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { toast } from "sonner";
 import { footerNav, site } from "@/lib/site";
+import { AmfiRegistrationMark } from "@/components/AmfiRegistrationMark";
 import { Button, Container } from "@/components/ui";
 import { contactIcons, socialIcons } from "@/components/icons";
 
@@ -275,6 +276,9 @@ export function Footer() {
               ))}
             </div>
           </Grid>
+        </Container>
+        <AmfiRegistrationMark />
+        <Container>
           <Fine>
             {site.legalName} is an AMFI-registered Mutual Fund Distributor
             {amfiText ? ` (${amfiText})` : ""}. Mutual fund

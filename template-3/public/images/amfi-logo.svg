@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 108" role="img" aria-label="AMFI">
+  <text x="60" y="24" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#00843D">AMFI</text>
+  <rect x="30" y="32" width="60" height="68" fill="none" stroke="#00843D" stroke-width="2.5"/>
+  <polygon points="60,40 50,56 70,56" fill="#00843D"/>
+  <polygon points="50,56 40,72 60,72" fill="#00843D"/>
+  <polygon points="70,56 60,72 80,72" fill="#00843D"/>
+  <polygon points="40,72 30,88 50,88" fill="#00843D"/>
+  <polygon points="60,72 50,88 70,88" fill="#00843D"/>
+  <polygon points="80,72 70,88 90,88" fill="#00843D"/>
+</svg>
