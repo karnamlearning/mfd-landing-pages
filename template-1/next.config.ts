@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  compiler: {
+  logging: {
+    fetches: {
+      fullUrl: true, // Displays the entire API URL in the terminal
+    },
+  }, compiler: {
     styledComponents: true,
   },
   images: {

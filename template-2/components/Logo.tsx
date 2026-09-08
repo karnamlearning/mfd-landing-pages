@@ -10,7 +10,6 @@ const Mark = styled(Link)`
   align-items: center;
   gap: 12px;
   color: inherit;
-  white-space: nowrap;
 `;
 
 const Seal = styled.span<{ $size: number }>`
@@ -44,18 +43,12 @@ const Name = styled.span`
   color: var(--ink);
 `;
 
-const Sub = styled.span<{ $hideNarrow?: boolean }>`
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+const Sub = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 22ch;
   color: var(--muted);
-  font-weight: 500;
-  line-height: 1;
-
-  ${({ $hideNarrow }) =>
-    $hideNarrow
-      ? `@media (max-width: 1360px) { display: none; }`
-      : ""}
 `;
 
 export function LogoMark({ size = 48 }: { size?: number }) {
@@ -74,15 +67,13 @@ export function LogoMark({ size = 48 }: { size?: number }) {
   );
 }
 
-export function Logo({ compact = false }: { compact?: boolean }) {
+export function Logo({ showAmfiTag = true }: { showAmfiTag?: boolean }) {
   return (
     <Mark href="/" aria-label={site.name}>
       <LogoMark />
       <Word>
         <Name>{site.shortName}</Name>
-        <Sub $hideNarrow={compact}>
-          {site.logoTagline} · {site.address.city}
-        </Sub>
+        {showAmfiTag ? <Sub>{site.amfiMark.tagline}</Sub> : null}
       </Word>
     </Mark>
   );

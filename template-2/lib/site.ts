@@ -2,9 +2,10 @@ export const site = {
   name: "Nila Investment Services",
   legalName: "Nila Investment Services",
   shortName: "Nila",
-  /** Small line beside the wordmark. Keep it to two or three words. */
-  logoTagline: "Investment services",
   tagline: "Plan your goals. Invest with confidence.",
+  amfiMark: {
+    tagline: "AMFI Registered Mutual Fund Distributor",
+  },
   description:
     "Mutual fund distribution, insurance, and FD & bond services - helping investors select, execute, monitor, and stay serviced.",
   /** One-line version for the footer and metadata. */

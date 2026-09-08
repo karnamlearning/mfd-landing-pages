@@ -3,6 +3,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { footerNav, site } from "@/lib/site";
+import { AmfiRegistrationMark } from "@/components/AmfiRegistrationMark";
 import { Logo } from "@/components/Logo";
 import { Container } from "@/components/ui";
 import { socialIcons } from "@/components/icons";
@@ -110,7 +111,7 @@ const Social = styled.div`
 `;
 
 const Fine = styled.div`
-  margin-top: 64px;
+  margin-top: 28px;
   padding-top: 24px;
   border-top: 1px solid var(--line);
   display: grid;
@@ -163,7 +164,7 @@ export function Footer() {
       <Container>
         <Top>
           <div>
-            <Logo />
+            <Logo showAmfiTag={false} />
             <Blurb>{site.blurb}</Blurb>
             <Social>
               {site.social.map((item) => {
@@ -219,6 +220,9 @@ export function Footer() {
             </Reach>
           </div>
         </Top>
+      </Container>
+      <AmfiRegistrationMark />
+      <Container>
         <Fine>
           <div>
             {footerNav.legal.map((item, index) => (

@@ -317,7 +317,7 @@ export function Header() {
     <Bar $solid={solid} $open={open}>
       <Container>
         <Row>
-          <Logo compact />
+          <Logo />
           <Nav aria-label="Primary">
             {primaryNav.map((item) => (
               <Item

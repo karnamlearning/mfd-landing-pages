@@ -3,6 +3,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { footerNav, site } from "@/lib/site";
+import { AmfiRegistrationMark } from "@/components/AmfiRegistrationMark";
 import { Container } from "@/components/ui";
 import { contactIcons, socialIcons } from "@/components/icons";
 
@@ -98,7 +99,7 @@ const Pill = styled(Link) <{ $primary?: boolean }>`
 `;
 
 const Fine = styled.p`
-  margin: 40px auto 0;
+  margin: 28px auto 0;
   padding-top: 22px;
   border-top: 1px solid var(--line);
   font-size: 12px;
@@ -203,7 +204,11 @@ export function Footer() {
             Contact us
           </Pill>
         </Pills>
+      </Container>
 
+      <AmfiRegistrationMark />
+
+      <Container>
         <Fine>
           {site.legalName} is an AMFI-registered Mutual Fund Distributor
           {amfiText ? ` (${amfiText})` : ""}. Mutual fund

@@ -151,13 +151,12 @@ export const talk = {
   ],
 };
 
-/** "Where the money goes" */
-export const money = {
-  intro:
-    "We are paid by the fund house out of the scheme's expense ratio, never as a bill to you, and if you stop investing we stop being paid. Here is the rest of the arithmetic, before you have to ask us for it.",
-  note: "Illustrative. A constant 12% return is assumed; markets do not deliver that on cue. Commission is an estimate at 0.75% a year on the running balance.",
-  /** Monthly SIP presets, in rupees. */
-  presets: [10000, 25000, 50000],
+/** Home SIP calculator section */
+export const homeCalculator = {
+  eyebrow: "SIP calculator",
+  lede:
+    "See what a monthly SIP could become. Change the amount, tenure, or return assumption and the maturity figure moves with it.",
+  note: "Illustrative only. Returns are not guaranteed.",
 };
 
 /** "What people ask first": six questions, each with a numbered answer and a photo. */

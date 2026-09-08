@@ -18,7 +18,7 @@ import {
   firstQuestions,
   handle,
   hero,
-  money,
+  homeCalculator,
   outcomes,
   partners,
   promises,
@@ -28,7 +28,8 @@ import {
 } from "@/lib/content";
 import { site } from "@/lib/site";
 import { photos } from "@/lib/media";
-import { formatDate, formatINR, formatShortINR } from "@/lib/format";
+import { formatDate } from "@/lib/format";
+import { CalculatorPanel } from "@/components/calculators/panels";
 import { LeadForm } from "@/components/LeadForm";
 import { Item, Reveal, Stagger, ease, useReduceMotion } from "@/components/motion";
 import { ButtonLink, Container, Display, Eyebrow, Section } from "@/components/ui";
@@ -1017,9 +1018,9 @@ const TalkMeta = styled.div`
   }
 `;
 
-/* ----------------------------------------------------------------- money --- */
+/* ----------------------------------------------------------- calculator --- */
 
-const MoneyIntro = styled.p`
+const CalcIntro = styled.p`
   font-family: var(--font-display);
   font-size: clamp(22px, 2.1vw, 30px);
   line-height: 1.3;
@@ -1028,326 +1029,6 @@ const MoneyIntro = styled.p`
   max-width: 44ch;
   margin-bottom: 48px;
 `;
-
-const Ledger = styled.div`
-  border-radius: var(--radius);
-  background: var(--surface-raised);
-  border: 1px solid var(--line);
-  padding: 38px 40px 34px;
-
-  @media (max-width: 640px) {
-    padding: 26px 20px;
-  }
-`;
-
-const LedgerTop = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px 40px;
-  flex-wrap: wrap;
-`;
-
-const BigFigure = styled.div`
-  display: grid;
-  gap: 10px;
-
-  strong {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(44px, 5vw, 72px);
-    line-height: 1;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-
-  strong small {
-    font-size: 0.42em;
-    color: var(--muted);
-    letter-spacing: 0;
-    margin-left: 8px;
-  }
-`;
-
-const Presets = styled.div`
-  display: grid;
-  gap: 10px;
-  justify-items: end;
-
-  div {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 640px) {
-    justify-items: start;
-  }
-`;
-
-const Preset = styled.button<{ $on: boolean }>`
-  min-height: 38px;
-  padding: 0 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid ${({ $on }) => ($on ? "var(--brand-deep)" : "var(--line-strong)")};
-  background: ${({ $on }) => ($on ? "var(--brand-deep)" : "transparent")};
-  color: ${({ $on }) => ($on ? "var(--on-brand)" : "var(--ink)")};
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.15s ease;
-  font-variant-numeric: tabular-nums;
-
-  &:hover {
-    border-color: var(--brand-deep);
-  }
-`;
-
-const YearsRow = styled.label`
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 18px;
-  margin-top: 30px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-
-  b {
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--ink);
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-
-  input[type="range"] {
-    width: 100%;
-    height: 2px;
-    appearance: none;
-    background: var(--line-strong);
-    border-radius: 2px;
-    cursor: pointer;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--brand-deep);
-    border: 3px solid var(--surface-raised);
-    box-shadow: 0 0 0 1px var(--brand-deep);
-  }
-
-  input[type="range"]::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--brand-deep);
-    border: 3px solid var(--surface-raised);
-    box-shadow: 0 0 0 1px var(--brand-deep);
-  }
-
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-`;
-
-const Shares = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px;
-  margin-top: 36px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`;
-
-const Share = styled.div<{ $tone?: "ink" | "muted" }>`
-  display: grid;
-  gap: 8px;
-  align-content: start;
-
-  strong {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(26px, 2.4vw, 34px);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: ${({ $tone }) => ($tone === "muted" ? "var(--muted)" : "var(--ink)")};
-    font-variant-numeric: tabular-nums;
-  }
-
-  span {
-    font-size: 13px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-`;
-
-/* A single stacked bar for the same split, so the shares read at a glance. */
-const Bar = styled.div`
-  display: flex;
-  height: 8px;
-  margin-top: 26px;
-  border-radius: 4px;
-  overflow: hidden;
-  background: var(--surface-alt);
-
-  i {
-    display: block;
-    height: 100%;
-    transition: width 0.35s ease;
-  }
-`;
-
-const LedgerFoot = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px 32px;
-  flex-wrap: wrap;
-  margin-top: 30px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-
-  p {
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--muted);
-    max-width: 52ch;
-  }
-
-  div {
-    display: flex;
-    gap: 8px 22px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-`;
-
-const RATE = 0.12;
-const TRAIL = 0.0075;
-
-/** Month-by-month SIP with the distributor's trail accrued on the running balance. */
-function ledger(monthly: number, years: number) {
-  const r = RATE / 12;
-  const t = TRAIL / 12;
-  let balance = 0;
-  let invested = 0;
-  let commission = 0;
-  for (let m = 0; m < years * 12; m += 1) {
-    balance = balance * (1 + r) + monthly;
-    invested += monthly;
-    commission += balance * t;
-  }
-  return {
-    corpus: balance,
-    invested,
-    growth: Math.max(0, balance - invested),
-    commission,
-  };
-}
-
-const pct = (part: number, whole: number) =>
-  whole > 0 ? `${((part / whole) * 100).toFixed(1)}%` : "0%";
-
-function MoneyLedger() {
-  const [monthly, setMonthly] = useState(money.presets[1]);
-  const [years, setYears] = useState(15);
-  const out = useMemo(() => ledger(monthly, years), [monthly, years]);
-
-  return (
-    <Ledger>
-      <LedgerTop>
-        <BigFigure>
-          <Caps>If you invest</Caps>
-          <strong>
-            {formatINR(monthly)}
-            <small>a month</small>
-          </strong>
-        </BigFigure>
-        <Presets>
-          <Caps>Try another SIP</Caps>
-          <div role="group" aria-label="Monthly SIP presets">
-            {money.presets.map((amount) => (
-              <Preset
-                key={amount}
-                type="button"
-                $on={amount === monthly}
-                onClick={() => setMonthly(amount)}
-              >
-                {formatShortINR(amount)}
-              </Preset>
-            ))}
-          </div>
-        </Presets>
-      </LedgerTop>
-
-      <YearsRow>
-        <b>for {years} years</b>
-        <input
-          type="range"
-          min={5}
-          max={30}
-          step={1}
-          value={years}
-          onChange={(event) => setYears(Number(event.target.value))}
-          aria-label="Years invested"
-        />
-        <Caps>5 to 30 yrs</Caps>
-      </YearsRow>
-
-      <Shares>
-        <Share>
-          <Caps>You end with</Caps>
-          <strong>{formatCompact(out.corpus)}</strong>
-          <span>100%</span>
-        </Share>
-        <Share>
-          <Caps>You put in</Caps>
-          <strong>{formatCompact(out.invested)}</strong>
-          <span>{pct(out.invested, out.corpus)}</span>
-        </Share>
-        <Share>
-          <Caps>Market growth</Caps>
-          <strong>{formatCompact(out.growth)}</strong>
-          <span>{pct(out.growth, out.corpus)}</span>
-        </Share>
-        <Share $tone="muted">
-          <Caps>What we receive</Caps>
-          <strong>{formatCompact(out.commission)}</strong>
-          <span>{pct(out.commission, out.corpus)} · paid by the AMC</span>
-        </Share>
-      </Shares>
-
-      <Bar aria-hidden>
-        <i style={{ width: pct(out.invested, out.corpus), background: "var(--brand-deep)" }} />
-        <i style={{ width: pct(out.growth, out.corpus), background: "var(--accent)" }} />
-      </Bar>
-
-      <LedgerFoot>
-        <p>{money.note}</p>
-        <div>
-          <ButtonLink href="/disclosures" $variant="ghost">
-            Read the commission disclosures
-          </ButtonLink>
-          <ButtonLink href="/contact">Ask what yours would look like</ButtonLink>
-        </div>
-      </LedgerFoot>
-    </Ledger>
-  );
-}
-
-/** "₹1.2 Cr" style figures with two decimals trimmed. */
-function formatCompact(value: number) {
-  return formatShortINR(Math.round(value));
-}
 
 /* -------------------------------------------------------------- questions --- */
 
@@ -1894,13 +1575,18 @@ export function HomeView() {
         <Container>
           <Reveal>
             <Head>
-              <Eyebrow>Where the money goes</Eyebrow>
-              <small>Illustrative. Your own numbers turn on your own plan.</small>
+              <div>
+                <Eyebrow>{homeCalculator.eyebrow}</Eyebrow>
+                <small>{homeCalculator.note}</small>
+              </div>
+              <ButtonLink href="/tools#sip-calculator" $variant="ghost">
+                All calculators
+              </ButtonLink>
             </Head>
-            <MoneyIntro>{money.intro}</MoneyIntro>
+            <CalcIntro>{homeCalculator.lede}</CalcIntro>
           </Reveal>
           <Reveal delay={0.08}>
-            <MoneyLedger />
+            <CalculatorPanel slug="sip-calculator" />
           </Reveal>
         </Container>
       </Section>

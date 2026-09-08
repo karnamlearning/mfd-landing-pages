@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   compiler: {
     styledComponents: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true, // Displays the entire API URL in the terminal
+    },
+  },
   images: {
     remotePatterns: [
       {

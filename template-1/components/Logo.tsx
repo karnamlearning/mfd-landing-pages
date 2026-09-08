@@ -42,16 +42,12 @@ const Name = styled.span`
   letter-spacing: -0.04em;
 `;
 
-const Sub = styled.small`
-  font-size: 9px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.6;
-  font-weight: 700;
-
-  @media (max-width: 640px) {
-    display: none;
-  }
+const Sub = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 22ch;
+  opacity: 0.72;
 `;
 
 export function LogoMark({ size = 48 }: { size?: number }) {
@@ -70,13 +66,13 @@ export function LogoMark({ size = 48 }: { size?: number }) {
   );
 }
 
-export function Logo({ tagline = true }: { onDark?: boolean; tagline?: boolean }) {
+export function Logo({ showAmfiTag = true }: { showAmfiTag?: boolean }) {
   return (
     <Mark href="/" aria-label={site.name}>
       <LogoMark />
       <Word>
         <Name>{site.shortName}</Name>
-        {tagline ? <Sub>{site.logoTagline}</Sub> : null}
+        {showAmfiTag ? <Sub>{site.amfiMark.tagline}</Sub> : null}
       </Word>
     </Mark>
   );
