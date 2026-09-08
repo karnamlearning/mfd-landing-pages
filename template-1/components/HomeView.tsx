@@ -1020,7 +1020,7 @@ const VsMark = styled.span`
 
 const Side = styled.div.attrs<{ $primary?: boolean }>(({ $primary }) => ({
   className: $primary ? "on-dark-scope" : undefined,
-}))<{ $primary?: boolean }>`
+})) <{ $primary?: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 32px;
@@ -1849,18 +1849,21 @@ export function HomeView() {
               </CalcShot>
             </Reveal>
             <Reveal delay={0.1}>
-              <Eyebrow>Calculators</Eyebrow>
+              <Eyebrow>Tools</Eyebrow>
               <Display>Plan the numbers before you invest.</Display>
               <Lead style={{ marginTop: 16 }}>
-                Seven planning tools on one page. Change an assumption and every figure, chart,
-                and table moves with it.
+                Six planning calculators and four fund research tools, on one page. Change an
+                assumption and every figure, chart, and table moves with it.
               </Lead>
               <CalcList>
-                {calculatorMeta.map((item) => {
+                {[...calculatorMeta]
+                  .sort((a, b) => Number(a.group === "research") - Number(b.group === "research"))
+                  .map((item) => {
                   const Icon = calculatorIcons[item.slug];
+                  const href = `/tools#${item.slug}`;
                   return (
                     <li key={item.slug}>
-                      <CalcLink href={`/calculators#${item.slug}`}>
+                      <CalcLink href={href}>
                         {Icon ? <Icon size={16} aria-hidden /> : null}
                         {item.title}
                         <FiArrowRight size={14} aria-hidden />

@@ -25,13 +25,33 @@ const groupIN = (n: number) => n.toLocaleString("en-IN");
 
 export const ControlStack = styled.div`
   display: grid;
-  gap: 24px;
+  gap: 20px 16px;
   align-content: start;
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: 520px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`;
+
+/** Full-width control inside a two-column ControlStack. */
+export const ControlWide = styled.div`
+  grid-column: 1 / -1;
+  min-width: 0;
+`;
+
+/** As many fields per row as fit; for controls that span the full page width. */
+export const ControlGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 16px;
+  align-items: start;
 `;
 
 const Block = styled.div`
   display: grid;
   gap: 10px;
+  min-width: 0;
 `;
 
 const Head = styled.div`
@@ -686,6 +706,68 @@ export function SelectField({
         </NativeSelect>
         <FiChevronDown size={16} aria-hidden />
       </SelectShell>
+      {hint ? <Hint>{hint}</Hint> : null}
+    </Block>
+  );
+}
+
+/* ------------------------------------------------------------------- text --- */
+
+const TextInput = styled.input`
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-strong);
+    box-shadow: 0 0 0 3px var(--tint-accent-weak);
+  }
+`;
+
+/** Free text, e.g. a child's name. */
+export function TextField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  hint,
+  maxLength = 40,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  hint?: string;
+  maxLength?: number;
+}) {
+  return (
+    <Block>
+      <Head>
+        <Name>{label}</Name>
+      </Head>
+      <TextInput
+        type="text"
+        aria-label={label}
+        value={value}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        onChange={(event) => onChange(event.target.value)}
+      />
       {hint ? <Hint>{hint}</Hint> : null}
     </Block>
   );

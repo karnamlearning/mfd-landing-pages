@@ -112,6 +112,23 @@ export type CalcParams = {
     interest_rate: number;
     period: number;
   };
+  /** `period` is in MONTHS. */
+  getSIPCalcResultWithChartData: {
+    sip_amount: number;
+    interest_rate: number;
+    period: number;
+  };
+  getRetirementAnnualIncrease: {
+    current_age: number;
+    retire_age: number;
+    life_expectancy: number;
+    monthly_expense_amount: number;
+    expected_return: number;
+    post_retire_return: number;
+    inflation: number;
+    lumpsum_amount: number;
+    withdrawal_increase_percent: number;
+  };
   /** Empty child names are ignored by the upstream. */
   getEducationPlannerResult: {
     child1_name: string;

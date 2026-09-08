@@ -1,18 +1,15 @@
-import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
-import { CalculatorsView } from "@/components/calculators/CalculatorsView";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Calculators",
-  description:
-    "SIP, retirement, education, lumpsum, and crorepati calculators - all on one interactive page.",
-};
+import { useEffect } from "react";
+import { isCalculatorSlug, toolsForGroup } from "@/lib/calculators";
 
-export default function CalculatorsPage() {
-  return (
-    <>
-      <PageHero title="Calculators" meta="Plan the numbers" />
-      <CalculatorsView />
-    </>
-  );
+/** `/calculators` lands on the Calculators division of the Tools page. */
+export default function CalculatorsRedirectPage() {
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    const slug = isCalculatorSlug(hash) ? hash : toolsForGroup("calculator")[0].slug;
+    window.location.replace(`/tools#${slug}`);
+  }, []);
+
+  return null;
 }

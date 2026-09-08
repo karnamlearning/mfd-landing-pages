@@ -123,64 +123,125 @@ export function retirementCorpus(options: {
 
 export const calculatorMeta = [
   {
-    slug: "become-a-crorepati",
-    short: "Crorepati",
-    title: "Become a Crorepati",
-    eyebrow: "Goal calculator",
+    slug: "trailing-returns",
+    short: "Trailing Returns",
+    title: "Trailing Returns",
+    eyebrow: "MF research",
+    group: "research" as const,
     summary:
-      "What monthly SIP it takes to get to Rs. 1 crore by a year you choose.",
+      "Compare category trailing returns across schemes for Regular or Direct plans.",
   },
   {
-    slug: "sip-return",
-    short: "SIP Return",
-    title: "SIP Return Calculator",
-    eyebrow: "Contribution math",
+    slug: "mf-sip-returns",
+    short: "MF SIP Returns",
+    title: "MF SIP Returns",
+    eyebrow: "MF research",
+    group: "research" as const,
     summary:
-      "Invested amount versus an assumed constant return. A sketch, not a forecast.",
+      "See how a monthly SIP in a category would have performed over a chosen period.",
   },
   {
-    slug: "retirement-planning",
-    short: "Retirement",
-    title: "Retirement Planning Calculator",
-    eyebrow: "Paycheck after work",
+    slug: "mf-lumpsum-returns",
+    short: "MF Lumpsum Returns",
+    title: "MF Lumpsum Returns",
+    eyebrow: "MF research",
+    group: "research" as const,
     summary:
-      "Inflate today's spend, then see the corpus and SIP that would fund it.",
+      "Top-performing lumpsum outcomes by category, period, and investment amount.",
   },
   {
-    slug: "sip-step-up",
-    short: "Step-Up SIP",
-    title: "SIP Step-Up Calculator",
-    eyebrow: "Annual raise",
+    slug: "swp-return-calculator",
+    short: "SWP Returns",
+    title: "SWP Return Calculator",
+    eyebrow: "MF research",
+    group: "research" as const,
     summary:
-      "What happens if the SIP grows with your salary, not just the market.",
+      "Historical SWP results for a chosen AMC scheme, withdrawal day, and period.",
   },
   {
-    slug: "lumpsum-target",
+    slug: "sip-calculator",
+    short: "SIP",
+    title: "SIP Calculator",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
+    summary:
+      "Estimate maturity value for a fixed monthly SIP at an assumed return rate.",
+  },
+  {
+    slug: "lumpsum-calculator",
     short: "Lumpsum",
-    title: "Lumpsum Target Calculator",
-    eyebrow: "One cheque",
+    title: "Lumpsum Calculator",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
     summary:
-      "Start from the goal and work back to the amount that would have to go in today.",
+      "Project what a one-time investment could grow to over the years you choose.",
   },
   {
-    slug: "children-education",
+    slug: "child-education-planner",
     short: "Education",
-    title: "Children Education Planner",
-    eyebrow: "Fee inflation",
+    title: "Child Education Planner",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
     summary:
-      "Today's course cost, inflated, then a SIP that might meet it.",
+      "Inflate today's education cost and see the monthly savings that could fund it.",
   },
   {
-    slug: "target-amount-sip",
-    short: "Target SIP",
-    title: "Target Amount SIP Calculator",
-    eyebrow: "Reverse the SIP",
+    slug: "retirement-planner",
+    short: "Retirement",
+    title: "Retirement Planner",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
     summary:
-      "Pick a corpus and a year. Get the monthly debit that would be required.",
+      "Work out the corpus and SIP needed to fund inflated retirement expenses.",
+  },
+  {
+    slug: "goal-setting-calculator",
+    short: "Goal Setting",
+    title: "Goal Setting Calculator",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
+    summary:
+      "Turn a future dream amount into a monthly savings target after inflation.",
+  },
+  {
+    slug: "swp-calculator",
+    short: "SWP",
+    title: "SWP Calculator",
+    eyebrow: "Calculator",
+    group: "calculator" as const,
+    summary:
+      "Model systematic withdrawals from a corpus at an assumed return rate.",
   },
 ] as const;
 
 export type CalculatorSlug = (typeof calculatorMeta)[number]["slug"];
+export type ToolGroup = (typeof calculatorMeta)[number]["group"];
+
+export const researchMeta = calculatorMeta.filter((item) => item.group === "research");
+export const calculatorToolsMeta = calculatorMeta.filter((item) => item.group === "calculator");
+
+export function toolsForGroup(group: ToolGroup) {
+  return calculatorMeta.filter((item) => item.group === group);
+}
+
+/** Display order of the two divisions on the Tools page. */
+export const toolGroups: { id: ToolGroup; label: string; note: string }[] = [
+  { id: "calculator", label: "Calculators", note: "Plan the numbers" },
+  { id: "research", label: "Research", note: "Compare funds" },
+];
+
+/** Every tool lives on the single Tools page; the slug is the hash. */
+export function pathForTool(_slug: CalculatorSlug): "/tools" {
+  return "/tools";
+}
+
+export function groupOf(slug: CalculatorSlug): ToolGroup {
+  return calculatorMeta.find((entry) => entry.slug === slug)?.group ?? "calculator";
+}
+
+export function isCalculatorSlug(value: string): value is CalculatorSlug {
+  return calculatorMeta.some((entry) => entry.slug === value);
+}
 
 /** What a future rupee amount is worth in today's money. */
 export function realValue(nominal: number, years: number, inflation: number) {

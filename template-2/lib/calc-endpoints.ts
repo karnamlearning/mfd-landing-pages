@@ -50,6 +50,11 @@ export const CALC_ENDPOINTS = {
   getLumpsumTargetCalcResult: { method: "POST", source: SOURCE_AK, keyProfile: "default" },
   getTargetAmountSIPCalcResult: { method: "GET", source: SOURCE_AK, keyProfile: "default" },
   getNetworthCalcResult: { method: "GET", source: SOURCE_AK, keyProfile: "default" },
+  getSIPCalcResultWithChartData: {
+    method: "GET",
+    source: SOURCE_AK,
+    keyProfile: "default",
+  },
 
   // --- Website source, `website` key ----------------------------------------
   getCrorepatiResult: { method: "GET", source: SOURCE_WEBSITE, keyProfile: "website" },
@@ -92,6 +97,11 @@ export const CALC_ENDPOINTS = {
     keyProfile: "website",
     prefix: "",
   },
+  getRetirementAnnualIncrease: {
+    method: "GET",
+    keyProfile: "default",
+    prefix: "",
+  },
 } as const satisfies Record<string, CalcEndpoint>;
 
 export type CalcEndpointName = keyof typeof CALC_ENDPOINTS;
@@ -105,6 +115,7 @@ export type CalcEndpointName = keyof typeof CALC_ENDPOINTS;
 export const NO_SOURCE_ENDPOINTS = new Set<CalcEndpointName>([
   "getImpactResult",
   "getSipLumpsumTenure",
+  "getRetirementAnnualIncrease",
 ]);
 
 export function isCalcEndpoint(name: string): name is CalcEndpointName {

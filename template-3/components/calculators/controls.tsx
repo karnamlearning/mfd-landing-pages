@@ -25,13 +25,33 @@ const groupIN = (n: number) => n.toLocaleString("en-IN");
 
 export const ControlStack = styled.div`
   display: grid;
-  gap: 24px;
+  gap: 20px 16px;
   align-content: start;
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: 520px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+`;
+
+/** Full-width control inside a two-column ControlStack. */
+export const ControlWide = styled.div`
+  grid-column: 1 / -1;
+  min-width: 0;
+`;
+
+/** As many fields per row as fit; for controls that span the full page width. */
+export const ControlGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px 16px;
+  align-items: start;
 `;
 
 const Block = styled.div`
   display: grid;
   gap: 10px;
+  min-width: 0;
 `;
 
 const Head = styled.div`
@@ -75,6 +95,7 @@ const Range = styled.input<{ $pct: number }>`
   appearance: none;
   width: 100%;
   height: 4px;
+  border-radius: 999px;
   margin: 6px 0 2px;
   cursor: pointer;
   background: linear-gradient(
@@ -91,8 +112,8 @@ const Range = styled.input<{ $pct: number }>`
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--ink);
+    background: var(--surface-raised);
+    border: 3px solid var(--accent-strong);
     transition: transform 0.12s ease;
   }
 
@@ -104,8 +125,8 @@ const Range = styled.input<{ $pct: number }>`
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: var(--accent);
-    border: 2px solid var(--ink);
+    background: var(--surface-raised);
+    border: 3px solid var(--accent-strong);
   }
 
   &:focus-visible {
@@ -162,10 +183,11 @@ const Chips = styled.div`
 `;
 
 const Chip = styled.button<{ $on: boolean }>`
-  border: 1px solid ${({ $on }) => ($on ? "var(--ink)" : "var(--line-strong)")};
-  background: ${({ $on }) => ($on ? "var(--ink)" : "transparent")};
-  color: ${({ $on }) => ($on ? "var(--accent)" : "var(--muted)")};
-  padding: 6px 11px;
+  border: 1px solid ${({ $on }) => ($on ? "var(--brand-deep)" : "var(--line-strong)")};
+  background: ${({ $on }) => ($on ? "var(--brand-deep)" : "transparent")};
+  color: ${({ $on }) => ($on ? "var(--on-brand)" : "var(--muted)")};
+  border-radius: 999px;
+  padding: 6px 12px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -174,8 +196,8 @@ const Chip = styled.button<{ $on: boolean }>`
   font-variant-numeric: tabular-nums;
 
   &:hover {
-    border-color: var(--ink);
-    color: ${({ $on }) => ($on ? "var(--accent)" : "var(--ink)")};
+    border-color: var(--brand-deep);
+    color: ${({ $on }) => ($on ? "var(--on-brand)" : "var(--ink)")};
   }
 `;
 
@@ -213,6 +235,8 @@ const InputRow = styled.div`
   display: flex;
   align-items: stretch;
   min-width: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
   transition:
@@ -387,6 +411,8 @@ const StepRow = styled.div`
   display: flex;
   align-items: stretch;
   min-width: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
 `;
@@ -402,7 +428,7 @@ const StepButton = styled.button`
   transition: 0.15s ease;
 
   &:hover:not(:disabled) {
-    background: var(--accent);
+    background: var(--surface-sage);
   }
 
   &:disabled {
@@ -497,6 +523,8 @@ const Seg = styled.div`
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
   min-width: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
 `;
@@ -514,7 +542,7 @@ const SegCell = styled.div`
 const SegPill = styled(motion.span)`
   position: absolute;
   inset: 0;
-  background: var(--ink);
+  background: var(--brand-deep);
 `;
 
 const SegButton = styled.button<{ $on: boolean }>`
@@ -527,7 +555,7 @@ const SegButton = styled.button<{ $on: boolean }>`
   padding: 10px 6px;
   display: grid;
   gap: 2px;
-  color: ${({ $on }) => ($on ? "var(--accent)" : "var(--muted)")};
+  color: ${({ $on }) => ($on ? "var(--on-brand)" : "var(--muted)")};
   transition: color 0.2s ease;
 
   strong {
@@ -545,7 +573,7 @@ const SegButton = styled.button<{ $on: boolean }>`
   }
 
   &:hover {
-    color: ${({ $on }) => ($on ? "var(--accent)" : "var(--ink)")};
+    color: ${({ $on }) => ($on ? "var(--on-brand)" : "var(--ink)")};
   }
 `;
 
@@ -627,6 +655,7 @@ const NativeSelect = styled.select`
   width: 100%;
   min-height: 50px;
   padding: 0 42px 0 14px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--line-strong);
   background: var(--surface-raised);
   color: var(--ink);
@@ -682,6 +711,68 @@ export function SelectField({
   );
 }
 
+/* ------------------------------------------------------------------- text --- */
+
+const TextInput = styled.input`
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-strong);
+    box-shadow: 0 0 0 3px var(--tint-accent-weak);
+  }
+`;
+
+/** Free text, e.g. a child's name. */
+export function TextField({
+  label,
+  value,
+  onChange,
+  placeholder,
+  hint,
+  maxLength = 40,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  hint?: string;
+  maxLength?: number;
+}) {
+  return (
+    <Block>
+      <Head>
+        <Name>{label}</Name>
+      </Head>
+      <TextInput
+        type="text"
+        aria-label={label}
+        value={value}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      {hint ? <Hint>{hint}</Hint> : null}
+    </Block>
+  );
+}
+
 /* ----------------------------------------------------------------- switch --- */
 
 const SwitchButton = styled.button<{ $on: boolean }>`
@@ -692,6 +783,7 @@ const SwitchButton = styled.button<{ $on: boolean }>`
   width: 100%;
   text-align: left;
   padding: 12px 14px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   border: 1px solid ${({ $on }) => ($on ? "var(--accent-strong)" : "var(--line-strong)")};
   background: ${({ $on }) => ($on ? "var(--tint-accent-weak)" : "var(--surface-raised)")};
@@ -723,7 +815,7 @@ const SwitchTrack = styled.span<{ $on: boolean }>`
   height: 26px;
   flex-shrink: 0;
   border-radius: 999px;
-  background: ${({ $on }) => ($on ? "var(--ink)" : "var(--line-strong)")};
+  background: ${({ $on }) => ($on ? "var(--brand-deep)" : "var(--line-strong)")};
   transition: background 0.2s ease;
 `;
 
@@ -734,7 +826,7 @@ const SwitchKnob = styled(motion.span)`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--surface-raised);
 `;
 
 /** Turns an optional assumption on, revealing the inputs it needs. */

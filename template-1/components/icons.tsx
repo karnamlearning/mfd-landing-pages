@@ -142,13 +142,16 @@ export const navIcons: Record<string, IconType> = {
 };
 
 export const calculatorIcons: Record<string, IconType> = {
-  "become-a-crorepati": FiTrendingUp,
-  "sip-return": FiRefreshCw,
-  "retirement-planning": FiSunrise,
-  "sip-step-up": FiActivity,
-  "lumpsum-target": FiPercent,
-  "children-education": FiBookOpen,
-  "target-amount-sip": FiHome,
+  "trailing-returns": FiTrendingUp,
+  "mf-sip-returns": FiRefreshCw,
+  "mf-lumpsum-returns": FiPercent,
+  "swp-return-calculator": FiActivity,
+  "sip-calculator": FiRefreshCw,
+  "lumpsum-calculator": FiPercent,
+  "child-education-planner": FiBookOpen,
+  "retirement-planner": FiSunrise,
+  "goal-setting-calculator": FiHome,
+  "swp-calculator": FiActivity,
 };
 
 export const statIcons: Record<string, IconType> = {

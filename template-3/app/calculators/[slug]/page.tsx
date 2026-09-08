@@ -2,12 +2,9 @@
 
 import { useEffect } from "react";
 import { notFound, useParams } from "next/navigation";
-import { calculatorMeta } from "@/lib/calculators";
+import { calculatorMeta, pathForTool } from "@/lib/calculators";
 
-/**
- * Legacy `/calculators/[slug]` URLs bounce into the single-page workspace.
- * Kept as a client page so the hash redirect runs in the browser.
- */
+/** Legacy `/calculators/[slug]` URLs bounce into the matching workspace. */
 export default function CalculatorDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
@@ -15,14 +12,9 @@ export default function CalculatorDetailPage() {
 
   useEffect(() => {
     if (!item) return;
-    window.location.replace(`/calculators#${item.slug}`);
+    window.location.replace(`${pathForTool(item.slug)}#${item.slug}`);
   }, [item]);
 
   if (!item) notFound();
-
-  return (
-    <p style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)" }}>
-      Opening {item.title}…
-    </p>
-  );
+  return null;
 }

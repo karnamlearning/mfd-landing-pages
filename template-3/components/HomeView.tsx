@@ -59,15 +59,15 @@ const pillars = pillarSlugs.map((slug, index) => ({
 
 const resources = [
   {
-    href: "/calculators#sip-return",
-    title: calculatorMeta[1].title,
-    note: calculatorMeta[1].summary,
+    href: "/tools#sip-calculator",
+    title: calculatorMeta.find((item) => item.slug === "sip-calculator")!.title,
+    note: calculatorMeta.find((item) => item.slug === "sip-calculator")!.summary,
     image: photos.resourceSip,
   },
   {
-    href: "/calculators#retirement-planning",
-    title: calculatorMeta[2].title,
-    note: calculatorMeta[2].summary,
+    href: "/tools#retirement-planner",
+    title: calculatorMeta.find((item) => item.slug === "retirement-planner")!.title,
+    note: calculatorMeta.find((item) => item.slug === "retirement-planner")!.summary,
     image: photos.resourceRetirement,
   },
   {

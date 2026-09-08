@@ -82,7 +82,7 @@ const Pills = styled.nav`
   gap: 8px;
 `;
 
-const Pill = styled(Link)<{ $primary?: boolean }>`
+const Pill = styled(Link) <{ $primary?: boolean }>`
   padding: 10px 16px;
   border-radius: 999px;
   border: 1px solid ${({ $primary }) => ($primary ? "var(--brand-deep)" : "var(--line-strong)")};
@@ -162,7 +162,7 @@ const pills = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Calculators", href: "/calculators" },
+  { label: "Tools", href: "/tools" },
   { label: "Blog", href: "/blog" },
   { label: "News", href: "/news" },
   { label: "Mutual Funds", href: "/mutual-funds" },
